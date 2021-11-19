@@ -16,7 +16,7 @@ import SmokeList from '../../models/Smoking';
 import DrinkingHabit from '../../models/DrinkingHabits';
 import WantKidsList from '../../models/WantKids';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import NextButton from '../NextButton';
 
 // issue: lag 
 
@@ -34,7 +34,7 @@ const Item = ({ label, onPress }) => (
 const {fontScale} = Dimensions.get("window")
 
 // create a component
-const DescribeMe = () => {
+const DescribeMe = ({onPress}) => {
     const [selectedItem, setSelectedItem] = useState(null);
 
     useEffect(() => {
@@ -261,8 +261,8 @@ const DescribeMe = () => {
                     </View>
                     <View style={{height: 1.5, backgroundColor: COLORS.grey }}  />
                 </View>
-
-
+                
+                <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={onPress} />
 
 
                 <BottomSheetModal
@@ -280,7 +280,7 @@ const DescribeMe = () => {
                             
 
                 >
-                   <SafeAreaView style={{flex: 1}} >
+                   <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
                         
                             <View style={DescribeStyle.panelHeader} >
                                 <Text style={DescribeStyle.headerText} >Astrological Signs</Text>
@@ -317,7 +317,7 @@ const DescribeMe = () => {
                             handleIndicatorStyle={{backgroundColor: COLORS.white}}
                           
                 >
-                    <SafeAreaView style={{flex: 1}} >
+                    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
                         <View style={DescribeStyle.panelHeader} >
                             <Text style={DescribeStyle.headerText}  >Political View</Text>
                         </View>
@@ -348,7 +348,7 @@ const DescribeMe = () => {
                             handleIndicatorStyle={{backgroundColor: COLORS.white}}
                 >
                     
-                    <SafeAreaView style={{flex: 1}}  >
+                    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
                         
                             <View style={DescribeStyle.panelHeader} >
                                 <Text style={DescribeStyle.headerText}>Religion</Text>
@@ -386,7 +386,7 @@ const DescribeMe = () => {
                             handleIndicatorStyle={{backgroundColor: COLORS.white}}
                           
                 >
-                    <SafeAreaView style={{flex:1}} >
+                    <SafeAreaView style={{flex:1, backgroundColor: COLORS.white}} >
                         <View style={DescribeStyle.panelHeader} >
                             <Text style={DescribeStyle.headerText}  >Smoking Habit</Text>
                         </View>
@@ -417,7 +417,7 @@ const DescribeMe = () => {
                             enablePanDownToClose
                             enableContentPanningGesture={false}
                 >
-                    <SafeAreaView style={{flex:1}} >
+                    <SafeAreaView style={{flex:1, backgroundColor: COLORS.white}} >
                          <View style={DescribeStyle.panelHeader} >
                             <Text style={DescribeStyle.headerText}  >Drinking Habit</Text>
                         </View>
@@ -451,7 +451,7 @@ const DescribeMe = () => {
                             handleIndicatorStyle={{backgroundColor: COLORS.white}}
                           
                 >
-                    <SafeAreaView style={{flex:1}} >
+                    <SafeAreaView style={{flex:1, backgroundColor: COLORS.white, zIndex: 10}} >
                         <View style={DescribeStyle.panelHeader} >
                             <Text style={DescribeStyle.headerText}  >Want or Not?</Text>
                         </View>
@@ -462,6 +462,7 @@ const DescribeMe = () => {
                                     keyExtractor={item => item.key}
                                     scrollEnabled={false}
                                     scrollToOverflowEnabled
+                                    
                             />
                         </ScrollView>
                         

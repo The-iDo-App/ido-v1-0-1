@@ -120,7 +120,6 @@ const AgeRange = ({minValue, maxValue, onChangeMin, onChangeMax, initialValue}) 
 // define your styles
 const styles = StyleSheet.create({
     container:{
-        marginTop: 40,
         marginHorizontal: 40,
         justifyContent: 'center',
     },

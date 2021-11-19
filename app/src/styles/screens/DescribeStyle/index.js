@@ -26,7 +26,7 @@ const DescribeStyle = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         paddingHorizontal: 20/scale,
-        padding: 40/scale,
+        padding: 10/scale,
         zIndex: 1,  
     }, 
     headerText:{
@@ -62,7 +62,9 @@ const DescribeStyle = StyleSheet.create({
     },
     flatListWrapper: {
         paddingHorizontal: 40/scale,
-        marginBottom: 10
+        marginBottom: 10, 
+        backgroundColor: COLORS.white, 
+        
     }, 
     item: {
         marginVertical: 10,

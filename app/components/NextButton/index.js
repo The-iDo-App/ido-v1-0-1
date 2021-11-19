@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
         padding: fontScale * 12, 
         alignItems:'center', 
         borderRadius: (width-50)/2, 
-        margin: 10
+        margin: 10, 
+        
     },
     TextButton:{
         color: COLORS.white,

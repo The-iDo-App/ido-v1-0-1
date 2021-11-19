@@ -10,7 +10,7 @@ const {height} = Dimensions.get("window");
 const Logo = () => 
 {
     return (
-    <View style={{display:'flex', alignItems: 'center', marginTop: 5}} >
+    <View style={{display:'flex', alignItems: 'center'}} >
         <Image source={require('../../src/assets/adaptive-icon.png')} resizeMode="contain" style={HeaderStyle.logo} />
     </View> 
     )
