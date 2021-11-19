@@ -1,0 +1,5 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["8vi+nt0"]); }
+
+__d("CometMarketplaceLeftRailSearchContainer.react",["deferredLoadComponent","react","requireDeferredForDisplay"],(function(a,b,c,d,e,f,g){"use strict";var h=d("react"),i=c("deferredLoadComponent")(c("requireDeferredForDisplay")("MarketplaceScopedTypeaheadWithLogging.react").__setRef("CometMarketplaceLeftRailSearchContainer.react"));function a(){return h.jsx(i,{})}a.displayName=a.name+" [from "+f.id+"]";g["default"]=a}),98);
+__d("useIsSearchRouteActive",["useIsRouteActive"],(function(a,b,c,d,e,f,g){"use strict";function a(){return c("useIsRouteActive")("comet.marketplace.search")}g["default"]=a}),98);
+__d("usePreloadPDPRoute",["JSResourceForInteraction","gkx","react"],(function(a,b,c,d,e,f,g){"use strict";var h=d("react").useEffect;function a(){h(function(){c("gkx")("1949110")&&c("JSResourceForInteraction")("CometMarketplacePermalinkRoot.react").__setRef("usePreloadPDPRoute").preload()},[])}g["default"]=a}),98);
