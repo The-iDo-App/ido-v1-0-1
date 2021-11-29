@@ -19,8 +19,7 @@ const Sports = () => {
 
 
     const renderItem = ({item, selected}) => {
-                   
-        
+          
         return(
            <View style={interestStyles.item} >
                {

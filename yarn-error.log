@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\ACER\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-native-screens@~3.8.0 react-native-safe-area-context@3.3.2
+  C:\Program Files\nodejs\node.exe C:\Users\ACER\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add expo-checkbox@~2.0.0
 
 PATH: 
-  C:\Program Files\PowerShell\7;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python39\Scripts\;C:\Python39\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\xampp;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files\MongoDB\Server\4.4\bin;C:\Users\ACER\AppData\Local\Android\Sdk\platform-tools;C:\Users\ACER\AppData\Local\Android\Sdk\tools;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Program Files\Java\jdk-11.0.13;C:\Users\ACER\Gradle\gradle-7.2\bin;C:\Users\ACER\AppData\Local\Microsoft\WindowsApps;C:\Users\ACER\.dotnet\tools;d:\win32pe_edu;d:\modelsim\win32pe_edu;C:\Program Files\JetBrains\PhpStorm 2020.2.3\bin;C:\xampp\php;C:\Users\ACER\AppData\Roaming\Composer\vendor\bin;C:\xampp;C:\Modeltech_pe_edu_10.4a\win32pe_edu;C:\Program Files\nodejs;C:\Users\ACER\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ACER\AppData\Roaming\npm;C:\Users\ACER\AppData\Local\Microsoft\WindowsApps;C:\Users\ACER\.dotnet\tools;C:\Users\ACER\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Java\jdk-11.0.13;
+  C:\Program Files\PowerShell\7;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python39\Scripts\;C:\Python39\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\xampp;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files\MongoDB\Server\4.4\bin;C:\Users\ACER\AppData\Local\Android\Sdk\platform-tools;C:\Users\ACER\AppData\Local\Android\Sdk\tools;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Program Files\Java\jdk-11.0.13;C:\Users\ACER\Gradle\gradle-7.2\bin;C:\Users\ACER\AppData\Local\Microsoft\WindowsApps;C:\Users\ACER\.dotnet\tools;d:\win32pe_edu;d:\modelsim\win32pe_edu;C:\Program Files\JetBrains\PhpStorm 2020.2.3\bin;C:\xampp\php;C:\Users\ACER\AppData\Roaming\Composer\vendor\bin;C:\xampp;C:\Modeltech_pe_edu_10.4a\win32pe_edu;C:\Program Files\nodejs;C:\Users\ACER\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ACER\AppData\Roaming\npm;C:\Users\ACER\AppData\Local\Microsoft\WindowsApps;C:\Users\ACER\.dotnet\tools;C:\Users\ACER\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Java\jdk-11.0.13;C:\src\flutter\bin;
 
 Yarn version: 
   1.22.17
@@ -41,6 +41,7 @@ npm manifest:
       "@react-native-async-storage/async-storage": "^1.15.11",
       "@react-native-community/datetimepicker": "3.5.2",
       "@react-navigation/native": "^6.0.6",
+      "@react-navigation/stack": "^6.0.11",
       "expo": "~43.0.2",
       "expo-dev-client": "~0.6.3",
       "expo-font": "~10.0.3",
@@ -51,6 +52,7 @@ npm manifest:
       "react": "17.0.1",
       "react-dom": "17.0.1",
       "react-native": "0.64.3",
+      "react-native-animatable": "^1.3.3",
       "react-native-bouncy-checkbox": "^2.1.7",
       "react-native-elements": "^3.4.2",
       "react-native-gesture-handler": "~1.10.2",
@@ -1485,7 +1487,12 @@ Lockfile:
       "query-string" "^7.0.0"
       "react-is" "^16.13.0"
   
-  "@react-navigation/native@^6.0.6":
+  "@react-navigation/elements@^1.2.1":
+    "integrity" "sha512-EnmAbKMsptrliRKf95rdgS6BhMjML+mIns06+G1Vdih6BrEo7/0iytThUv3WBf99AI76dyEq/cqLUwHPiFzXWg=="
+    "resolved" "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.2.1.tgz"
+    "version" "1.2.1"
+  
+  "@react-navigation/native@^6.0.0", "@react-navigation/native@^6.0.6":
     "integrity" "sha512-XzL7YPsaRRQgdCQSXbA8PJWLN2I4lhUUvSFoKQPNO4DS6y8eqZI1V8COPYlJg8+tsetGV5J8jt+jVjWL7h6ZrQ=="
     "resolved" "https://registry.npmjs.org/@react-navigation/native/-/native-6.0.6.tgz"
     "version" "6.0.6"
@@ -1500,6 +1507,15 @@ Lockfile:
     "version" "6.1.0"
     dependencies:
       "nanoid" "^3.1.23"
+  
+  "@react-navigation/stack@^6.0.11":
+    "integrity" "sha512-Osc2mXi0Zh/u92HRCceDqVfVnypTa2sZgYMJDU+vDhHz38negtbCG+cjje6nApSjwC5WTVhYP4OoD5WBSh51+g=="
+    "resolved" "https://registry.npmjs.org/@react-navigation/stack/-/stack-6.0.11.tgz"
+    "version" "6.0.11"
+    dependencies:
+      "@react-navigation/elements" "^1.2.1"
+      "color" "^3.1.3"
+      "warn-once" "^0.1.0"
   
   "@sideway/address@^4.1.0":
     "integrity" "sha512-idTz8ibqWFrPU8kMirL0CoPH/A29XOzzAzpyN3zQ4kAWnzmNfFmRaoMNN6VI8ske5M73HZyhIaW4OuSFIdM4oA=="
@@ -2227,7 +2243,7 @@ Lockfile:
       "color-name" "^1.0.0"
       "simple-swizzle" "^0.2.2"
   
-  "color@^3.1.2":
+  "color@^3.1.2", "color@^3.1.3":
     "integrity" "sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA=="
     "resolved" "https://registry.npmjs.org/color/-/color-3.2.1.tgz"
     "version" "3.2.1"
@@ -4913,6 +4929,11 @@ Lockfile:
       "object-assign" "^4.1.1"
       "scheduler" "^0.20.1"
   
+  "react-freeze@^1.0.0":
+    "integrity" "sha512-yQaiOqDmoKqks56LN9MTgY06O0qQHgV4FUrikH357DydArSZHQhl0BJFqGKIZoTqi8JizF9Dxhuk1FIZD6qCaw=="
+    "resolved" "https://registry.npmjs.org/react-freeze/-/react-freeze-1.0.0.tgz"
+    "version" "1.0.0"
+  
   "react-is@^16.13.0":
     "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
     "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -4932,6 +4953,13 @@ Lockfile:
     "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
     "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
     "version" "17.0.2"
+  
+  "react-native-animatable@^1.3.3":
+    "integrity" "sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w=="
+    "resolved" "https://registry.npmjs.org/react-native-animatable/-/react-native-animatable-1.3.3.tgz"
+    "version" "1.3.3"
+    dependencies:
+      "prop-types" "^15.7.2"
   
   "react-native-apple-header@^0.1.1":
     "integrity" "sha512-olhk1icxbmX4p320+iE3NunTQOlqBHMxHp/HcQ3XiUpPzekLPhJKK0r5dZfp80LEdcdxnZKhJMJqq0FquIG/VQ=="
@@ -4981,7 +5009,7 @@ Lockfile:
       "react-native-ratings" "8.0.4"
       "react-native-size-matters" "^0.3.1"
   
-  "react-native-gesture-handler@*", "react-native-gesture-handler@>=1.10.1", "react-native-gesture-handler@~1.10.2":
+  "react-native-gesture-handler@*", "react-native-gesture-handler@>= 1.0.0", "react-native-gesture-handler@>=1.10.1", "react-native-gesture-handler@~1.10.2":
     "integrity" "sha512-cBGMi1IEsIVMgoox4RvMx7V2r6bNKw0uR1Mu1o7NbuHS6BRSVLq0dP34l2ecnPlC+jpWd3le6Yg1nrdCjby2Mw=="
     "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz"
     "version" "1.10.3"
@@ -5018,10 +5046,18 @@ Lockfile:
       "normalize-svg-path" "^1.0.1"
       "parse-svg-path" "^0.1.2"
   
-  "react-native-safe-area-context@^3.1.9", "react-native-safe-area-context@^3.3.2":
+  "react-native-safe-area-context@^3.1.9", "react-native-safe-area-context@^3.3.2", "react-native-safe-area-context@>= 3.0.0":
     "integrity" "sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q=="
     "resolved" "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz"
     "version" "3.3.2"
+  
+  "react-native-screens@>= 3.0.0":
+    "integrity" "sha512-TP/kASLQ/2iGCz4/n9CHeveKC9urzbfYXFH+1TfBnqaBwjIszhVuadiIOQ0qWKdSs6qnBR2xPTp9U18sNoc34A=="
+    "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.9.0.tgz"
+    "version" "3.9.0"
+    dependencies:
+      "react-freeze" "^1.0.0"
+      "warn-once" "^0.1.0"
   
   "react-native-size-matters@^0.3.1":
     "integrity" "sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw=="
@@ -5127,7 +5163,7 @@ Lockfile:
     "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
     "version" "0.4.3"
   
-  "react@*", "react@^16.8.0 || ^17.0.0", "react@>= 16.x", "react@>= 16.x.x", "react@>=17.0.1", "react@17.0.1":
+  "react@*", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@>= 16.x", "react@>= 16.x.x", "react@>=17.0.1", "react@17.0.1":
     "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
     "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
     "version" "17.0.1"
@@ -6025,6 +6061,11 @@ Lockfile:
     "version" "1.0.8"
     dependencies:
       "makeerror" "1.0.12"
+  
+  "warn-once@^0.1.0":
+    "integrity" "sha512-recZTSvuaH/On5ZU5ywq66y99lImWqzP93+AiUo9LUwG8gXHW+LJjhOd6REJHm7qb0niYqrEQJvbHSQfuJtTqA=="
+    "resolved" "https://registry.npmjs.org/warn-once/-/warn-once-0.1.0.tgz"
+    "version" "0.1.0"
   
   "wcwidth@^1.0.1":
     "integrity" "sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g="

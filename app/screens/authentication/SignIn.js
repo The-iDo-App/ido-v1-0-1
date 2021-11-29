@@ -78,6 +78,11 @@ export default function SignInPage({navigation}){
         }
     }
 
+    const handleLogIn = () => {
+        // after validation
+        navigation.navigate("MainTab");
+    }
+
         return (
             <SafeAreaView style={AuthenticationStyle.authWrapper}>
                <ScrollView showsVerticalScrollIndicator={false}>
@@ -139,7 +144,7 @@ export default function SignInPage({navigation}){
                             </TouchableOpacity>
                         </View>
                         {/*Log in button*/}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleLogIn()}>
                             <View style={AuthenticationStyle.loginBtn}>
                                 <Text style={AuthenticationStyle.loginText}>LOG IN</Text>
                             </View>

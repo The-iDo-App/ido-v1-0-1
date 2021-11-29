@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //screens
 //Authentication
@@ -25,11 +25,33 @@ import FilmInterest from '../screens/interests/FilmInterest';
 import PetsInterest from '../screens/interests/PetsInterest';
 import BookInterest from '../screens/interests/BookInterest';
 import FoodInterest from '../screens/interests/FoodInterest';
+//Question Interest
+import Question from '../screens/preferences/Question';
 
-
+//main screens
+import Home from '../screens/main-screens/Home';
+import MessageInbox from '../screens/main-screens/MessageInbox';
+import Profile from '../screens/main-screens/Profile';
+import Settings from '../screens/main-screens/Setting';
 
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+
+function MainTab(){
+  return(
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Home" component={Home}  />
+        <Tab.Screen name="Messaging" component={MessageInbox}  />
+        <Tab.Screen name="Profile" component={Profile}  />
+        <Tab.Screen name="Settings" component={Settings}  />
+      </Tab.Navigator>
+  );
+    
+  
+}
+
 
 // create a component
 const Stacks = () => {
@@ -51,6 +73,9 @@ const Stacks = () => {
                 <Stack.Screen name="PetsInterest" options={{header: () => null}} component={PetsInterest}/>
                 <Stack.Screen name="BookInterest" options={{header: () => null}} component={BookInterest}/>
                 <Stack.Screen name="FoodInterest" options={{header: () => null}} component={FoodInterest}/>
+                <Stack.Screen name="Question"  options={{header: () => null}} component={Question} />
+                <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}} title="MainTab"/>
+
             </Stack.Navigator>
         </NavigationContainer>
     );

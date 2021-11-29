@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import COLORS from '../../src/consts/color';
 
-export default function MessageBox() {
+export default function Question() {
   return (
     <View>
       <Text></Text>

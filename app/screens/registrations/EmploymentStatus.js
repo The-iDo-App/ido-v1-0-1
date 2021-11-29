@@ -53,7 +53,7 @@ const EmploymentStatus = ({navigation}) => {
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
             <HeaderWrapper />
             <View style={Register.container} >
-                <TouchableOpacity onPress={()=> goBack()} >
+                <TouchableOpacity onPress={()=> navigation.goBack()} >
                     <Text style={Register.label}  >Back</Text>
                 </TouchableOpacity>
             </View>
@@ -82,7 +82,7 @@ const EmploymentStatus = ({navigation}) => {
                     />
 
             </View>
-            <View style={{height: height/3}} />
+            <View style={{height: height/4}} />
             <View style={{flexDirection:  'row', alignItems: 'center', width: width - 50, alignSelf: 'center'}} >
                 <BouncyCheckbox iconStyle={{padding: 15}} fillColor={COLORS.darkPink} isChecked={isSelected} onPress={()=> setIsSelected(!isSelected)}  />
                 <Text style={{fontSize: 16/fontScale, color: COLORS.blue}}  >I agree to IDo's terms and conditions.</Text>

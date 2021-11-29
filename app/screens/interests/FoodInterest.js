@@ -17,7 +17,7 @@ const FoodInterest = ({navigation}) => {
             <BackSkip   onBackPress={()=> navigation.goBack()}   />
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <Food/>
-            <NextButton TextButton="Next" backgroundColor={COLORS.lightPink}  />
+            <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={() => navigation.navigate('Question')}  />
         </SafeAreaView>
     );
 };

@@ -29,7 +29,7 @@ const Register = StyleSheet.create({
         opacity: 0.6
    },
    chips:{
-       width:  350,
+       width: WIDTH-10,
        justifyContent: 'center',
        alignItems: 'center',
        borderWidth: 1,

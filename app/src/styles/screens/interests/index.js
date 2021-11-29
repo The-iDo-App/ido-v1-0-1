@@ -49,6 +49,10 @@ const interestStyles = StyleSheet.create({
         color: COLORS.blue, 
         fontWeight: '700', 
         marginVertical: 20
+    }, 
+    checkBox:{
+        padding: 20/scale,
+        borderRadius: 4,
     }
 });
 
