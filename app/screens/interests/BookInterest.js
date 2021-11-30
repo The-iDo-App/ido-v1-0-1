@@ -18,6 +18,7 @@ const BookInterest = ({navigation}) => {
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <Books/>
             <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=> navigation.navigate("FoodInterest")} />
+            <View  style={{marginTop: 20}} />
         </SafeAreaView>
     );
 };

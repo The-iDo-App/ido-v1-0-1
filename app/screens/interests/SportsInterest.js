@@ -19,6 +19,7 @@ const SportsInterest = ({navigation}) => {
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <Sports />
             <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=>navigation.navigate("HobbyInterest")} />
+            <View  style={{marginTop: 20}} />
         </SafeAreaView>
     );
 };

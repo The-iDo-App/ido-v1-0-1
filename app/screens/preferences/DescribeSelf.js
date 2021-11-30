@@ -18,12 +18,12 @@ const DescribeScreen = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >  
             <HeaderWrapper />
-            <BackSkip onBackPress={()=> navigation.goBack()}   onSkipPress={()=> navigation.navigate("SportInterest")} />
-            <ScrollView>
-                 <Title Title="I describe myself as" Description="Choose only one in each section" />
+            
+                <BackSkip onBackPress={()=> navigation.goBack()}   onSkipPress={()=> navigation.navigate("SportInterest")} />
+                <Title Title="I describe myself as" Description="Choose only one in each section" />
                 <DescribeMe  onPress={() => navigation.navigate("SportInterest")} />
                 
-            </ScrollView>
+            
            
            
 

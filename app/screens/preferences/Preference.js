@@ -1,6 +1,6 @@
 //import liraries
-import React, { useState } from 'react';
-import { View, FlatList, TouchableOpacity, Text , Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, TouchableOpacity, Text , Dimensions, LogBox} from 'react-native';
 import AgeRange from '../../components/InputRange';
 import DistanceRange from '../../components/DistanceRange';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,6 +10,7 @@ import NextButton from '../../components/NextButton';
 import Register from '../../src/styles/screens/registration';
 import COLORS from '../../src/consts/color';
 import { Header } from 'react-native/Libraries/NewAppScreen';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -38,10 +39,15 @@ const Item =({item, onPress, backgroundColor, borderColor, color}) => {
 const Preference = ({navigation}) => {
     const [selectGender, setSelectGender] = useState("");
 
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
+
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
              <HeaderWrapper />
-                
+             
              <Title Title="My Preferences" Description="Choose your preferred gender, age range and distance to see on the suggestion page. " />
              <View style={Register.sexualityWrapper} >
                 <FlatList 
@@ -62,11 +68,10 @@ const Preference = ({navigation}) => {
                                 )
                                 }}
                             keyExtractor={item=> item.key.toString()}
-                            style={{marginTop: 20, marginBottom: -40}}
+                            style={{marginBottom: -20}}
                         />
              </View>
-             <View  style={{marginTop: 100}} />
-             <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center'}} >
+             <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center', marginTop: -20}} >
                  <Text style={Register.labelText} >Age</Text>
              </View>
              <AgeRange minValue={18} maxValue={65} initialValue={18} onChangeMin={(v)=>console.log(v)} onChangeMax={(v)=>console.log(v)}   />
@@ -74,8 +79,9 @@ const Preference = ({navigation}) => {
                  <Text style={Register.labelText}>Distance</Text>
              </View>
              <DistanceRange />
-             <View  style={{marginTop: 80}} />
+             <View style={{marginBottom: 30}} />
              <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={() => navigation.navigate("Describe")} />
+             <View style={{marginBottom: 10}} />
         </SafeAreaView>
     );
 };

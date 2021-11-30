@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from "react-native";
 import COLORS from "../../../consts/color";
 
 
-const {width, fontScale} = Dimensions.get("window");
+const {width, fontScale, height} = Dimensions.get("window");
 
 const WIDTH = width - 50; 
 
@@ -15,11 +15,12 @@ const Register = StyleSheet.create({
    labelText:{color: COLORS.blue, fontSize:18,},
    underText:{color: COLORS.blue, fontSize:12, fontWeight: '300', opacity: 0.6},
    inputText:{fontSize: 18, color: COLORS.blue,},
-   sexualityWrapper:{width: WIDTH, justifyContent:  'center', alignItems: 'center', alignSelf: 'center'},
+   sexualityWrapper:{width: WIDTH, justifyContent:  'center', alignItems: 'center', alignSelf: 'center', flex: 1},
    sexualityWrapperBigText:{
-       color: COLORS.grey,
+        color: COLORS.grey,
         fontSize: 20,
-        fontWeight: '600',},
+        fontWeight: '600',
+        },
    sexualityWrapperSmallText:{
        marginTop: 10,
         textAlign: 'center',

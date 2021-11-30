@@ -28,6 +28,9 @@ import FoodInterest from '../screens/interests/FoodInterest';
 //Question Interest
 import Question from '../screens/preferences/Question';
 
+//onboard
+import Onboarding from '../screens/Onboarding';
+
 //main screens
 import Home from '../screens/main-screens/Home';
 import MessageInbox from '../screens/main-screens/MessageInbox';
@@ -74,6 +77,7 @@ const Stacks = () => {
                 <Stack.Screen name="BookInterest" options={{header: () => null}} component={BookInterest}/>
                 <Stack.Screen name="FoodInterest" options={{header: () => null}} component={FoodInterest}/>
                 <Stack.Screen name="Question"  options={{header: () => null}} component={Question} />
+                <Stack.Screen name="Onboarding" options={{header: () => null}} component={Onboarding} />
                 <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}} title="MainTab"/>
 
             </Stack.Navigator>

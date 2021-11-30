@@ -4,7 +4,7 @@ import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-han
 import QuestionList from '../../models/QuestionsList';
 import COLORS from '../../src/consts/color';
 import NextButton from '../NextButton';
-
+import { useNavigation } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 const WIDTH = width - 50;
@@ -16,7 +16,7 @@ export default function QuestionInterest() {
     const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
     const [showNextButton, setShowNextButton] = useState(false);
   
-    
+    const navigation = useNavigation();
 
     const pressAnswer = (selectedChoice) => {
         setCurrentOptionSelected(selectedChoice);
@@ -27,7 +27,7 @@ export default function QuestionInterest() {
         if(currentQuestionIndex === allQuestions.length-1){
             //last question 
             // navigate to onboarding page
-
+            navigation.navigate('Onboarding');
         }
         else{
             setCurrentQuestionIndex(currentQuestionIndex+1); 
@@ -79,7 +79,7 @@ export default function QuestionInterest() {
       if(showNextButton) {
           return (
               <View >
-                    <NextButton TextButton={currentQuestionIndex === allQuestions.length-1 ? "Submit" : "Next" } backgroundColor={COLORS.lightPink} onPress={handleNext} />
+                    <NextButton TextButton={currentQuestionIndex === allQuestions.length-1 ? "Submit" : "Next" } backgroundColor={COLORS.lightPink} onPress={()=>handleNext()} />
               </View>
               
           )
@@ -95,7 +95,7 @@ export default function QuestionInterest() {
 
   return (
     <View style={{alignSelf: 'center', width: WIDTH, backgroundColor: COLORS.white}}  >
-        <View style={{height: height-180, backgroundColor: COLORS.white}}  >
+        <View style={{height: height/1.75, backgroundColor: COLORS.white}}  >
             {/*Question*/}
             {renderQuestion()}
 

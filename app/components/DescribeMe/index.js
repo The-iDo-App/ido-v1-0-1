@@ -177,7 +177,7 @@ const DescribeMe = ({onPress}) => {
            
 
             <BottomSheetModalProvider>
-                
+                <ScrollView>
                 <View style={DescribeStyle.inputContainer}  >
                     <View style={DescribeStyle.labelContainer} >
                             <Text style={DescribeStyle.labelText}  >1. &nbsp;</Text> 
@@ -262,8 +262,10 @@ const DescribeMe = ({onPress}) => {
                     <View style={{height: 1.5, backgroundColor: COLORS.grey }}  />
                 </View>
                 
-                <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={onPress} />
+                </ScrollView>
 
+                <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={onPress} />
+                
 
                 <BottomSheetModal
                             name="signModal"
@@ -295,7 +297,7 @@ const DescribeMe = ({onPress}) => {
                                         scrollToOverflowEnabled
                                     />
                                     
-                            </ScrollView >
+                            </ScrollView>
                             
 
                         

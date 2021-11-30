@@ -1,6 +1,6 @@
 //import liraries
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, TouchableOpacity, LogBox } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import NextButton from '../../components/NextButton';
@@ -10,6 +10,7 @@ import SexOrientation from '../../models/Sexuality';
 import Title from '../../components/Title';
 import BackSkip from '../../components/BackSkip';
 import Register from '../../src/styles/screens/registration';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Item =({item, onPress, backgroundColor, borderColor, color}) => {
     return(
@@ -25,40 +26,49 @@ const Item =({item, onPress, backgroundColor, borderColor, color}) => {
 // create a component
 const Sexuality = ({navigation}) => {
     const [selectOrientation, setSelectOrientation] = useState("");
+
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
+
     return (
         
      <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
          <HeaderWrapper />
+         
          <BackSkip onBackPress={() => navigation.goBack()} onSkipPress={() => navigation.navigate("Address")} />
-         <Title Title="I identify my sexuality" Description="Choose your sexual orientation" />
-         <View style={Register.sexualityWrapper} > 
-                <FlatList 
-                        scrollEnabled={true}
-                        data={SexOrientation}
-                        renderItem={({item}) => {
-                                                const backgroundColor = item.key === selectOrientation ? COLORS.darkPink : COLORS.white;
-                                                const borderColor = item.key === selectOrientation ? COLORS.darkPink : COLORS.grey;  
-                                                const color = item.key === selectOrientation ? COLORS.white : COLORS.grey;      
-                                                return (
-                                                       <Item
-                                                        item={item}
-                                                        onPress={()=>setSelectOrientation(item.key)}
-                                                        backgroundColor={{backgroundColor}}
-                                                        borderColor={{borderColor}}
-                                                        color={{color}}
-                                                       /> 
-                                                
-                                                        
-                                                        
-                                                        )
-                                                    }}
+         
+            <Title Title="I identify my sexuality" Description="Choose your sexual orientation" />
+            
+            <View style={Register.sexualityWrapper} > 
+                    <FlatList 
+                            scrollEnabled={true}
+                            data={SexOrientation}
+                            renderItem={({item}) => {
+                                                    const backgroundColor = item.key === selectOrientation ? COLORS.darkPink : COLORS.white;
+                                                    const borderColor = item.key === selectOrientation ? COLORS.darkPink : COLORS.grey;  
+                                                    const color = item.key === selectOrientation ? COLORS.white : COLORS.grey;      
+                                                    return (
+                                                        <Item
+                                                            item={item}
+                                                            onPress={()=>setSelectOrientation(item.key)}
+                                                            backgroundColor={{backgroundColor}}
+                                                            borderColor={{borderColor}}
+                                                            color={{color}}
+                                                        /> 
+                                                    
+                                                            
+                                                            
+                                                            )
+                                                        }}
+                            
+                            keyExtractor={item=> item.key.toString()}
                         
-                        keyExtractor={item=> item.key.toString()}
-                       
-                    />
-         </View>
+                        />
+            </View>
+            
+         
          <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=>navigation.navigate("Address")} />
-
      </SafeAreaView>
         
     );
