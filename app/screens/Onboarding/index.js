@@ -6,9 +6,10 @@ import COLORS from '../../src/consts/color';
 import {AntDesign} from '@expo/vector-icons';
 import OnboardingList from '../../models/Onboarding';
 import { array } from 'prop-types';
+import { Inter_300Light } from '@expo-google-fonts/inter';
 
 
-const {width} = Dimensions.get('window');
+const {width, scale, height} = Dimensions.get('window');
 
 
 export default function Onboarding({navigation}) {
@@ -112,13 +113,13 @@ export default function Onboarding({navigation}) {
 
   const renderFlatList = ({item}) => {
       return (
-          <View style={{width: width, flex: 1, alignItems: 'center', justifyContent: 'center'}}  >
-                <View style={{alignItems: 'center', marginVertical: 20}} >
-                    <ImageBackground source={item.image} style={{width: 335, height: 335}}  resizeMode='contain'  />
+          <View style={{width: width, flex: 2, alignItems: 'center', justifyContent: 'center'}}  >
+                <View style={{alignItems: 'center', marginVertical: 10/height}} >
+                    <ImageBackground source={item.image} style={{width: width/1, height: height/scale}}  resizeMode='contain'  />
                 </View>
-                <View style={{paddingHorizontal: 40, marginVertical:40}}  >
+                <View style={{paddingHorizontal: 20/scale, marginVertical:20/height}}  >
                     <Text style={{fontSize: 30, textAlign: 'center', fontWeight: 'bold', color: COLORS.blue}}  >{item.title}</Text>
-                    <Text style={{fontSize: 18, textAlign: 'center', fontWeight: '300', color: COLORS.grey, lineHeight: 25}}  >{item.description}</Text>
+                    <Text style={{fontSize: 16, textAlign: 'center', fontWeight: '300', color: COLORS.grey, lineHeight: 25}}  >{item.description}</Text>
                 </View>
           </View>
       )
@@ -144,7 +145,7 @@ export default function Onboarding({navigation}) {
             viewabilityConfig={{viewAreaCoveragePercentThreshold: 100}}
             initialNumToRender={1}
             extraData={width}
-
+            style={{flex:1}}
         />
         {/*BOTTOM SECTION - pagination & next or GetStarted Button*/}
         {renderBottomSection()}

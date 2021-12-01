@@ -6,7 +6,7 @@ import COLORS from '../../src/consts/color';
 import NextButton from '../NextButton';
 import { useNavigation } from '@react-navigation/native';
 
-const {width, height} = Dimensions.get('window');
+const {width, height, scale} = Dimensions.get('window');
 const WIDTH = width - 50;
 
 export default function QuestionInterest() {
@@ -47,13 +47,13 @@ export default function QuestionInterest() {
   const renderQuestion = () => {
      
       return (
-          <View>
+          <View style={{marginBottom: 10}} >
             <View style={{flexDirection: 'row', alignItems: 'flex-end' }}  >
-                <Text style={{color: COLORS.blue, fontSize: 20}}  >{currentQuestionIndex+1}</Text>
-                <Text style={{color: COLORS.grey, fontSize: 18}} >/{allQuestions.length}</Text>
+                <Text style={{color: COLORS.blue, fontSize: 18}}  >{currentQuestionIndex+1}</Text>
+                <Text style={{color: COLORS.grey, fontSize: 16}} >/{allQuestions.length}</Text>
             </View>
 
-            <Text style={{color: COLORS.blue, fontSize:25}} >{allQuestions[currentQuestionIndex]?.question}</Text>
+            <Text style={{color: COLORS.blue, fontSize:18}} >{allQuestions[currentQuestionIndex]?.question}</Text>
             
           </View>
       )
@@ -65,8 +65,8 @@ export default function QuestionInterest() {
           <View>
                 {
                     allQuestions[currentQuestionIndex]?.choices.map(choice => (
-                        <TouchableOpacity onPress={() => pressAnswer(choice)} key={choice} style={{borderWidth: 2, borderColor: choice === currentOptionSelected ? COLORS.darkPink : COLORS.grey, backgroundColor: choice === currentOptionSelected ? COLORS.darkPink : COLORS.white , borderRadius: 20, padding: 12, marginVertical: 10}}  >
-                            <Text style={{color: choice === currentOptionSelected ? COLORS.white : COLORS.grey, fontSize: 20}}  >{choice}</Text>
+                        <TouchableOpacity onPress={() => pressAnswer(choice)} key={choice} style={{borderWidth: 2, borderColor: choice === currentOptionSelected ? COLORS.darkPink : COLORS.grey, backgroundColor: choice === currentOptionSelected ? COLORS.darkPink : COLORS.white , borderRadius: 20, padding: 16/scale, marginVertical: 10/scale}}  >
+                            <Text style={{color: choice === currentOptionSelected ? COLORS.white : COLORS.grey, fontSize: 16, padding: 10/scale}}  >{choice}</Text>
                         </TouchableOpacity>
                     ))
                 }
@@ -94,14 +94,14 @@ export default function QuestionInterest() {
 
 
   return (
-    <View style={{alignSelf: 'center', width: WIDTH, backgroundColor: COLORS.white}}  >
-        <View style={{height: height/1.75, backgroundColor: COLORS.white}}  >
+    <View style={{alignSelf: 'center', width: WIDTH, backgroundColor: COLORS.white, flex: 1}}  >
+        <ScrollView style={{height: height/1.8, backgroundColor: COLORS.white}}  >
             {/*Question*/}
             {renderQuestion()}
 
             {/*Options*/}
              {renderOptions()}
-        </View>
+        </ScrollView>
             {/*Next Button*/}
             {renderNextButton()}
 

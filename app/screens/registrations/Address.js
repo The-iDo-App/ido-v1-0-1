@@ -25,11 +25,10 @@ const Address = ({navigation}) => {
             <HeaderWrapper />
             <BackSkip onBackPress={()=> navigation.goBack() } onSkipPress={()=> navigation.navigate("Employment")} />
             <ScrollView>
-                <Title Title="I live at" />
+                <Title Title="I live at" Description="Fill in your address or you may click the Enable Location button" />
                 <EnableLocation />
-                <View style={{height: height/3}} />
-                <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=> navigation.navigate("Employment")} />
             </ScrollView>
+            <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=> navigation.navigate("Employment")} />
         </SafeAreaView>
     );
 };

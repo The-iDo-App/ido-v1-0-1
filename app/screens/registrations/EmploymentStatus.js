@@ -66,7 +66,7 @@ const EmploymentStatus = ({navigation}) => {
                 <Title Title="My employment status" />
                 <View  style={Register.sexualityWrapper} >
                     <FlatList 
-                            scrollEnabled={true}
+                            scrollEnabled={false}
                             data={employmentList}
                             renderItem={({item}) => 
                             {

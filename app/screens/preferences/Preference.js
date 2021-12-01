@@ -47,11 +47,11 @@ const Preference = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
              <HeaderWrapper />
-             
+             <ScrollView>
              <Title Title="My Preferences" Description="Choose your preferred gender, age range and distance to see on the suggestion page. " />
              <View style={Register.sexualityWrapper} >
                 <FlatList 
-                            scrollEnabled={true}
+                            scrollEnabled={false}
                             data={screenGenderList}
                             renderItem={({item}) => {
                                 const backgroundColor = item.key === selectGender ? COLORS.darkPink : COLORS.white;
@@ -68,10 +68,10 @@ const Preference = ({navigation}) => {
                                 )
                                 }}
                             keyExtractor={item=> item.key.toString()}
-                            style={{marginBottom: -20}}
+                            style={{marginBottom: height/20}}
                         />
              </View>
-             <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center', marginTop: -20}} >
+             <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center'}} >
                  <Text style={Register.labelText} >Age</Text>
              </View>
              <AgeRange minValue={18} maxValue={65} initialValue={18} onChangeMin={(v)=>console.log(v)} onChangeMax={(v)=>console.log(v)}   />
@@ -79,9 +79,9 @@ const Preference = ({navigation}) => {
                  <Text style={Register.labelText}>Distance</Text>
              </View>
              <DistanceRange />
-             <View style={{marginBottom: 30}} />
+             </ScrollView>
              <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={() => navigation.navigate("Describe")} />
-             <View style={{marginBottom: 10}} />
+             <View style={{marginBottom: height/30}} />
         </SafeAreaView>
     );
 };
