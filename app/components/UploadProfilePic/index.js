@@ -267,3 +267,5 @@ const style = StyleSheet.create({
 
 //make this component available to the app
 export default UploadProfile;
+
+//TODO: display ung selected avatar to Image

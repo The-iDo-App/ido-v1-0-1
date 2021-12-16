@@ -483,3 +483,5 @@ const DescribeMe = ({onPress}) => {
 
 //make this component available to the app
 export default DescribeMe;
+
+//TODO: display ung selected item from bottomsheet to TextInput

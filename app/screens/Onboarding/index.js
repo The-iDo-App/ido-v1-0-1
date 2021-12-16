@@ -5,8 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import COLORS from '../../src/consts/color';
 import {AntDesign} from '@expo/vector-icons';
 import OnboardingList from '../../models/Onboarding';
-import { array } from 'prop-types';
-import { Inter_300Light } from '@expo-google-fonts/inter';
+
 
 
 const {width, scale, height} = Dimensions.get('window');

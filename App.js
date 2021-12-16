@@ -10,13 +10,9 @@ export default function App() {
     <>
       <StatusBar />
       <Stacks/>
-
-     
-       
-     
-      
-     
     </>
   );
 }
 
+//TODO: insert snackbar messages indicating success or failed process
+//TODO: insert activity indicator to registration, preferences, interests, authetnication
