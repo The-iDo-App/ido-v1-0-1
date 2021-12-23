@@ -138,38 +138,6 @@ const DescribeMe = ({onPress}) => {
         kidsBSModalRef.current?.dismiss();
     }
 
-  
-
-   
-    // render items
-
-    const signRenderItem = ({item}) => (
-        <Item label={item.sign} onPress={signDismissModal}  />
-    )     
-     
-
-    const politicalRenderItem = ({item}) => (
-        <Item label={item.view} onPress={politicalDismissModal}  />
-    )
-
-    const faithRenderItem = ({item}) => (
-        <Item label={item.belief} onPress={faithDismissModal}  />
-    )
-
-    const smokeRenderItem = ({item}) => (
-        <Item label={item.smoke} onPress={smokeDismissModal}  />
-    )
-
-    const drinkRenderItem = ({item}) => (
-        <Item label={item.habit} onPress={drinkDismissModal}  />
-    )
-
-    const kidsRenderItem = ({item}) => (
-        <Item label={item.want} onPress={kidsDismissModal}  />
-    )
-    
-   
-    
 
 
     return (
@@ -289,14 +257,16 @@ const DescribeMe = ({onPress}) => {
                             </View>
                             
                             <ScrollView style={DescribeStyle.flatListWrapper} >
-                                    <FlatList
-                                        data={AstrologicalSign}
-                                        keyExtractor={item=>item.key}
-                                        renderItem={signRenderItem}
-                                        scrollEnabled={false}
-                                        scrollToOverflowEnabled
-                                    />
-                                    
+                                   {
+                                        AstrologicalSign.map((item) =>(
+                                        <View style={DescribeStyle.item} key={item.key} >
+                                            <TouchableOpacity onPress={signDismissModal}   >
+                                                <Text style={DescribeStyle.itemText}>{item.sign}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        ))
+
+                                   }
                             </ScrollView>
                             
 
@@ -325,14 +295,17 @@ const DescribeMe = ({onPress}) => {
                         </View>
                         
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                            <FlatList
-                                data={PoliticalViews}
-                                renderItem={politicalRenderItem}
-                                keyExtractor={item => item.key}
-                                scrollEnabled={false}
-                                scrollToOverflowEnabled
-                            />
-                        </ScrollView>
+                                   {
+                                        PoliticalViews.map((item) =>(
+                                        <View style={DescribeStyle.item} key={item.key} >
+                                            <TouchableOpacity onPress={politicalDismissModal}   >
+                                                <Text style={DescribeStyle.itemText}>{item.view}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        ))
+
+                                   }
+                            </ScrollView>
                     </SafeAreaView>
                 </BottomSheetModal>
                 
@@ -343,7 +316,7 @@ const DescribeMe = ({onPress}) => {
                             snapPoints={snapPoints}
                             onChange={faithHandleSheetChanges}
                             backdropComponent={BottomSheetBackdrop}
-                            eenablePanDownToClose
+                            enablePanDownToClose
                             enableContentPanningGesture={false}
                             stackBehavior="replace"
                             handleStyle={DescribeStyle.bottomSheetHeader}
@@ -356,16 +329,17 @@ const DescribeMe = ({onPress}) => {
                                 <Text style={DescribeStyle.headerText}>Religion</Text>
                             </View>
 
-                            <ScrollView style={DescribeStyle.flatListWrapper} > 
-                                <View>
-                                    <FlatList
-                                        data={Religion}
-                                        renderItem={faithRenderItem}
-                                        keyExtractor={item => item.key}
-                                        scrollToOverflowEnabled
-                                        scrollEnabled={false}
-                                    />
-                                </View>
+                            <ScrollView style={DescribeStyle.flatListWrapper} >
+                                   {
+                                        Religion.map((item) =>(
+                                        <View style={DescribeStyle.item} key={item.key} >
+                                            <TouchableOpacity onPress={faithDismissModal}   >
+                                                <Text style={DescribeStyle.itemText}>{item.belief}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        ))
+
+                                   }
                             </ScrollView>
                 
                        
@@ -393,14 +367,17 @@ const DescribeMe = ({onPress}) => {
                             <Text style={DescribeStyle.headerText}  >Smoking Habit</Text>
                         </View>
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                            <FlatList
-                                data={SmokeList}
-                                renderItem={smokeRenderItem}
-                                keyExtractor={item => item.key}
-                                scrollEnabled={false}
-                                scrollToOverflowEnabled
-                            />
-                        </ScrollView>
+                                   {
+                                        SmokeList.map((item) =>(
+                                        <View style={DescribeStyle.item} key={item.key} >
+                                            <TouchableOpacity onPress={smokeDismissModal}   >
+                                                <Text style={DescribeStyle.itemText}>{item.smoke}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        ))
+
+                                   }
+                            </ScrollView>
                         
 
                     </SafeAreaView>
@@ -425,15 +402,17 @@ const DescribeMe = ({onPress}) => {
                         </View>
                         
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                                <FlatList
-                                    data={DrinkingHabit}
-                                    renderItem={drinkRenderItem}
-                                    keyExtractor={item => item.key}
-                                    scrollEnabled={false}
-                                    scrollToOverflowEnabled
-                                />
+                                   {
+                                        DrinkingHabit.map((item) =>(
+                                        <View style={DescribeStyle.item} key={item.key} >
+                                            <TouchableOpacity onPress={drinkDismissModal}   >
+                                                <Text style={DescribeStyle.itemText}>{item.habit}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        ))
 
-                        </ScrollView>
+                                   }
+                            </ScrollView>
 
                         
                     </SafeAreaView>
@@ -458,15 +437,17 @@ const DescribeMe = ({onPress}) => {
                             <Text style={DescribeStyle.headerText}  >Want or Not?</Text>
                         </View>
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                            <FlatList
-                                    data={WantKidsList}
-                                    renderItem={kidsRenderItem}
-                                    keyExtractor={item => item.key}
-                                    scrollEnabled={false}
-                                    scrollToOverflowEnabled
-                                    
-                            />
-                        </ScrollView>
+                                   {
+                                        WantKidsList.map((item) =>(
+                                        <View style={DescribeStyle.item} key={item.key} >
+                                            <TouchableOpacity onPress={kidsDismissModal}   >
+                                                <Text style={DescribeStyle.itemText}>{item.want}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        ))
+
+                                   }
+                            </ScrollView>
                         
 
                     </SafeAreaView>
