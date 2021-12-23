@@ -14,7 +14,7 @@ const HobbyInterest = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
             <HeaderWrapper />
-            <BackSkip   onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("MusicInterest")}  />
+            <BackSkip   onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("MusicInterest")} text={'Skip'} />
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <HobbyCom />
             <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=> navigation.navigate("MusicInterest")} />

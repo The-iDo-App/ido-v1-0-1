@@ -7,14 +7,14 @@ import COLORS from '../../src/consts/color';
 const {width, fontScale} = Dimensions.get("window");
 
 // create a component
-const BackSkip = ({onBackPress, onSkipPress}) => {
+const BackSkip = ({onBackPress, onSkipPress, text}) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={onBackPress}>
                 <Text style={styles.label}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onSkipPress} >
-                <Text style={styles.label}>Skip</Text>
+                <Text style={styles.label}>{text}</Text>
             </TouchableOpacity>
         </View>
     );

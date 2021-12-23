@@ -15,7 +15,7 @@ const FilmInterest = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
             <HeaderWrapper />
-            <BackSkip   onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("PetsInterest")}  />
+            <BackSkip   onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("PetsInterest")} text={'Skip'}  />
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <Film />
             <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=> navigation.navigate("PetsInterest")} />

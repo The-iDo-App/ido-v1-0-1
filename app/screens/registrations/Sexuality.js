@@ -36,7 +36,7 @@ const Sexuality = ({navigation}) => {
      <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
          <HeaderWrapper />
          
-         <BackSkip onBackPress={() => navigation.goBack()} onSkipPress={() => navigation.navigate("Address")} />
+         <BackSkip text={'Skip'} onBackPress={() => navigation.goBack()} onSkipPress={() => navigation.navigate("Address")} />
          
             <Title Title="I identify my sexuality" Description="Choose your sexual orientation" />
             
