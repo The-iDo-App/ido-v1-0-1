@@ -50,7 +50,7 @@ const DescribeScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}  >
             <HeaderWrapper />
-            <BackSkip onBackPress={() => navigation.goBack()} onSkipPress={() => navigation.navigate("SportInterest")} />
+            <BackSkip onBackPress={() => navigation.goBack()} text={'Skip'} onSkipPress={() => navigation.navigate("SportInterest")} />
             <Title Title="I describe myself as" Description="Choose only one in each section" />
             <Snackbar message={message} visibleToast={visibleToast} />
             <DescribeMe onPress={() => handleSubmit()}

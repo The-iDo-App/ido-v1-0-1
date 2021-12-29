@@ -36,7 +36,7 @@ const MusicInterest = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
             <HeaderWrapper />
-            <BackSkip   onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("FilmInterest")}  />
+            <BackSkip text={'Skip'}  onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("FilmInterest")}  />
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <Snackbar message={message} visibleToast={visibleToast}/>
             <Music musicValue={(value) => setMusicGenre(value)} />

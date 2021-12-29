@@ -50,7 +50,7 @@ const Address = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
             <HeaderWrapper />
-            <BackSkip onBackPress={()=> navigation.goBack() } onSkipPress={()=> navigation.navigate("Employment")} />
+            <BackSkip text={'Skip'} onBackPress={()=> navigation.goBack() } onSkipPress={()=> navigation.navigate("Employment")} />
             <ScrollView>
                 <Title Title="I live at" Description="Fill in your address or you may click the Enable Location button" />
                 <Snackbar message={message} visibleToast={visibleToast}/>
