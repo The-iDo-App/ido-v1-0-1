@@ -35,7 +35,7 @@ const BookInterest = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
             <HeaderWrapper />
-            <BackSkip   onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("FoodInterest")}  />
+            <BackSkip   onBackPress={()=> navigation.goBack()} onSkipPress={()=> navigation.navigate("FoodInterest")} text={'Skip'} />
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <Snackbar message={message} visibleToast={visibleToast}/>
             <Books booksValue={(value) => setBooks(value)}/>

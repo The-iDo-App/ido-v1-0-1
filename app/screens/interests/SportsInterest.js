@@ -37,7 +37,7 @@ const SportsInterest = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
             <HeaderWrapper   />
-            <BackSkip onBackPress={()=>navigation.goBack()}  onSkipPress={()=>navigation.navigate("HobbyInterest")}  />
+            <BackSkip text={'Skip'} onBackPress={()=>navigation.goBack()}  onSkipPress={()=>navigation.navigate("HobbyInterest")}  />
             <Title Title="Choose your interests!" Description="Choose at least five" />
             <Snackbar message={message} visibleToast={visibleToast}/>
             <Sports sportsValue={(value) => setSports(value)}/>
