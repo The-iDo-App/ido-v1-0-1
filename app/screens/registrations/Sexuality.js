@@ -46,13 +46,13 @@ const Sexuality = ({navigation}) => {
             setMessage("Input successfully saved!");
             await AsyncStorage.setItem('orientation', orientation);
             console.log(orientation);
-            // navigation.navigate("Address");
+            navigation.navigate("Address");
 
         }else{
             setMessage("Please fill in the required fields.");
         }
         setVisibleToast(true);
-        navigation.navigate("Address");
+        // navigation.navigate("Address");
     }
 
     const handleOrientation = (key,orientation) =>{                                               

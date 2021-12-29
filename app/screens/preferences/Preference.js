@@ -56,21 +56,20 @@ const Preference = ({navigation}) => {
 
     
     const handleSubmit = async()=>{
-        if(selectGender){
+        if(screenGenderList[selectGender]){
             setMessage("Input successfully saved!");
             const gender =  screenGenderList[selectGender].gender;      
             await AsyncStorage.setItem('distance',String(distance));
             await AsyncStorage.setItem('genderPref',gender);
             let min = await AsyncStorage.getItem('min');
             let max = await AsyncStorage.getItem('max');
-            // navigation.navigate('Describe');
-
-            console.log("gender:" + gender,"distance: "+ distance);
+            navigation.navigate('Describe');
+            // console.log("gender:" + gender,"distance: "+ distance);
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate('Describe');
+        // navigation.navigate('Describe');
     }
 
     return (

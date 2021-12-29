@@ -25,12 +25,12 @@ const HobbyInterest = ({navigation}) => {
             await AsyncStorage.setItem('hobbies', String(hobbies));
             setMessage("Input successfully saved!");
             console.log(hobbies);
-            // navigation.navigate("MusicInterest")
+            navigation.navigate("MusicInterest")
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate("MusicInterest")
+        // navigation.navigate("MusicInterest")
     }
     
 

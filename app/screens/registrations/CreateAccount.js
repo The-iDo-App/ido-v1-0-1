@@ -38,13 +38,13 @@ const CreateAccount = ({navigation}) => {
             await AsyncStorage.setItem('username', username);
             await AsyncStorage.setItem('birthday', birthday);
             await AsyncStorage.setItem('gender', gender);
-            console.log(firstName,lastName,username,birthday,gender);
-            // navigation.navigate('Sexuality')
+            // console.log(firstName,lastName,username,birthday,gender);
+            navigation.navigate('Sexuality')
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate('Sexuality');
+        // navigation.navigate('Sexuality');
     }
 
 

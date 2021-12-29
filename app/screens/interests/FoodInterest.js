@@ -11,28 +11,129 @@ import NextButton from '../../components/NextButton';
 
 import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {BACKEND_BASEURL,PORT} from '@env';
 
 // create a component
 const FoodInterest = ({navigation}) => {
     const  [food,setFood] = useState([]);
 
-    const [message,setMessage] = useState("Input successfully saved!");
+    const [message,setMessage] = useState("");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
     
+    const postData = async()=>{
+        // let keys = await AsyncStorage.getAllKeys();
+
+        //address
+        const address = {
+                postalCode: await AsyncStorage.getItem('postalCode'),
+                city: await AsyncStorage.getItem('city'),
+                province: await AsyncStorage.getItem('province'),
+                country: await AsyncStorage.getItem('country'),
+                street: await AsyncStorage.getItem('street'),
+                latitude:await AsyncStorage.getItem('latitude'),
+                longitude: await AsyncStorage.getItem('longitude'),
+            };
+
+        //user
+        let email = await AsyncStorage.getItem('email');
+        let password = await AsyncStorage.getItem('password');
+        let firstName = await AsyncStorage.getItem('firstName');
+        let lastName = await AsyncStorage.getItem('lastName');
+        let username = await AsyncStorage.getItem('username');
+        let gender = await AsyncStorage.getItem('gender');
+        let birthday = await AsyncStorage.getItem('birthday');
+        let orientation = await AsyncStorage.getItem('orientation');
+        let employment = await AsyncStorage.getItem('employment');
+
+        //single pref
+        let maxDistance = await AsyncStorage.getItem('distance');
+        let genderPref = await AsyncStorage.getItem('genderPref');
+        let maxAge = await AsyncStorage.getItem('max');
+        let minAge = await AsyncStorage.getItem('min');
+
+        //describe self
+        let astrologicalSign = await AsyncStorage.getItem('astrologicalSign');
+        let drinks = await AsyncStorage.getItem('drinks');
+        let politicalView = await AsyncStorage.getItem('politicalView');
+        let religion = await AsyncStorage.getItem('religion');
+        let smoke =   await AsyncStorage.getItem('smoke');
+        let wantKids = await AsyncStorage.getItem('wantKids');
+
+        //multi select preference
+        let books = (await AsyncStorage.getItem('books')).split(',');
+        let food = (await AsyncStorage.getItem('food')).split(',');
+        let hobbies = (await AsyncStorage.getItem('hobbies')).split(',');
+        let movieGenre = (await AsyncStorage.getItem('movieGenre')).split(',');
+        let musicGenre = (await AsyncStorage.getItem('musicGenre')).split(',');
+        let pets = (await AsyncStorage.getItem('pets')).split(',');
+        let sports = (await AsyncStorage.getItem('sports')).split(',');
+        
+        try {
+            const response = await axios.post(`${BACKEND_BASEURL}:${PORT}/api/registers/createAccount`, {
+                address,
+                email,
+                password,
+                firstName,
+                lastName,
+                username,
+                gender,
+                birthday,
+                orientation,
+                employment,
+                maxDistance,
+                genderPref,
+                minAge,
+                maxAge,
+                astrologicalSign,
+                drinks,
+                politicalView,
+                religion,
+                smoke,
+                wantKids,
+                books,
+                food,
+                hobbies,
+                movieGenre,
+                musicGenre,
+                pets,
+                sports,
+            });
+            if (response.status === 200) {
+                setMessage(`Account successfully created!`);
+                console.log(response.data);
+                await AsyncStorage.setItem('userId', response.data.user_id);
+                await AsyncStorage.setItem('interestId', response.data.interestId);
+                let id =  await AsyncStorage.getItem('userId');
+                let iid = await AsyncStorage.getItem('interestId');
+               
+                if(id && iid){
+                    navigation.navigate('Question');
+                }   
+            } else {
+                setMessage("An error has occurred");
+                throw new Error("An error has occurred");
+            }
+        } catch (error) {
+            console.log(error);
+            setMessage("An error has occurred");
+        }
+    }
+
     const handleSubmit = async() =>{
         if(food.length>0){
             await AsyncStorage.setItem('food', String(food));
-            setMessage("Input successfully saved!");
-            console.log(food);
-            // navigation.navigate('Question');
+            // console.log(food);
+            postData();
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate('Question');
+        // navigation.navigate('Question');
     }
-    
+
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}} >
             <HeaderWrapper />

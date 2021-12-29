@@ -37,13 +37,13 @@ const DescribeScreen = ({ navigation }) => {
             await AsyncStorage.setItem('wantKids', wantKids);
             console.log(astrologicalSign, politicalView, religion, smoke, drinks, wantKids)
             setMessage("Input successfully saved!");
-            // navigation.navigate("SportInterest");
+            navigation.navigate("SportInterest");
         } else {
             setMessage("Please fill in the required fields.");
 
         }
         setvisibleToast(true);
-        navigation.navigate("SportInterest");
+        // navigation.navigate("SportInterest");
 
     }
 

@@ -6,8 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AuthenticationStyle from '../../src/styles/screens/authentication';
 import COLORS from '../../src/consts/color';
 import {Feather, FontAwesome, AntDesign} from '@expo/vector-icons';
-
-
 import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -69,21 +67,21 @@ export default function SignUpPage({navigation}) {
 
     const handleSubmit = async() =>{
         const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-        if(data.password.length < 6){
-            setMessage("Password must be at least 6 characters long.");
-        }else if(!data.email.match(emailRegex)){
+        if(!data.email.match(emailRegex)){
             setMessage("Invalid email format.");
+        }else if(data.password.length < 6){
+            setMessage("Password must be at least 6 characters long.");
         }else{
             if((data.password === data.confirmPassword) && data.password !== '' && data.email.match(emailRegex)){
                 setMessage("Input successfully saved!");
                 await AsyncStorage.setItem('email',data.email);
-                await AsyncStorage.setItem('email',data.password);
-                // navigation.navigate('CreateAccount');
+                await AsyncStorage.setItem('password',data.password);
+                navigation.navigate('CreateAccount');
             }else{
                 setMessage("Invalid Credentials! Please try again.");
             }
         }
-        navigation.navigate('CreateAccount');
+        // navigation.navigate('CreateAccount');
         setvisibleToast(true);
         return;
     }

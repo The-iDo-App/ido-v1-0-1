@@ -6,6 +6,9 @@ import COLORS from '../../src/consts/color';
 import NextButton from '../NextButton';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Snackbar from '../../components/Toast';
+import {BACKEND_BASEURL,PORT} from '@env';
 
 const {width, height, scale} = Dimensions.get('window');
 const WIDTH = width - 50;
@@ -18,12 +21,16 @@ export default function QuestionInterest() {
     const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
     const [showNextButton, setShowNextButton] = useState(false);
   
+    const [message,setMessage] = useState("Feedback saved!");
+    const [visibleToast, setvisibleToast] = useState(false);
+    useEffect(() => setvisibleToast(false), [visibleToast]);
+
     const navigation = useNavigation();
 
     // let questionsDB;
     useEffect(() => {
         const fetchData = async() =>{
-            let questions = await axios.get("http://192.168.0.107:5000/api/questions");
+            let questions = await axios.get(`${BACKEND_BASEURL}:${PORT}/api/questions`);
             setQuestionsDB(questions.data.questions);
             let qID = questions.data.questions;
             qID.forEach(itemId => {
@@ -34,20 +41,48 @@ export default function QuestionInterest() {
        fetchData();
     }, []);
 
-    const pressAnswer = (selectedChoice) => {
+    const pressAnswer = async(selectedChoice) => {
         setCurrentOptionSelected(selectedChoice);
-        // console.log(selectedChoice); // ANSWER SA TANONG
         setShowNextButton(true);
+        
+        // let g = await AsyncStorage.getItem('userId');
+        // console.log(g);
+        // console.log(selectedChoice); // ANSWER SA TANONG
     }
     
+    const postEvaluation = async()=>{
+        const userId = await AsyncStorage.getItem('userId');
+        const interest = await AsyncStorage.getItem('interestId');
+        console.log(interest);
+        try{
+            const response = await axios.post(`${BACKEND_BASEURL}:${PORT}/api/evaluations`,{
+                userId,
+                interest,
+                questions,
+                answers,
+            });
+            if (response.status === 200) {
+                setMessage(`Input saved successfully!`);
+                navigation.navigate('Onboarding');
+            } else {
+                setMessage("An error has occurred");
+                throw new Error("An error has occurred");
+            }
+        }catch (error) {
+            console.log(error);
+            setMessage("An error has occurred");
+        }
+        setvisibleToast(true);
+
+    }
+
     const handleNext = () => {
         if(currentQuestionIndex === questionsDB.length-1){
             //last question 
             // navigate to onboarding page
             setAnswers(oldAnswer => [...oldAnswer,currentOptionSelected]);
             //USER ANSWERS ON QUESTIONS
-            console.log(questions,answers);
-            navigation.navigate('Onboarding');
+            postEvaluation();
         }
         else{
             setAnswers(oldAnswer => [...oldAnswer,currentOptionSelected]);
@@ -55,21 +90,17 @@ export default function QuestionInterest() {
             setCurrentOptionSelected(null);
             setShowNextButton(false);
         }
-
     }
 
 
   const renderQuestion = () => {
-     
       return (
           <View style={{marginBottom: 10}} >
             <View style={{flexDirection: 'row', alignItems: 'flex-end' }}  >
                 <Text style={{color: COLORS.blue, fontSize: 18}}  >{currentQuestionIndex+1}</Text>
                 <Text style={{color: COLORS.grey, fontSize: 16}} >/{questionsDB.length}</Text>
             </View>
-
             <Text style={{color: COLORS.blue, fontSize:18}} >{questionsDB[currentQuestionIndex]?.question}</Text>
-            
           </View>
       )
       
@@ -110,6 +141,7 @@ export default function QuestionInterest() {
 
   return (
     <View style={{alignSelf: 'center', width: WIDTH, backgroundColor: COLORS.white, flex: 1}}  >
+        <Snackbar message={message} visibleToast={visibleToast}/>
         <ScrollView style={{height: height/1.8, backgroundColor: COLORS.white}}  >
             {/*Question*/}
             {renderQuestion()}

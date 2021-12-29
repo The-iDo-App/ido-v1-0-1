@@ -56,12 +56,12 @@ const EmploymentStatus = ({navigation}) => {
             setMessage("Input successfully saved!");
             await AsyncStorage.setItem("employment", employment);
             console.log(employment);
-            // navigation.navigate('Preference');
+            navigation.navigate('Preference');
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate('Preference');
+        // navigation.navigate('Preference');
     }
 
 

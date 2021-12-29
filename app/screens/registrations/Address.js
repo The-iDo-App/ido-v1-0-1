@@ -32,19 +32,26 @@ const Address = ({navigation}) => {
 
     const handleSubmit = async() =>{
         if(address){
-            await AsyncStorage.setItem("city",address.city);
-            await AsyncStorage.setItem("country",address.country);
-            await AsyncStorage.setItem("province",address.province);
-            await AsyncStorage.setItem("street",address.street);
-            await AsyncStorage.setItem("latitude",address.latitude.toString());
-            await AsyncStorage.setItem("longitude",address.longitude.toString());
-            console.log(address);
-            // navigation.navigate("Employment")
+            if(address.city)
+                await AsyncStorage.setItem("city",address.city);
+            if(address.country)
+                await AsyncStorage.setItem("country",address.country);
+            if(address.province)
+                await AsyncStorage.setItem("province",address.province);
+            if(address.street)
+                await AsyncStorage.setItem("street",address.street);
+            if(address.postalCode)
+                await AsyncStorage.setItem("postalCode",address.postalCode);
+            if(address.latitude)
+             await AsyncStorage.setItem("latitude",address.latitude.toString());
+            if(address.longitude)
+                await AsyncStorage.setItem("longitude",address.longitude.toString());
+            navigation.navigate("Employment")
         }else{
             setMessage("Please fill in the required fields.");
         }
         setVisibleToast(true);
-        navigation.navigate("Employment");
+        // navigation.navigate("Employment");
     }
 
     return (

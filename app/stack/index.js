@@ -62,7 +62,6 @@ const Stacks = () => {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}} >
                 <Stack.Screen name="SignIn" options={{header: () => null}}  component={SignInPage} />
-                {/* <Stack.Screen name="SignIn" options={{header: () => null}}  component={FoodInterest} /> */}
                 <Stack.Screen name="SignUp" options={{header: () => null}} component={SignUpPage} />
                 <Stack.Screen name="CreateAccount" options={{header: () => null}} component={CreateAccount} />
                 <Stack.Screen name="Sexuality" options={{header: () => null}} component={Sexuality} />

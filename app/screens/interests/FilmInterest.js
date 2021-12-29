@@ -27,12 +27,12 @@ const FilmInterest = ({navigation}) => {
             await AsyncStorage.setItem('movieGenre', String(movieGenre));
             setMessage("Input successfully saved!");
             console.log(movieGenre);
-            // navigation.navigate("PetsInterest");
+            navigation.navigate("PetsInterest");
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate("PetsInterest");
+        // navigation.navigate("PetsInterest");
     }
     
 

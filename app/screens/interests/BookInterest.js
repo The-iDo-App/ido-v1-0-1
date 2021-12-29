@@ -24,12 +24,12 @@ const BookInterest = ({navigation}) => {
             await AsyncStorage.setItem('books', String(books));
             setMessage("Input successfully saved!");
             console.log(books);
-            // navigation.navigate("FoodInterest");
+            navigation.navigate("FoodInterest");
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate("FoodInterest");
+        // navigation.navigate("FoodInterest");
     }
 
     return (

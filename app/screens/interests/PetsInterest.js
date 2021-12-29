@@ -23,12 +23,12 @@ const PetsInterest = ({navigation}) => {
             await AsyncStorage.setItem('pets', String(pets));
             setMessage("Input successfully saved!");
             console.log(pets);
-            // navigation.navigate("BookInterest");
+            navigation.navigate("BookInterest");
         }else{
             setMessage("Please fill in the required fields.");
         }
         setvisibleToast(true);
-        navigation.navigate("BookInterest");
+        // navigation.navigate("BookInterest");
     }
     
 
