@@ -1,4 +1,4 @@
-import React, { useReducer, useState} from 'react';
+import React, { useReducer, useState, useEffect} from 'react';
 import { View, Text, FlatList, Dimensions } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import COLORS from '../../../src/consts/color';
@@ -11,11 +11,24 @@ const WIDTH = width - 50;
 
 
 // create a component
-const Books = () => {
-   const [selectedItems, setSelectedItems] = useState([]);
+const Books = ({booksValue}) => {
+    const [selectedItems, setSelectedItems] = useState([]);
     const [toggle, setToggle] = useState(false)
     const maxSelections = 5; 
     
+    useEffect(() => {
+        booksValue(selectedItems);
+        // console.log(selectedItems);
+    }, [selectedItems])
+
+    const handlePress = (item)=>{
+        setToggle(!toggle);
+        if(selectedItems.includes(item)){
+            setSelectedItems(selectedItems.filter(items=> items !== item));
+        }else{
+           setSelectedItems(oldItems=> [...oldItems,item]);
+        }
+    }
 
 
     const renderItem = ({item, selected}) => {
@@ -27,9 +40,9 @@ const Books = () => {
                    
                     (
                         <BouncyCheckbox 
-                            onPress={() => setToggle(!toggle)}
+                            onPress={() => handlePress(item.bookGenre)}
                             fillColor={COLORS.darkPink}
-                            onChange ={() => setToggle(!toggle)}
+                            onChange ={() => handlePress(item.bookGenre)}
                             size={60/scale}
                             iconStyle={{width: WIDTH/12, height: height/30}}
                             isChecked={toggle}

@@ -4,6 +4,7 @@ import Stacks from './app/stack';
 import Onboarding from './app/screens/Onboarding';
 import QuestionInterest from './app/components/QuestionInterest';
 import Preference from './app/screens/preferences/Preference';
+import {LogBox } from 'react-native';
 
 export default function App() {
   return (

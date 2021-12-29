@@ -12,6 +12,10 @@ import BackSkip from '../../components/BackSkip';
 import Register from '../../src/styles/screens/registration';
 import { ScrollView } from 'react-native-gesture-handler';
 
+
+import Snackbar from '../../components/Toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Item =({item, onPress, backgroundColor, borderColor, color}) => {
     return(
     <TouchableOpacity onPress={onPress}>
@@ -26,10 +30,35 @@ const Item =({item, onPress, backgroundColor, borderColor, color}) => {
 // create a component
 const Sexuality = ({navigation}) => {
     const [selectOrientation, setSelectOrientation] = useState("");
+    const [orientation, setOrientation] = useState(null);
+
+    const [message,setMessage] = useState("Input successfully saved!");
+    const [visibleToast,setVisibleToast] = useState(false);
+    useEffect(() => {setVisibleToast(false)}, [visibleToast]);
 
     useEffect(() => {
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     }, [])
+
+    
+    const handleSubmit = async() =>{
+        if(orientation){
+            setMessage("Input successfully saved!");
+            await AsyncStorage.setItem('orientation', orientation);
+            console.log(orientation);
+            // navigation.navigate("Address");
+
+        }else{
+            setMessage("Please fill in the required fields.");
+        }
+        setVisibleToast(true);
+        navigation.navigate("Address");
+    }
+
+    const handleOrientation = (key,orientation) =>{                                               
+        setSelectOrientation(key)
+        setOrientation(orientation);
+    }
 
     return (
         
@@ -39,6 +68,7 @@ const Sexuality = ({navigation}) => {
          <BackSkip onBackPress={() => navigation.goBack()} onSkipPress={() => navigation.navigate("Address")} />
          
             <Title Title="I identify my sexuality" Description="Choose your sexual orientation" />
+            <Snackbar message={message} visibleToast={visibleToast}/>
             
             <View style={Register.sexualityWrapper} > 
                     <FlatList 
@@ -51,7 +81,7 @@ const Sexuality = ({navigation}) => {
                                                     return (
                                                         <Item
                                                             item={item}
-                                                            onPress={()=>setSelectOrientation(item.key)}
+                                                            onPress={()=>handleOrientation(item.key,item.orientation)}
                                                             backgroundColor={{backgroundColor}}
                                                             borderColor={{borderColor}}
                                                             color={{color}}
@@ -68,7 +98,7 @@ const Sexuality = ({navigation}) => {
             </View>
             
          
-         <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=>navigation.navigate("Address")} />
+         <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={()=> handleSubmit()} />
      </SafeAreaView>
         
     );

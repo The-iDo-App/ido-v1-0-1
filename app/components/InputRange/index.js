@@ -1,10 +1,12 @@
 //import liraries
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, TextInput } from 'react-native';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import Svg, { Line } from 'react-native-svg';
 import Animated, { useCode } from 'react-native-reanimated';
 import COLORS from '../../src/consts/color';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const {width, height, fontScale} = Dimensions.get("window");
 const MAX_WIDTH = (width - 80) -20;
@@ -64,9 +66,12 @@ const AgeRange = ({minValue, maxValue, onChangeMin, onChangeMax, initialValue}) 
     const max = useRef(null);
 
     useCode(() => [
-            call([x1],([value]) =>{
+            call([x1],async([value]) =>{
                 if(min.current){
-                         onChangeMin(minValue + (value/MAX_WIDTH)*(maxValue-minValue));
+                        let minRangeAge = minValue + (value/MAX_WIDTH)*(maxValue-minValue);
+                        onChangeMin(minRangeAge);
+                        await AsyncStorage.setItem('min', String(Math.round(minRangeAge)));
+
                          min.current.setNativeProps({
                              text: `${Math.round(minValue + (value/MAX_WIDTH)*(maxValue-minValue))}`,
 
@@ -77,9 +82,12 @@ const AgeRange = ({minValue, maxValue, onChangeMin, onChangeMax, initialValue}) 
     ] , [x1])
 
         useCode(() => [
-            call([x2],([value]) =>{
+            call([x2],async([value]) =>{
                 if(max.current){
-                         onChangeMax(minValue + (value/MAX_WIDTH)*(maxValue-minValue));
+                        let maxRangeAge = minValue + (value/MAX_WIDTH)*(maxValue-minValue);
+                        onChangeMax(maxRangeAge);
+                        await AsyncStorage.setItem('max', String(Math.round(maxRangeAge)));
+
                          max.current.setNativeProps({
                              text: `${Math.round(minValue + (value/MAX_WIDTH)*(maxValue-minValue))}`,
 

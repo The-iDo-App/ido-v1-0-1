@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-location';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import COLORS from '../../src/consts/color';
 
 
@@ -25,7 +23,7 @@ const MultilineText = (props) => {
 }
 
 // create a component
-const EnableLocation = () => {
+const EnableLocation = ({addressValue}) => {
 
     const [location, setLocation] = useState(null);
     const [userLocation, setUserLocation]= useState(null);
@@ -47,29 +45,25 @@ const EnableLocation = () => {
         }catch(err){
             throw err;
         }
-
+        let codedLocation = null;
         try{
-            let codedLocation =  await Location.reverseGeocodeAsync({latitude :  userLocation.coords.latitude,longitude :userLocation.coords.longitude}); 
-            const address = {
-            country: codedLocation[0].country,
-            province: codedLocation[0].subregion,
-            city: codedLocation[0].city,
-            street: codedLocation[0].street,
-            postalCode: codedLocation[0].postalCode,
-            latitude: userLocation.coords.latitude,
-            longitude: userLocation.coords.longitude,
+            if(userLocation)
+                codedLocation =  await Location.reverseGeocodeAsync({latitude :  userLocation.coords.latitude,longitude :userLocation.coords.longitude}); 
+            if(codedLocation){
+                const address = {
+                    country: codedLocation[0].country,
+                    province: codedLocation[0].subregion,
+                    city: codedLocation[0].city,
+                    street: codedLocation[0].street,
+                    postalCode: codedLocation[0].postalCode,
+                    latitude: userLocation.coords.latitude,
+                    longitude: userLocation.coords.longitude,
+                }
+                const currentLocation = `${address.street}, ${address.city}, ${address.province}, ${address.country}`;
+                setLocation(currentLocation);
+                addressValue(address);
             }
-            
-            // full address
-            // await AsyncStorage.setItem("city",address.city);
-            // await AsyncStorage.setItem("country",address.country);
-            // await AsyncStorage.setItem("province",address.province);
-            // await AsyncStorage.setItem("street",address.street);
-            // await AsyncStorage.setItem("latitude",address.latitude.toString());
-            // await AsyncStorage.setItem("longitude",address.longitude.toString());
-            
-            const currentLocation = `${address.street}, ${address.city}, ${address.province}, ${address.country}`;
-            setLocation(currentLocation);
+
         }
         catch(err){
             console.log(err)
