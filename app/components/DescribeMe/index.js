@@ -170,6 +170,8 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
     }
 
   
+
+   
     // render items
 
     const signRenderItem = ({item}) => (
@@ -197,6 +199,7 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
     )
     
    
+    
 
 
     return (
@@ -314,16 +317,14 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
                             </View>
                             
                             <ScrollView style={DescribeStyle.flatListWrapper} >
-                                   {
-                                        AstrologicalSign.map((item) =>(
-                                        <View style={DescribeStyle.item} key={item.key} >
-                                            <TouchableOpacity onPress={signDismissModal}   >
-                                                <Text style={DescribeStyle.itemText}>{item.sign}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        ))
-
-                                   }
+                                    <FlatList
+                                        data={AstrologicalSign}
+                                        keyExtractor={item=>item.key}
+                                        renderItem={signRenderItem}
+                                        scrollEnabled={false}
+                                        scrollToOverflowEnabled
+                                    />
+                                    
                             </ScrollView>
                             
 
@@ -352,17 +353,14 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
                         </View>
                         
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                                   {
-                                        PoliticalViews.map((item) =>(
-                                        <View style={DescribeStyle.item} key={item.key} >
-                                            <TouchableOpacity onPress={politicalDismissModal}   >
-                                                <Text style={DescribeStyle.itemText}>{item.view}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        ))
-
-                                   }
-                            </ScrollView>
+                            <FlatList
+                                data={PoliticalViews}
+                                renderItem={politicalRenderItem}
+                                keyExtractor={item => item.key}
+                                scrollEnabled={false}
+                                scrollToOverflowEnabled
+                            />
+                        </ScrollView>
                     </SafeAreaView>
                 </BottomSheetModal>
                 
@@ -386,17 +384,16 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
                                 <Text style={DescribeStyle.headerText}>Religion</Text>
                             </View>
 
-                            <ScrollView style={DescribeStyle.flatListWrapper} >
-                                   {
-                                        Religion.map((item) =>(
-                                        <View style={DescribeStyle.item} key={item.key} >
-                                            <TouchableOpacity onPress={faithDismissModal}   >
-                                                <Text style={DescribeStyle.itemText}>{item.belief}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        ))
-
-                                   }
+                            <ScrollView style={DescribeStyle.flatListWrapper} > 
+                                <View>
+                                    <FlatList
+                                        data={Religion}
+                                        renderItem={faithRenderItem}
+                                        keyExtractor={item => item.key}
+                                        scrollToOverflowEnabled
+                                        scrollEnabled={false}
+                                    />
+                                </View>
                             </ScrollView>
                 
                        
@@ -424,17 +421,14 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
                             <Text style={DescribeStyle.headerText}  >Smoking Habit</Text>
                         </View>
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                                   {
-                                        SmokeList.map((item) =>(
-                                        <View style={DescribeStyle.item} key={item.key} >
-                                            <TouchableOpacity onPress={smokeDismissModal}   >
-                                                <Text style={DescribeStyle.itemText}>{item.smoke}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        ))
-
-                                   }
-                            </ScrollView>
+                            <FlatList
+                                data={SmokeList}
+                                renderItem={smokeRenderItem}
+                                keyExtractor={item => item.key}
+                                scrollEnabled={false}
+                                scrollToOverflowEnabled
+                            />
+                        </ScrollView>
                         
 
                     </SafeAreaView>
@@ -459,17 +453,15 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
                         </View>
                         
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                                   {
-                                        DrinkingHabit.map((item) =>(
-                                        <View style={DescribeStyle.item} key={item.key} >
-                                            <TouchableOpacity onPress={drinkDismissModal}   >
-                                                <Text style={DescribeStyle.itemText}>{item.habit}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        ))
+                                <FlatList
+                                    data={DrinkingHabit}
+                                    renderItem={drinkRenderItem}
+                                    keyExtractor={item => item.key}
+                                    scrollEnabled={false}
+                                    scrollToOverflowEnabled
+                                />
 
-                                   }
-                            </ScrollView>
+                        </ScrollView>
 
                         
                     </SafeAreaView>
@@ -494,17 +486,15 @@ const DescribeMe = ({onPress,astValue,relValue,polValue,drinkValue,smokeValue,ki
                             <Text style={DescribeStyle.headerText}  >Want or Not?</Text>
                         </View>
                         <ScrollView style={DescribeStyle.flatListWrapper} >
-                                   {
-                                        WantKidsList.map((item) =>(
-                                        <View style={DescribeStyle.item} key={item.key} >
-                                            <TouchableOpacity onPress={kidsDismissModal}   >
-                                                <Text style={DescribeStyle.itemText}>{item.want}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        ))
-
-                                   }
-                            </ScrollView>
+                            <FlatList
+                                    data={WantKidsList}
+                                    renderItem={kidsRenderItem}
+                                    keyExtractor={item => item.key}
+                                    scrollEnabled={false}
+                                    scrollToOverflowEnabled
+                                    
+                            />
+                        </ScrollView>
                         
 
                     </SafeAreaView>
