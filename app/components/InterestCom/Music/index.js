@@ -1,4 +1,4 @@
-import React, { useReducer, useState} from 'react';
+import React, { useReducer, useState, useEffect} from 'react';
 import { View, Text, FlatList, Dimensions } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import COLORS from '../../../src/consts/color';
@@ -11,11 +11,24 @@ const WIDTH = width - 50;
 
 
 // create a component
-const Music = () => {
+const Music = ({musicValue}) => {
    const [selectedItems, setSelectedItems] = useState([]);
     const [toggle, setToggle] = useState(false)
     const maxSelections = 5; 
     
+    useEffect(() => {
+        musicValue(selectedItems);
+        // console.log(selectedItems);
+    }, [selectedItems])
+
+    const handlePress = (item)=>{
+        setToggle(!toggle);
+        if(selectedItems.includes(item)){
+            setSelectedItems(selectedItems.filter(items=> items !== item));
+        }else{
+           setSelectedItems(oldItems=> [...oldItems,item]);
+        }
+    }
 
 
     const renderItem = ({item, selected}) => {
@@ -27,9 +40,9 @@ const Music = () => {
                    
                     (
                         <BouncyCheckbox 
-                            onPress={() => setToggle(!toggle)}
+                            onPress={() => handlePress(item.musicGenre)}
                             fillColor={COLORS.darkPink}
-                            onChange ={() => setToggle(!toggle)}
+                            onChange ={() => handlePress(item.musicGenre)}
                             size={60/scale}
                             iconStyle={{width: WIDTH/12, height: height/30}}
                             isChecked={toggle}

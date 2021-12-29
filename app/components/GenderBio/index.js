@@ -9,13 +9,14 @@ import COLORS from '../../src/consts/color';
 const {width} = Dimensions.get('window');
 
 // create a component
-const GenderBio = () => {
+const GenderBio = ({genderValue}) => {
     //state
     const [gender, setGender] = useState("");
 
         // gender
     const switchGender = (gender) => {
-        setGender({gender: gender});
+        setGender({gender});
+        genderValue(gender);
     }
     
     return (

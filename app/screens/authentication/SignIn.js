@@ -10,7 +10,6 @@ import Users from '../../models/Users';
 import * as Animatable from 'react-native-animatable';
 
 
-
 export default function SignInPage({navigation}){
     
     const [data, setData] = React.useState({

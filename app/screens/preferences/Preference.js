@@ -1,5 +1,5 @@
 //import liraries
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { View, FlatList, TouchableOpacity, Text , Dimensions, LogBox} from 'react-native';
 import AgeRange from '../../components/InputRange';
 import DistanceRange from '../../components/DistanceRange';
@@ -11,6 +11,8 @@ import Register from '../../src/styles/screens/registration';
 import COLORS from '../../src/consts/color';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import { ScrollView } from 'react-native-gesture-handler';
+import Snackbar from '../../components/Toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -38,17 +40,45 @@ const Item =({item, onPress, backgroundColor, borderColor, color}) => {
 // create a component
 const Preference = ({navigation}) => {
     const [selectGender, setSelectGender] = useState("");
+   
+    const [message,setMessage] = useState("Input successfully saved!");
+    const [visibleToast, setvisibleToast] = useState(false);
+    useEffect(() => setvisibleToast(false), [visibleToast]);
+
+    const [miniRange,setMiniRange] = useState(null);
+    const [maxiRange,setMaxiRange] = useState(null);
+    const [distance,setDistance] = useState(null);
+    
 
     useEffect(() => {
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     }, [])
 
+    
+    const handleSubmit = async()=>{
+        if(selectGender){
+            setMessage("Input successfully saved!");
+            const gender =  screenGenderList[selectGender].gender;      
+            await AsyncStorage.setItem('distance',String(distance));
+            await AsyncStorage.setItem('genderPref',gender);
+            let min = await AsyncStorage.getItem('min');
+            let max = await AsyncStorage.getItem('max');
+            // navigation.navigate('Describe');
+
+            console.log("gender:" + gender,"distance: "+ distance);
+        }else{
+            setMessage("Please fill in the required fields.");
+        }
+        setvisibleToast(true);
+        navigation.navigate('Describe');
+    }
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
              <HeaderWrapper />
              <ScrollView>
              <Title Title="My Preferences" Description="Choose your preferred gender, age range and distance to see on the suggestion page. " />
+             <Snackbar message={message} visibleToast={visibleToast}/>
              <View style={Register.sexualityWrapper} >
                 <FlatList 
                             scrollEnabled={false}
@@ -74,13 +104,13 @@ const Preference = ({navigation}) => {
              <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center'}} >
                  <Text style={Register.labelText} >Age</Text>
              </View>
-             <AgeRange minValue={18} maxValue={65} initialValue={18} onChangeMin={(v)=>console.log(v)} onChangeMax={(v)=>console.log(v)}   />
+             <AgeRange minValue={18} maxValue={65} initialValue={18} onChangeMin={(v)=> console.log(v)} onChangeMax={(v)=> console.log(v)}/>
             <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center'}}>
                  <Text style={Register.labelText}>Distance</Text>
              </View>
-             <DistanceRange />
+             <DistanceRange distanceValue={(value) =>setDistance(value)}/>
              </ScrollView>
-             <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={() => navigation.navigate("Describe")} />
+             <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={() => handleSubmit()} />
              <View style={{marginBottom: height/30}} />
         </SafeAreaView>
     );

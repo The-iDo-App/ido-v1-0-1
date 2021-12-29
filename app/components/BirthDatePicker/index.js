@@ -10,7 +10,7 @@ const {scale, width} = Dimensions.get("window");
 
 
 // create a component
-const BirthDatePicker = () => {
+const BirthDatePicker = ({dateValue}) => {
     const [birthDate, setBirthDate] = useState("MM / DD / YYYY");
     const [date, setDate] = useState(new Date())
     const [mode, setMode] = useState('date');
@@ -23,12 +23,8 @@ const BirthDatePicker = () => {
 
         let tempDate = new Date(currentDate);
         let fDate = (tempDate.getMonth() + 1) + " " + '/' + tempDate.getDate()  + " "  + '/' + tempDate.getFullYear();
-
         setBirthDate(fDate);
-
-        
-
-        
+        dateValue(fDate);
     };
 
     const showMode = (currentMode) => {

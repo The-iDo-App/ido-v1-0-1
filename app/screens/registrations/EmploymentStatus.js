@@ -12,6 +12,8 @@ import { Header } from 'react-native/Libraries/NewAppScreen';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
+import Snackbar from '../../components/Toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width, height, fontScale, scale} = Dimensions.get("window");
 
@@ -36,19 +38,29 @@ const Item =({item, onPress, backgroundColor, borderColor, color}) => {
 
 // create a component
 const EmploymentStatus = ({navigation}) => {
-
+    const [message,setMessage] = useState("Input successfully saved!");
     const [selectStatus, setSelectStatus] = useState("");
     const [isSelected, setIsSelected] = useState(false);
+    const [visibleToast, setvisibleToast] = useState(false);
+    useEffect(() => setvisibleToast(false), [visibleToast]);
 
     useEffect(() => {
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     }, [])
 
-    const  registerUser = async() =>{
-        const employement = employmentList[selectStatus].status;
-        // await AsyncStorage.setItem("employment", employement);
-        
-        console.log(employmentList[selectStatus].status);
+    const handleSubmit = async() =>{
+        let employment = null;
+        if(employmentList[selectStatus])
+            employment = employmentList[selectStatus].status;
+        if(employment){
+            setMessage("Input successfully saved!");
+            await AsyncStorage.setItem("employment", employment);
+            console.log(employment);
+            // navigation.navigate('Preference');
+        }else{
+            setMessage("Please fill in the required fields.");
+        }
+        setvisibleToast(true);
         navigation.navigate('Preference');
     }
 
@@ -64,7 +76,8 @@ const EmploymentStatus = ({navigation}) => {
             </View>
             
                 <Title Title="My employment status" />
-                <View  style={Register.sexualityWrapper} >
+                <Snackbar message={message} visibleToast={visibleToast}/>
+                <View style={Register.sexualityWrapper} >
                     <FlatList 
                             scrollEnabled={false}
                             data={employmentList}
@@ -94,7 +107,7 @@ const EmploymentStatus = ({navigation}) => {
                     <Text style={{fontSize: 16/fontScale, color: COLORS.blue}}  >I agree to IDo's terms and conditions.</Text>
                 </View>
         
-                <NextButton TextButton="Submit" backgroundColor={isSelected === true ? COLORS.lightPink : '#ffcdcc'} disabled={isSelected === true ? false : true} onPress={()=>registerUser()} />
+                <NextButton TextButton="Submit" backgroundColor={isSelected === true ? COLORS.lightPink : '#ffcdcc'} disabled={isSelected === true ? false : true} onPress={()=>handleSubmit()} />
                 <View style={{marginBottom: height/40}} />
             
         </SafeAreaView>

@@ -1,5 +1,5 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import {Slider} from 'react-native-elements';
 import COLORS from '../../src/consts/color';
@@ -8,8 +8,13 @@ import COLORS from '../../src/consts/color';
 const {width, fontScale} = Dimensions.get("window");
 
 // create a component
-const DistanceRange = () => {
+const DistanceRange = ({distanceValue}) => {
     const [distance, setDistance] = useState(100);
+
+    useEffect(() => {
+        distanceValue(distance);
+    }, [distance]);
+
     return (
         <View style={styles.rangeWrapper}>
              <Text style={styles.label}>{

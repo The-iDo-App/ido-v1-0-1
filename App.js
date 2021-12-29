@@ -5,7 +5,6 @@ import DescribeMe from './app/components/DescribeMe';
 import HeaderWrapper from './app/components/Header';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 
-
 export default function App() {
   return (
     <>
