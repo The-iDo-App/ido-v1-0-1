@@ -12,10 +12,10 @@ import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const {width, height, fontScale} = Dimensions.get("window")
+const { width, height, fontScale } = Dimensions.get("window")
 
 // create a component
-const DescribeScreen = ({navigation}) => {
+const DescribeScreen = ({ navigation }) => {
     const [astrologicalSign, setAstrologicalSign] = useState(null);
     const [religion, setReligion] = useState(null);
     const [politicalView, setPoliticalView] = useState(null);
@@ -23,24 +23,24 @@ const DescribeScreen = ({navigation}) => {
     const [smoke, setSmoke] = useState(null);
     const [wantKids, setWantKids] = useState(null);
 
-    const [message,setMessage] = useState("Input successfully saved!");
+    const [message, setMessage] = useState("Input successfully saved!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
-    const handleSubmit = async() =>{
-        if(astrologicalSign && politicalView && religion && smoke && drinks && wantKids){
+    const handleSubmit = async () => {
+        if (astrologicalSign && politicalView && religion && smoke && drinks && wantKids) {
             await AsyncStorage.setItem('astrologicalSign', astrologicalSign);
             await AsyncStorage.setItem('politicalView', politicalView);
             await AsyncStorage.setItem('religion', religion);
             await AsyncStorage.setItem('smoke', smoke);
             await AsyncStorage.setItem('drinks', drinks);
             await AsyncStorage.setItem('wantKids', wantKids);
-            console.log(astrologicalSign,politicalView,religion,smoke,drinks,wantKids)
+            console.log(astrologicalSign, politicalView, religion, smoke, drinks, wantKids)
             setMessage("Input successfully saved!");
             // navigation.navigate("SportInterest");
-        }else{
+        } else {
             setMessage("Please fill in the required fields.");
-        
+
         }
         setvisibleToast(true);
         navigation.navigate("SportInterest");
@@ -48,27 +48,26 @@ const DescribeScreen = ({navigation}) => {
     }
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >  
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}  >
             <HeaderWrapper />
-                <BackSkip onBackPress={()=> navigation.goBack()}   onSkipPress={()=> navigation.navigate("SportInterest")} />
-                <Title Title="I describe myself as" Description="Choose only one in each section" />
-                <Snackbar message={message} visibleToast={visibleToast}/>
-                <DescribeMe onPress={() => handleSubmit()} 
-                    astValue={(value)=>setAstrologicalSign(value)}
-                    relValue={(value)=>setReligion(value)}
-                    polValue={(value)=>setPoliticalView(value)}
-                    drinkValue={(value)=>setDrinks(value)}
-                    smokeValue={(value)=>setSmoke(value)}
-                    kidsValue={(value)=>setWantKids(value)}
-                
-                />
+            <BackSkip onBackPress={() => navigation.goBack()} onSkipPress={() => navigation.navigate("SportInterest")} />
+            <Title Title="I describe myself as" Description="Choose only one in each section" />
+            <Snackbar message={message} visibleToast={visibleToast} />
+            <DescribeMe onPress={() => handleSubmit()}
+                astValue={(value) => setAstrologicalSign(value)}
+                relValue={(value) => setReligion(value)}
+                polValue={(value) => setPoliticalView(value)}
+                drinkValue={(value) => setDrinks(value)}
+                smokeValue={(value) => setSmoke(value)}
+                kidsValue={(value) => setWantKids(value)}
+            />
         </SafeAreaView>
     );
 };
 
 // define your styles
 const styles = StyleSheet.create({
-   
+
 });
 
 //make this component available to the app
