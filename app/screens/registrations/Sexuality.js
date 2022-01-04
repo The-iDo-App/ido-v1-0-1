@@ -45,7 +45,7 @@ const Sexuality = ({navigation}) => {
         if(orientation){
             setMessage("Input successfully saved!");
             await AsyncStorage.setItem('orientation', orientation);
-            console.log(orientation);
+            // console.log(orientation);
             navigation.navigate("Address");
 
         }else{

@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState,useEffect, useRef } from 'react';
-import { View, Text, Dimensions,Button, TextInput} from 'react-native';
+import { View, Text, Dimensions,Button, TextInput, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 //components
@@ -24,20 +24,20 @@ const CreateAccount = ({navigation}) => {
     const [lastName, setLastName] = useState(null);
     const [username, setUsername] = useState(null);
     const [birthday, setBirthday] = useState(null);
-    const [gender, setGender] = useState("woman");
+    const [sex, setSex] = useState("woman");
 
     const [message,setMessage] = useState("Input successfully saved!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
     const handleSubmit = async()=>{
-        if(firstName && lastName && username && birthday && gender){
+        if(firstName && lastName && username && birthday && sex){
             setMessage("Input successfully saved!");
             await AsyncStorage.setItem('firstName', firstName);
             await AsyncStorage.setItem('lastName', lastName);
             await AsyncStorage.setItem('username', username);
             await AsyncStorage.setItem('birthday', birthday);
-            await AsyncStorage.setItem('gender', gender);
+            await AsyncStorage.setItem('sex', sex);
             // console.log(firstName,lastName,username,birthday,gender);
             navigation.navigate('Sexuality')
         }else{
@@ -53,8 +53,8 @@ const CreateAccount = ({navigation}) => {
                 <HeaderWrapper />
                 <ScrollView>
                     <Title Title="Create an account!" Description="Fill in the blanks. Upload your best photo or choose a best avatar"/>
-                    <UploadImage />
                     <Snackbar message={message} visibleToast={visibleToast}/>
+                    <UploadImage />
                     <View style={Register.formWrapper}>
                                     <View style={Register.labelWrapper}>
                                         <Text style={Register.labelText}>My name is</Text>
@@ -88,7 +88,7 @@ const CreateAccount = ({navigation}) => {
                     </View>
                     <BirthDatePicker dateValue={(value) => setBirthday(value)}/>
                     <View style={{marginVertical: 10}} />
-                    <GenderBio genderValue={(value)=> setGender(value)}/>
+                    <GenderBio genderValue={(value)=> setSex(value)}/>
                      <View style={{marginVertical: 20}} />
                         <NextButton TextButton="Next" backgroundColor={COLORS.lightPink} onPress={() => {
                             handleSubmit();

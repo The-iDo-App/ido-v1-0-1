@@ -8,6 +8,8 @@ import COLORS from '../../src/consts/color';
 import {Feather, FontAwesome, AntDesign} from '@expo/vector-icons';
 import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 export default function SignUpPage({navigation}) {
     const [data, setData] = React.useState({
@@ -65,6 +67,7 @@ export default function SignUpPage({navigation}) {
         });
     }
 
+
     const handleSubmit = async() =>{
         const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
         if(!data.email.match(emailRegex)){
@@ -72,7 +75,10 @@ export default function SignUpPage({navigation}) {
         }else if(data.password.length < 6){
             setMessage("Password must be at least 6 characters long.");
         }else{
-            if((data.password === data.confirmPassword) && data.password !== '' && data.email.match(emailRegex)){
+            if(userExisting){
+                setMessage("Email already exists in the system.");
+            }
+            else if((data.password === data.confirmPassword) && data.password !== '' && data.email.match(emailRegex)){
                 setMessage("Input successfully saved!");
                 await AsyncStorage.setItem('email',data.email);
                 await AsyncStorage.setItem('password',data.password);
@@ -89,6 +95,19 @@ export default function SignUpPage({navigation}) {
     const [message,setMessage] = useState("Input successfully saved!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
+    
+    const [userExisting,setUserExisting] = useState(false);
+    useEffect(async() => {
+        const fetchUsers = async() =>{
+            const email = data.email;
+            let user = await axios.post(`${BACKEND_BASEURL}/api/registers/`, {email});
+        
+
+            if(user.data.user) return setUserExisting(true);
+            return setUserExisting(false);
+        }
+       fetchUsers();
+    }, [data.email]);
 
     return (
         <SafeAreaView style={AuthenticationStyle.authWrapper}>

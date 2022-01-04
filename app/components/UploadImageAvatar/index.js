@@ -4,14 +4,15 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, Modal, Pla
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import * as ImagePicker from 'expo-image-picker'
 import {FontAwesome} from '@expo/vector-icons';
-
 import COLORS from '../../src/consts/color';
 import AvatarList from '../../models/Avatar';
-
+import axios from 'axios';
+import mime from 'mime';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //For the responsiveness of the website
 const {width, height} = Dimensions.get('window');
-
 
 //Flatlist items
 
@@ -22,9 +23,7 @@ const Item =({item, onPress, borderColor, borderWidth, icon}) => {
 
     return(
     <TouchableOpacity onPress={onPress}>
-            
             <View style={[style.avatarItemStyle, borderColor, borderWidth]}>
-            
                     <Image source={item.avatar} style={style.avatarImage}/>
                     <FontAwesome name={icon} size={20} style={{position:"absolute", top: 0, left: 0, color: "green"}}/>
             </View>
@@ -42,6 +41,9 @@ const UploadImage = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [photo, setPhoto] = useState(null);
 
+    const [uri, setUri] = useState(null);
+    const [src, setSrc] = useState(null);
+
     useEffect(() => {
             (async () => {
                 if(Platform.OS !== 'web'){
@@ -53,6 +55,31 @@ const UploadImage = () => {
             })();
     }, [])
 
+    const uploadPicture = async(imageUri) =>{
+        // console.log(BACKEND_DEVURL);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+             }
+        }
+        const newImageUri =  "file:///" + imageUri.split("file:/").join("");
+        const formData = new FormData();
+        formData.append('image', {
+            uri : newImageUri,
+            type: mime.getType(newImageUri),
+            name: newImageUri.split("/").pop()
+        });
+        const response = await axios.post(`${BACKEND_BASEURL}/api/registers/uploadImage`,formData, config);
+        console.log(response.data);
+        if(response.data){
+            await AsyncStorage.setItem('blurredImage', response.data.blurredImage);
+            await AsyncStorage.setItem('originalImage', response.data.originalImage);
+            const avat = await AsyncStorage.getItem('avatar');
+            if(avat)
+              await AsyncStorage.removeItem('avatar');
+        }
+    }
+
     const handlePhotoPicker = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -61,10 +88,13 @@ const UploadImage = () => {
             quality: 1,
         });
 
-        console.log(result);
+        // console.log(result);
+
 
         if (!result.cancelled){
-            setPhoto(result.uri);
+            uploadPicture(result.uri);
+            setUri(result.uri);
+            setSrc(null);
             setModalVisible(!modalVisible);
         }
 
@@ -72,7 +102,6 @@ const UploadImage = () => {
 
     const handleSaveButton = () => {
         // code goes here for displaying the selected avatar in Image component
-
         setModalVisible(!modalVisible);
     }
 
@@ -88,18 +117,28 @@ const UploadImage = () => {
 
                 return avatarList;
         }
+    const handleSelectAvatar = async(item) =>{
+        setSrc(item.avatar);
+        if(item.avatar){
+            await AsyncStorage.setItem('avatar', String(item.avatar));
+            await AsyncStorage.removeItem('originalImage');
+            await AsyncStorage.removeItem('blurredImage');
+        }
+        setUri(null);
+        setPhoto(item.id)
+    }
 
     return (
         <>
             <View  style={style.imageWrapper}>
                 <TouchableOpacity onPress={()=>setModalVisible(true)} >
                     {
-                        photo !== null ?
-                        photo && (<Image source={{uri: photo}} resizeMode="contain" style={style.image}  />)
-                        :
-                        (<Image source={require('../../src/assets/default.png')} resizeMode="contain" style={style.image}  />)
+                        uri ?
+                            (<Image source={{uri}} resizeMode="contain" style={style.image}  />) 
+                        :src 
+                            ?  (<Image source={src} resizeMode="contain" style={style.image}  />) 
+                        : (<Image source={require('../../src/assets/default.png')} resizeMode="contain" style={style.image}  />) 
                     }
-                        
                 </TouchableOpacity>
             </View>
             <Modal
@@ -141,7 +180,7 @@ const UploadImage = () => {
                                                         return (
                                                             <Item 
                                                             item={item}
-                                                            onPress={()=>setPhoto(item.id)}
+                                                            onPress={()=> handleSelectAvatar(item)}
                                                             icon={icon}
                                                             borderColor={{borderColor}}
                                                             borderWidth={{borderWidth}}

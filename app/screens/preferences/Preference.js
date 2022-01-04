@@ -45,8 +45,7 @@ const Preference = ({navigation}) => {
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
-    const [miniRange,setMiniRange] = useState(null);
-    const [maxiRange,setMaxiRange] = useState(null);
+    const [AgeSelected,setAgeRange] = useState(null);
     const [distance,setDistance] = useState(null);
     
 
@@ -61,8 +60,7 @@ const Preference = ({navigation}) => {
             const gender =  screenGenderList[selectGender].gender;      
             await AsyncStorage.setItem('distance',String(distance));
             await AsyncStorage.setItem('genderPref',gender);
-            let min = await AsyncStorage.getItem('min');
-            let max = await AsyncStorage.getItem('max');
+            await AsyncStorage.setItem('max',String(AgeSelected));
             navigation.navigate('Describe');
             // console.log("gender:" + gender,"distance: "+ distance);
         }else{
@@ -103,7 +101,7 @@ const Preference = ({navigation}) => {
              <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center'}} >
                  <Text style={Register.labelText} >Age</Text>
              </View>
-             <AgeRange minValue={18} maxValue={65} initialValue={18} onChangeMin={(v)=> console.log(v)} onChangeMax={(v)=> console.log(v)}/>
+            <AgeRange ageValue={(value) =>setAgeRange(value)} />
             <View style={{flexDirection: 'row', width: width-80, alignSelf: 'center'}}>
                  <Text style={Register.labelText}>Distance</Text>
              </View>

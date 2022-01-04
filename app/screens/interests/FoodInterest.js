@@ -12,19 +12,19 @@ import NextButton from '../../components/NextButton';
 import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {BACKEND_BASEURL,PORT} from '@env';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 // create a component
 const FoodInterest = ({navigation}) => {
     const  [food,setFood] = useState([]);
 
-    const [message,setMessage] = useState("");
+    const [message,setMessage] = useState("Processing, please wait.");
     const [visibleToast, setvisibleToast] = useState(false);
+    const [posted, setPosted] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
     
     const postData = async()=>{
         // let keys = await AsyncStorage.getAllKeys();
-
         //address
         const address = {
                 postalCode: await AsyncStorage.getItem('postalCode'),
@@ -42,16 +42,17 @@ const FoodInterest = ({navigation}) => {
         let firstName = await AsyncStorage.getItem('firstName');
         let lastName = await AsyncStorage.getItem('lastName');
         let username = await AsyncStorage.getItem('username');
-        let gender = await AsyncStorage.getItem('gender');
+        let sex = await AsyncStorage.getItem('sex');
         let birthday = await AsyncStorage.getItem('birthday');
         let orientation = await AsyncStorage.getItem('orientation');
         let employment = await AsyncStorage.getItem('employment');
 
         //single pref
+        let minDistance = 100;
         let maxDistance = await AsyncStorage.getItem('distance');
         let genderPref = await AsyncStorage.getItem('genderPref');
+        let minAge = 18;
         let maxAge = await AsyncStorage.getItem('max');
-        let minAge = await AsyncStorage.getItem('min');
 
         //describe self
         let astrologicalSign = await AsyncStorage.getItem('astrologicalSign');
@@ -69,19 +70,28 @@ const FoodInterest = ({navigation}) => {
         let musicGenre = (await AsyncStorage.getItem('musicGenre')).split(',');
         let pets = (await AsyncStorage.getItem('pets')).split(',');
         let sports = (await AsyncStorage.getItem('sports')).split(',');
+       
+        let avatar = (await AsyncStorage.getItem('avatar'));
+        let blurredImage = (await AsyncStorage.getItem('blurredImage'));
+        let originalImage = (await AsyncStorage.getItem('originalImage'));
         
+
         try {
-            const response = await axios.post(`${BACKEND_BASEURL}:${PORT}/api/registers/createAccount`, {
+            const response = await axios.post(`${BACKEND_BASEURL}/api/registers/createAccount`, {
+                avatar,
+                blurredImage,
+                originalImage,
                 address,
                 email,
                 password,
                 firstName,
                 lastName,
                 username,
-                gender,
+                sex,
                 birthday,
                 orientation,
                 employment,
+                minDistance,
                 maxDistance,
                 genderPref,
                 minAge,
@@ -102,9 +112,10 @@ const FoodInterest = ({navigation}) => {
             });
             if (response.status === 200) {
                 setMessage(`Account successfully created!`);
-                console.log(response.data);
+                setPosted(true);
                 await AsyncStorage.setItem('userId', response.data.user_id);
                 await AsyncStorage.setItem('interestId', response.data.interestId);
+                await AsyncStorage.setItem('access_token',  response.data.access_token);
                 let id =  await AsyncStorage.getItem('userId');
                 let iid = await AsyncStorage.getItem('interestId');
                
@@ -125,7 +136,8 @@ const FoodInterest = ({navigation}) => {
         if(food.length>0){
             await AsyncStorage.setItem('food', String(food));
             // console.log(food);
-            postData();
+            if(posted == false)
+                postData();
         }else{
             setMessage("Please fill in the required fields.");
         }

@@ -98,7 +98,7 @@ export default function Onboarding({navigation}) {
                                 </TouchableOpacity>
                         ): 
                         (
-                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: 180, height: 60, borderRadius: 30, backgroundColor: COLORS.blue, paddingHorizontal: 20}}  >
+                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: 180, height: 60, borderRadius: 30, backgroundColor: COLORS.blue, paddingHorizontal: 20}} onPress={()=>navigation.navigate("SignIn")}>
                                  <Text style={{fontSize: 20, color: COLORS.white, opacity: 1}} >Get started</Text>
                                  <AntDesign name="right" style={{fontSize: 20, color: COLORS.white, opacity: 1}}  />
                             </TouchableOpacity>

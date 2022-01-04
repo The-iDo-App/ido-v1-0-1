@@ -14,7 +14,7 @@ export default function Question({navigation}) {
     <SafeAreaView  style={{flex: 1, backgroundColor: COLORS.white}}  >
           <HeaderWrapper />
             <Title Title="Which one are you?" Description="Choose only one each question." />
-            <QuestionInterest />
+            <QuestionInterest/>
 
     </SafeAreaView>
   );
