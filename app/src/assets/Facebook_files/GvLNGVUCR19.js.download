@@ -1,0 +1,4 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["hPuLgQn"]); }
+
+__d("PostLevelAuthenticityRenderFalcoEvent",["FalcoLoggerInternal","getFalcoLogPolicy_DO_NOT_USE"],(function(a,b,c,d,e,f){"use strict";a=b("getFalcoLogPolicy_DO_NOT_USE")("595");c=b("FalcoLoggerInternal").create("post_level_authenticity_render",a);e.exports=c}),null);
+__d("CometPollVoterDialogQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="4035157629866735"}),null);
