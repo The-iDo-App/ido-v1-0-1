@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderWrapper from '../../components/Header';
 import Title from '../../components/Title';
@@ -74,7 +74,7 @@ export default function ChangePassScreen() {
      <HeaderWrapper/>
       <Title Title={'CHANGE PASSWORD'} Description={'Please enter your new password'}/>
       <SafeAreaView style={AuthenticationStyle.authWrapper} >
-        <View style={{flex: 1, justifyContent: 'flex-start'}}  >
+        <KeyboardAvoidingView style={{flex: 1, justifyContent: 'flex-start'}}  >
               {/*password*/}
                         <View style={AuthenticationStyle.action}>
                             <FontAwesome name="lock" color="#8999a8" size={30} />
@@ -103,15 +103,18 @@ export default function ChangePassScreen() {
                             
                             
                         </View>
-                        
+
                         {/*Log in button*/}
                         <TouchableOpacity onPress={()=> handleSubmit()}>
                             <View style={AuthenticationStyle.loginBtn}>
                                 <Text style={AuthenticationStyle.loginText}>SUBMIT</Text>
                             </View>
                         </TouchableOpacity>
-        </View>
-       <View  style={{height: height/3}}  />
+                                      
+        </KeyboardAvoidingView>
+                        
+         
+       
                         
 
       </SafeAreaView>

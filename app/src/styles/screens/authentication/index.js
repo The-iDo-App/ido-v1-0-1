@@ -41,8 +41,7 @@ const AuthenticationStyle = StyleSheet.create({
         textAlign: 'center',
     },
     action:{
-        marginTop: 10,
-        flex: 1,
+        marginVertical: 10,
         flexDirection: 'row',
         alignItems:'center',
         borderBottomWidth: 1,
