@@ -45,10 +45,9 @@ const AuthenticationStyle = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems:'center',
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
         width: WIDTH,
         borderBottomColor: COLORS.grey,
-
     },
     textInput: {
         width: WIDTH-40,
