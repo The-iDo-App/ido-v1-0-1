@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component,useState,useEffect, useMemo,useReducer} from 'react';
-import { View, Text, StyleSheet,ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet,ActivityIndicator, Image } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -50,10 +50,59 @@ const Tab = createBottomTabNavigator();
 function MainTab(){
   return(
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={Home}  />
-        <Tab.Screen name="Messaging" component={MessageInbox}  />
-        <Tab.Screen name="Profile" component={Profile}  />
-        <Tab.Screen name="Settings" component={Settings}  />
+        <Tab.Screen 
+            name="Home" 
+            component={Home}  
+            options={{
+                tabBarIcon: ({focused}) =>  (
+                    focused ?
+                         <Image source={require('../src/assets/components/matchFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                         :
+                         <Image source={require('../src/assets/components/match.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                ),
+                tabBarLabel: '' 
+            }}
+
+        />
+        <Tab.Screen 
+            name="Messaging" 
+            component={MessageInbox}  
+            options={{
+                tabBarIcon: ({focused}) =>  (
+                    focused ?
+                         <Image source={require('../src/assets/components/messageFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                         :
+                         <Image source={require('../src/assets/components/message.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                ),
+                tabBarLabel: '' 
+            }}
+        />
+        <Tab.Screen
+            name="Profile" 
+            component={Profile}  
+            options={{
+                tabBarIcon: ({focused}) =>  (
+                    focused ?
+                         <Image source={require('../src/assets/components/profileFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                         :
+                         <Image source={require('../src/assets/components/profile.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                ),
+                tabBarLabel: '' 
+            }}
+        />
+        <Tab.Screen 
+            name="Settings" 
+            component={Settings}  
+            options={{
+                tabBarIcon: ({focused}) =>  (
+                    focused ?
+                         <Image source={require('../src/assets/components/settingsFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                         :
+                         <Image source={require('../src/assets/components/settings.png')} style={{resizeMode:'contain', height:50, width:40}} />
+                ),
+                tabBarLabel: '' 
+            }}
+        />
       </Tab.Navigator>
   );
     
