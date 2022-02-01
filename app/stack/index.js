@@ -1,10 +1,10 @@
 //import liraries
 import React, { Component,useState,useEffect, useMemo,useReducer} from 'react';
-import { View, Text, StyleSheet,ActivityIndicator, Image } from 'react-native';
+import { View, Text, StyleSheet,ActivityIndicator, Image, Dimensions } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import COLORS from '../src/consts/color';
 //screens
 //Authentication
 import SignInPage from '../screens/authentication/SignIn';
@@ -42,14 +42,16 @@ import Settings from '../screens/main-screens/Setting';
 import Loading from '../components/ActivityIndicator'
 import { AuthContext } from '../components/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const {height} = Dimensions.get('window');
 
 function MainTab(){
   return(
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator screenOptions={{ headerShown: false }}   >
         <Tab.Screen 
             name="Home" 
             component={Home}  
@@ -60,7 +62,12 @@ function MainTab(){
                          :
                          <Image source={require('../src/assets/components/match.png')} style={{resizeMode:'contain', height:50, width:40}} />
                 ),
-                tabBarLabel: '' 
+                tabBarLabel: '' ,
+                tabBarStyle:{
+                    height: height/11,
+                    borderTopColor: COLORS.grey,
+                    borderTopWidth: 1
+                }
             }}
 
         />
@@ -74,7 +81,12 @@ function MainTab(){
                          :
                          <Image source={require('../src/assets/components/message.png')} style={{resizeMode:'contain', height:50, width:40}} />
                 ),
-                tabBarLabel: '' 
+                tabBarLabel: '' ,
+                tabBarStyle:{
+                    height: height/11,
+                    borderTopColor: COLORS.grey,
+                    borderTopWidth: 1
+                }
             }}
         />
         <Tab.Screen
@@ -87,7 +99,12 @@ function MainTab(){
                          :
                          <Image source={require('../src/assets/components/profile.png')} style={{resizeMode:'contain', height:50, width:40}} />
                 ),
-                tabBarLabel: '' 
+                tabBarLabel: '' ,
+                tabBarStyle:{
+                    height: height/11,
+                    borderTopColor: COLORS.grey,
+                    borderTopWidth: 1
+                }
             }}
         />
         <Tab.Screen 
@@ -100,7 +117,12 @@ function MainTab(){
                          :
                          <Image source={require('../src/assets/components/settings.png')} style={{resizeMode:'contain', height:50, width:40}} />
                 ),
-                tabBarLabel: '' 
+                tabBarLabel: '',
+                tabBarStyle:{
+                    height: height/11,
+                    borderTopColor: COLORS.grey,
+                    borderTopWidth: 1
+                }
             }}
         />
       </Tab.Navigator>

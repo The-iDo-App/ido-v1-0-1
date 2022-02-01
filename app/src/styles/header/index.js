@@ -4,7 +4,8 @@ const HeaderStyle = StyleSheet.create({
     logo:{
         width: 50, 
         height: 50
-    }
+    },
+    
 });
 
 export default HeaderStyle

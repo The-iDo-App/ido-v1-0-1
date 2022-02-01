@@ -26,7 +26,7 @@ const HeaderWrapper = () => {
                 backgroundColor={COLORS.white}
                 leftComponent={<Logo />}
                 barStyle='dark-content'
-                containerStyle={{backgroundColor: COLORS.white, borderBottomWidth: 0.75, borderBottomColor: COLORS.grey, alignItems: 'center'}}
+                containerStyle={{backgroundColor: COLORS.white, borderBottomWidth: 0.75, borderBottomColor: COLORS.grey, alignItems: 'center', zIndex: 100}}
             />
         </>
     );
