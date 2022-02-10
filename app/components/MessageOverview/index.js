@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import COLORS from '../../src/consts/color';
+import MessageBox from '../../screens/main-screens/MessageBox';
 
 const { width, height, fontScale } = Dimensions.get('window');
 
@@ -18,7 +19,7 @@ const MessageOverview = ({ ProfilePicture, Name, LatestMessage, Time, id }) => {
     <TouchableOpacity
       style={{ backgroundColor: 'white' }}
       onPress={() => {
-        alert(1);
+        alert(id);
       }}
     >
       <View style={{ ...styles.container }}>

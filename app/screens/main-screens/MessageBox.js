@@ -5,7 +5,7 @@ import COLORS from '../../src/consts/color';
 export default function MessageBox() {
   return (
     <View>
-      <Text></Text>
-     </View>
+      <Text>Lorem ipsum dolor sit amet</Text>
+    </View>
   );
 }

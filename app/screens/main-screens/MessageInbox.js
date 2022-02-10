@@ -12,7 +12,7 @@ export default function MessageInbox() {
       <HeaderWrapper />
       <ScrollView style={{ overflow: 'scroll' }}>
         {fakeMessageOverviews.map(
-          ({ key, profile_picture, name, latest_message, time, id }) => {
+          ({ key, profile_picture, name, latest_message, time, _id }) => {
             return (
               <MessageOverview
                 key={key}
@@ -20,6 +20,7 @@ export default function MessageInbox() {
                 Name={name}
                 LatestMessage={latest_message}
                 Time={time}
+                id={_id}
               />
             );
           }
