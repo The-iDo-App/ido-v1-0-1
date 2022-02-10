@@ -14,15 +14,26 @@ import MessageBox from '../../screens/main-screens/MessageBox';
 const { width, height, fontScale } = Dimensions.get('window');
 
 // create a component
-const MessageOverview = ({ ProfilePicture, Name, LatestMessage, Time, id }) => {
+const MessageOverview = ({
+  ProfilePicture,
+  Name,
+  LatestMessage,
+  Time,
+  id,
+  navigation,
+}) => {
   return (
     <TouchableOpacity
       style={{ backgroundColor: 'white' }}
       onPress={() => {
-        alert(id);
+        navigation.navigate('MessageBox', {
+          name: Name,
+          profile_picture: ProfilePicture,
+          id,
+        });
       }}
     >
-      <View style={{ ...styles.container }}>
+      <View style={styles.container}>
         <Image style={styles.image} source={ProfilePicture} />
         <View
           style={{

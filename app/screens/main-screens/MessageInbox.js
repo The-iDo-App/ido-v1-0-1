@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MessageOverview from '../../components/MessageOverview';
 import fakeMessageOverviews from '../../models/fakeMessageOverviews';
 
-export default function MessageInbox() {
+export default function MessageInbox({ navigation }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderWrapper />
@@ -21,6 +21,7 @@ export default function MessageInbox() {
                 LatestMessage={latest_message}
                 Time={time}
                 id={_id}
+                navigation={navigation}
               />
             );
           }
