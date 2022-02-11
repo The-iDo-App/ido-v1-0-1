@@ -188,9 +188,8 @@ const getTabBarVisibility = (route) => {
     if(routeName === 'Setting'){
         return 'flex';
     } else if(routeName === 'MessageInbox'){
-        return 'flex';
+        return 'flex'
     }
-    else
     {
         return 'none';
     }

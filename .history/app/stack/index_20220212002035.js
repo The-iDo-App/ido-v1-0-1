@@ -4,8 +4,6 @@ import { View, Text, StyleSheet,ActivityIndicator, Image, Dimensions } from 'rea
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-
 import COLORS from '../src/consts/color';
 //screens
 //Authentication
@@ -78,7 +76,9 @@ const SettingTab = () => {
     return(
          <Stack.Navigator screenOptions={{ headerShown: false }}   >
             <Stack.Screen name="Setting" options={{header: () => null}}  component={Settings} />
-            <Stack.Group  >
+            <Stack.Group  screenOptions={{
+                tab
+            }}  >
                 <Stack.Screen name="About" options={{header: () => null}}  component={AboutScreen} />
                 <Stack.Screen  name="ViewInfo" options={{header: () => null}}  component={ViewInfo} />
                 <Stack.Screen name="BlockedUsers" options={{header: () => null}}  component={BlockedUsersScreen} />
@@ -118,7 +118,7 @@ function MainTab(){
         <Tab.Screen 
             name="Messaging" 
             component={MessageTab}  
-            options={({route}) => ({
+            options={{
                 tabBarIcon: ({focused}) =>  (
                     focused ?
                          <Image source={require('../src/assets/components/messageFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
@@ -129,10 +129,9 @@ function MainTab(){
                 tabBarStyle:{
                     height: height/11,
                     borderTopColor: COLORS.grey,
-                    borderTopWidth: 1,
-                     display: getTabBarVisibility(route),
+                    borderTopWidth: 1
                 }
-            })}
+            }}
         />
         <Tab.Screen
             name="Profile" 
@@ -155,7 +154,7 @@ function MainTab(){
         <Tab.Screen 
             name="Settings" 
             component={SettingTab}  
-            options={({route})=> ({
+            options={{
                 tabBarIcon: ({focused}) =>  (
                     focused ?
                          <Image source={require('../src/assets/components/settingsFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
@@ -167,49 +166,15 @@ function MainTab(){
                     height: height/11,
                     borderTopColor: COLORS.grey,
                     borderTopWidth: 1,
-                    display: getTabBarVisibility(route),
+                   
                 }
-            })}
+            }}
         />
       </Tab.Navigator>
   );
     
   
 }
-
-// this is for when the screen is not on the main screens
-
-const getTabBarVisibility = (route) => {
-    console.log(route);
-
-    const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
-    console.log(routeName);
-
-    if(routeName === 'Setting'){
-        return 'flex';
-    } else if(routeName === 'MessageInbox'){
-        return 'flex';
-    }
-    else
-    {
-        return 'none';
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // create a component

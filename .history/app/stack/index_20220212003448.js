@@ -4,8 +4,7 @@ import { View, Text, StyleSheet,ActivityIndicator, Image, Dimensions } from 'rea
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-
+import {getFocusedRouteName}
 import COLORS from '../src/consts/color';
 //screens
 //Authentication
@@ -181,19 +180,6 @@ function MainTab(){
 
 const getTabBarVisibility = (route) => {
     console.log(route);
-
-    const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
-    console.log(routeName);
-
-    if(routeName === 'Setting'){
-        return 'flex';
-    } else if(routeName === 'MessageInbox'){
-        return 'flex';
-    }
-    else
-    {
-        return 'none';
-    }
 }
 
 

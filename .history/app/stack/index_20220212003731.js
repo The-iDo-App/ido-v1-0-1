@@ -185,13 +185,7 @@ const getTabBarVisibility = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
     console.log(routeName);
 
-    if(routeName === 'Setting'){
-        return 'flex';
-    } else if(routeName === 'MessageInbox'){
-        return 'flex';
-    }
-    else
-    {
+    if(routeName === 'About'){
         return 'none';
     }
 }
