@@ -1,7 +1,20 @@
 //import liraries
-import React, { Component,useState,useEffect, useMemo,useReducer} from 'react';
-import { View, Text, StyleSheet,ActivityIndicator, Image, Dimensions } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import React, {
+  Component,
+  useState,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  Dimensions,
+} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
@@ -15,13 +28,13 @@ import ForgotPassScreen from '../screens/authentication/ForgotPass';
 import OTPScreen from '../screens/authentication/OTP';
 import ChangePassScreen from '../screens/authentication/ChangePass';
 //Registration
-import CreateAccount from '../screens/registrations/CreateAccount'; 
+import CreateAccount from '../screens/registrations/CreateAccount';
 import Sexuality from '../screens/registrations/Sexuality';
 import Address from '../screens/registrations/Address';
 import EmploymentStatus from '../screens/registrations/EmploymentStatus';
 //Preference
 import Preference from '../screens/preferences/Preference';
-import DescribeScreen from '../screens/preferences/DescribeSelf'
+import DescribeScreen from '../screens/preferences/DescribeSelf';
 //Interests
 import SportInterest from '../screens/interests/SportsInterest';
 import HobbyInterest from '../screens/interests/HobbyInterest';
@@ -61,8 +74,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const {height} = Dimensions.get('window');
-
+const { height } = Dimensions.get('window');
 
 const MessageTab = () => {
     return(
@@ -173,8 +185,6 @@ function MainTab(){
         />
       </Tab.Navigator>
   );
-    
-  
 }
 
 // this is for when the screen is not on the main screens
@@ -196,89 +206,70 @@ const getTabBarVisibility = (route) => {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // create a component
 const Stacks = () => {
-    const initialLoginState = {
-        isLoading: true,
-        userName: null,
-        userToken: null,
-    };
+  const initialLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null,
+  };
 
-    const loginReducer = (prevState, action) => {
-        switch( action.type ) {
-            case 'RETRIEVE_TOKEN': 
-                return {
-                    ...prevState,
-                    userToken: action.token,
-                    isLoading: false,
-                };
-            case 'LOGIN': 
-                return {
-                    ...prevState,
-                    userName: action.id,
-                    userToken: action.token,
-                    isLoading: false,
-                };
-            case 'LOGOUT': 
-                return {
-                    ...prevState,
-                    userName: null,
-                    userToken: null,
-                    isLoading: false,
-                };
-            case 'REGISTER': 
-                return {
-                    ...prevState,
-                    userName: action.id,
-                    userToken: action.token,
-                    isLoading: false,
-                };
-        }
-    };
-    const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
-
-    const authContext = useMemo(()=>({
-        signIn: (username,token)=>{
-            dispatch({type:'LOGIN',id:username,token});
-        },
-        signOut: async()=>{
-            await AsyncStorage.removeItem("access_token");
-            dispatch({type:'LOGOUT'});
-        },
-        signUp: (username,token)=>{
-            dispatch({type:'REGISTER',id:username,token});
-
-        }
-    }));
-
-    useEffect(() => {
-        setTimeout(async() => {
-            const token = await AsyncStorage.getItem("access_token");
-            dispatch({type:'RETRIEVE_TOKEN',token});
-        }, 1000);
-    }, []);
-    
-    if(loginState.isLoading){
-        return (
-            <Loading/>
-        )
+  const loginReducer = (prevState, action) => {
+    switch (action.type) {
+      case 'RETRIEVE_TOKEN':
+        return {
+          ...prevState,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case 'LOGIN':
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case 'LOGOUT':
+        return {
+          ...prevState,
+          userName: null,
+          userToken: null,
+          isLoading: false,
+        };
+      case 'REGISTER':
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
     }
+  };
+  const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
+
+  const authContext = useMemo(() => ({
+    signIn: (username, token) => {
+      dispatch({ type: 'LOGIN', id: username, token });
+    },
+    signOut: async () => {
+      await AsyncStorage.removeItem('access_token');
+      dispatch({ type: 'LOGOUT' });
+    },
+    signUp: (username, token) => {
+      dispatch({ type: 'REGISTER', id: username, token });
+    },
+  }));
+
+  useEffect(() => {
+    setTimeout(async () => {
+      const token = await AsyncStorage.getItem('access_token');
+      dispatch({ type: 'RETRIEVE_TOKEN', token });
+    }, 1000);
+  }, []);
+
+  if (loginState.isLoading) {
+    return <Loading />;
+  }
 
     return (
         <AuthContext.Provider value={authContext}>
@@ -317,7 +308,6 @@ const Stacks = () => {
     );
 };
 
-
-
 //make this component available to the app
 export default Stacks;
+

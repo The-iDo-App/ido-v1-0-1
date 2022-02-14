@@ -1,22 +1,36 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import COLORS from '../../src/consts/color';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import HeaderWrapper from '../../components/Header';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import MessageBoxHeaderWrapper from '../../components/MessageBoxHeader';
+import fakeMessages from '../../models/fakeMessages';
+import MessageBoxMessage from '../../components/MessageBoxMessage';
 
-export default function MessageBox({navigation}) {
+const { height, width } = Dimensions.get('window');
+
+export default function MessageBox({ route, navigation }) {
+  const { name, profile_picture } = route.params;
   return (
-    <>
-        <HeaderWrapper />
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Text>Chatbox</Text>
-              <TouchableOpacity onPress={() => navigation.goBack()}  >
-                  <Text>Go Back</Text>
-              </TouchableOpacity>
-            </View>
-        </SafeAreaView>
-    </>
+    <View>
+      <MessageBoxHeaderWrapper
+        Name={name}
+        ProfilePicture={profile_picture}
+        navigation={navigation}
+      />
+      <ScrollView
+        style={{
+          marginBottom: height / 11 + 30,
+          backgroundColor: 'white',
+        }}
+      >
+        {fakeMessages.map((messageObject) => {
+          return (
+            <MessageBoxMessage
+              key={messageObject.key}
+              messageObject={messageObject}
+            />
+          );
+        })}
+      </ScrollView>
+    </View>
   );
 }
