@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderWrapper from '../../components/Header';
@@ -6,11 +6,27 @@ import Title from '../../components/Title';
 import AuthenticationStyle from '../../src/styles/screens/authentication';
 import {Feather, FontAwesome, AntDesign} from '@expo/vector-icons';
 import COLORS from '../../src/consts/color';
- 
-const {width, height} = Dimensions.get('window');
+import Snackbar from '../../components/Toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-export default function ChangePassScreen() {
-  const [data, setData] = React.useState({
+const {width, height} = Dimensions.get('window');
+export default function ChangePassScreen({navigation}) {
+   const DEVURL = "http://192.168.0.111:5000";
+
+    const [message,setMessage] = useState("");
+    const [visibleToast, setvisibleToast] = useState(false);
+    useEffect(() => setvisibleToast(false), [visibleToast]);
+
+    const hasUnsavedChanges = Boolean(true);
+        React.useEffect(
+            () =>
+            navigation.addListener('beforeRemove', (e) => {
+                e.preventDefault();
+        }),[navigation, hasUnsavedChanges]
+    );
+
+    const [data, setData] = React.useState({
         email: '',
         password: '',
         confirmPassword: '',
@@ -65,13 +81,41 @@ export default function ChangePassScreen() {
         });
     }
 
-    const handleSubmit = () => {
+    const fetchUpdate = async()=>{
+        return new Promise(async(resolve, reject) =>{
+            const email = await AsyncStorage.getItem("forgotEmail");
+            let user = await axios.post(`${DEVURL}/api/emails/change`, {email, password: data.password});
+            if(user) 
+                resolve(user.data);
+            reject(false);
+        });
+    }
+
+    const handleSubmit = async() => {
+        if(data.password.length <8){
+            setMessage("Password must be 8 character long");
+        }
+        else if(data.password == data.confirmPassword){
+            let updateUser;
+            try{
+                updateUser = await fetchUpdate();
+                setMessage("Password updated!");
+                 navigation.navigate('SignIn');
+            }catch(reject){
+                setMessage("An error occured");
+                updateUser = reject;
+            }
+        }else{
+            setMessage("Password does not match.");
+        }
+        setvisibleToast(true);
 
     }
     
   return (
     <View style={{justifyContent: 'flex-start', backgroundColor: 'white', flex: 1}}>
      <HeaderWrapper/>
+        <Snackbar message={message} visibleToast={visibleToast}/>
       <Title Title={'CHANGE PASSWORD'} Description={'Please enter your new password'}/>
       <SafeAreaView style={AuthenticationStyle.authWrapper} >
         <KeyboardAvoidingView style={{flex: 1, justifyContent: 'flex-start'}}  >

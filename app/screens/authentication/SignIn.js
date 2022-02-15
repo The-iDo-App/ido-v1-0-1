@@ -15,7 +15,14 @@ import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 import { AuthContext } from '../../components/context';
 
 export default function SignInPage({navigation}){
-    
+     const hasUnsavedChanges = Boolean(true);
+        React.useEffect(
+            () =>
+            navigation.addListener('beforeRemove', (e) => {
+                e.preventDefault();
+        }),[navigation, hasUnsavedChanges]
+    );
+
     const [data, setData] = React.useState({
         email: '',
         password: '',
