@@ -55,22 +55,12 @@ const MessageBubbles = ({
         )}
       </View>
       <View style={currentUser ? styles.selfMessage : styles.otherMessage}>
-        {message !== '' ? (
+        {!image ? (
           <Text style={currentUser ? { color: 'white' } : { color: 'black' }}>
             {message}
           </Text>
         ) : (
-          <Card
-            style={currentUser ? styles.selfMessage : styles.otherMessage}
-            elevation={5}
-          >
-            {image && (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 100, height: 100 }}
-              />
-            )}
-          </Card>
+          <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
         )}
       </View>
     </View>

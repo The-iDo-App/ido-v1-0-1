@@ -163,7 +163,13 @@ export default function MessageBox({ route, navigation }) {
       const extension = result.uri.substr(result.uri.lastIndexOf('.') + 1);
       const fullBase64 =
         'data:image/' + extension + ';base64, ' + result.base64;
-      await axios.post('http://192.168.1.11:3000/', { image: fullBase64 });
+      // await axios.post('http://192.168.1.11:3000/', { image: fullBase64 });
+      socket.emit('input', {
+        from: myId,
+        to: id,
+        message: '',
+        image: fullBase64,
+      });
     }
   };
 
@@ -225,7 +231,7 @@ export default function MessageBox({ route, navigation }) {
                     currentUser={myId == chat.senderId}
                     time={chat.timeSent}
                     key={chat._id}
-                    image={uri}
+                    image={chat.image ? chat.image : ''}
                     previousTime={index ? messages[index - 1].timeSent : null}
                   />
                 </React.Fragment>
