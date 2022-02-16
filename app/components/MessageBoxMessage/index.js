@@ -23,7 +23,7 @@ const MessageBubbles = ({time, currentUser, message, image}) => {
               </Text>
             ):
             (
-              <Card style={{backgroundColor: COLORS.blue}} elevation={5} >
+              <Card style={currentUser ? styles.selfMessage : styles.otherMessage} elevation={5} >
                   {
                     image && <Image source={{uri: image}} style={{width: 100, height: 100}} />
                   } 
