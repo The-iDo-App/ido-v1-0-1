@@ -6,6 +6,7 @@ import MessageOverview from '../../components/MessageOverview';
 import fakeMessageOverviews from '../../models/fakeMessageOverviews';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import io from 'socket.io-client/dist/socket.io';
+import { WS_URL } from '@env';
 
 export default function MessageInbox({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -25,7 +26,7 @@ export default function MessageInbox({ navigation }) {
     const access_token = await AsyncStorage.getItem('access_token');
     const user_id = await AsyncStorage.getItem('userId');
 
-    const socket = io('ws://192.168.1.11:3000');
+    const socket = io(WS_URL);
 
     if (socket !== undefined) {
       console.log('Connected to socket...');
