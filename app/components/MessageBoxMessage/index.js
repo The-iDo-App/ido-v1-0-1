@@ -6,7 +6,7 @@ import COLORS from '../../src/consts/color';
 const { height, width, fontScale } = Dimensions.get('window');
 
 const MessageBubbles = ({time, currentUser, message, image}) => {
- 
+  console.log(image);
   return (
     <View style={{display: message === " " ? 'none' : 'flex'}} >
       <View style={{ alignItems: 'center', display: time === time ? 'flex' : 'none' }}>
@@ -25,7 +25,7 @@ const MessageBubbles = ({time, currentUser, message, image}) => {
             (
               <Card style={currentUser ? styles.selfMessage : styles.otherMessage} elevation={5} >
                   {
-                    image && <Image source={{uri: image}} style={{width: 100, height: 100}} />
+                    image && <Image source={{image}} style={{width: 100, height: 100}} resizeMode="contain" />
                   } 
               </Card>
             )
