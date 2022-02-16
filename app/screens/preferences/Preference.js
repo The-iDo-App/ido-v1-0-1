@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState, useEffect,useRef } from 'react';
-import { View, FlatList, TouchableOpacity, Text , Dimensions, LogBox} from 'react-native';
+import { View, FlatList, TouchableOpacity, Text , Dimensions, LogBox, BackHandler} from 'react-native';
 import AgeRange from '../../components/InputRange';
 import DistanceRange from '../../components/DistanceRange';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -52,7 +52,10 @@ const Preference = ({navigation}) => {
     useEffect(() => {
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     }, [])
-
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
     
     const handleSubmit = async()=>{
         if(screenGenderList[selectGender]){

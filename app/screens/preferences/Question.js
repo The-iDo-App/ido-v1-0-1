@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import COLORS from '../../src/consts/color';
@@ -19,6 +19,10 @@ export default function Question({navigation}) {
       }),
       [navigation, hasUnsavedChanges]
   );
+  React.useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
   
   return (
     <SafeAreaView  style={{flex: 1, backgroundColor: COLORS.white}}  >

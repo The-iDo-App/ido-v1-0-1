@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState,useEffect, useRef } from 'react';
-import { View, Text, Dimensions,Button, TextInput, Image} from 'react-native';
+import { View, Text, Dimensions,Button, TextInput, Image, BackHandler} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 //components
@@ -29,6 +29,10 @@ const CreateAccount = ({navigation}) => {
     const [message,setMessage] = useState("Input successfully saved!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
 
     const handleSubmit = async()=>{
         if(firstName && lastName && username && birthday && sex){

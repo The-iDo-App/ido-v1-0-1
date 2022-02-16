@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect,useContext} from 'react';
-import { View, Text, StatusBar, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StatusBar, Dimensions, ImageBackground, BackHandler } from 'react-native';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import COLORS from '../../src/consts/color';
@@ -22,7 +22,11 @@ export default function Onboarding({navigation}) {
       }),
     [navigation, hasUnsavedChanges]
   );
-
+  useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
+ 
   const flatListRef = useRef();
   const [currentPage, setCurrentPage] = useState(0);
   const [viewableItems, setViewableItems] = useState([]);
