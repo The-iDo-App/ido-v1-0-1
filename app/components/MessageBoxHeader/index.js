@@ -25,7 +25,7 @@ const BackButtonAndName = ({ name, profile_picture, navigation, openSettings }) 
         </TouchableOpacity>
         <View style={{ ...styles.itemStyle, marginHorizontal: 10 }}>
           <Image
-            source={profile_picture}
+            source={{ uri: profile_picture }}
             style={{ width: 45, height: 45, borderRadius: 30 }}
           />
         </View>

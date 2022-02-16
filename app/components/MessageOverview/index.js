@@ -21,6 +21,7 @@ const MessageOverview = ({
   Time,
   id,
   navigation,
+  myId,
 }) => {
   return (
     <TouchableOpacity
@@ -30,11 +31,12 @@ const MessageOverview = ({
           name: Name,
           profile_picture: ProfilePicture,
           id,
+          myId,
         });
       }}
     >
       <View style={styles.container}>
-        <Image style={styles.image} source={ProfilePicture} />
+        <Image style={styles.image} source={{ uri: ProfilePicture }} />
         <View
           style={{
             flexDirection: 'row',
@@ -50,7 +52,7 @@ const MessageOverview = ({
           >
             <Text style={styles.title}>{Name}</Text>
             <Text>
-              {LatestMessage.length > 30
+              {LatestMessage?.length > 30
                 ? LatestMessage.substring(0, 30) + '...'
                 : LatestMessage}
             </Text>
