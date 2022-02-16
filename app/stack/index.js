@@ -27,6 +27,7 @@ import ForgotPassScreen from '../screens/authentication/ForgotPass';
 import OTPScreen from '../screens/authentication/OTP';
 import ChangePassScreen from '../screens/authentication/ChangePass';
 //Registration
+import VerificationOTPScreen from '../screens/registrations/Verification-OTP';
 import CreateAccount from '../screens/registrations/CreateAccount';
 import Sexuality from '../screens/registrations/Sexuality';
 import Address from '../screens/registrations/Address';
@@ -235,6 +236,7 @@ const Stacks = () => {
                         <Stack.Screen name="ForgotPass" options={{header: () => null}}  component={ForgotPassScreen} />
                         <Stack.Screen name="OTP" options={{header: () => null}} component={OTPScreen} />
                         <Stack.Screen name="ChangePass" options={{header: () => null}} component={ChangePassScreen} />
+                        <Stack.Screen name="VerificationOTP" options={{header: () => null}} component={VerificationOTPScreen} />
                         <Stack.Screen name="CreateAccount" options={{header: () => null}} component={CreateAccount} />
                         <Stack.Screen name="Sexuality" options={{header: () => null}} component={Sexuality} />
                         <Stack.Screen name="Address" options={{header: () => null}} component={Address}/>

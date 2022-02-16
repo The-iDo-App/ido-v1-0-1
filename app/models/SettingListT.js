@@ -11,7 +11,7 @@ const SettingList2 = [
     },
      {
         key: 2, 
-        label: 'Guidelines',
+        label: 'Privacy',
         route: 'Guidelines'
     },
      {

@@ -9,7 +9,7 @@ import UserInfoModal from '../../components/userInfoModal';
 const {width, height} = Dimensions.get('window');
 
 
-export default function Home() {
+export default function Home({navigation}) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInfoModalVisible, setUserInfoModalVisible] = useState(false);

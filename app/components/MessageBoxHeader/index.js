@@ -6,7 +6,7 @@ import COLORS from '../../src/consts/color';
 
 const { height, width, fontScale } = Dimensions.get('window');
 
-const BackButtonAndName = ({ name, profile_picture, navigation }) => {
+const BackButtonAndName = ({ name, profile_picture, navigation, openSettings }) => {
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row' }}>
@@ -46,18 +46,20 @@ const BackButtonAndName = ({ name, profile_picture, navigation }) => {
           </Text>
         </View>
       </View>
-      <View style={{ ...styles.itemStyle, alignSelf: 'flex-end' }}>
-        <Image
-          source={require('../../src/assets/info.png')}
-          resizeMode="contain"
-          style={{ width: 30, height: 30 }}
-        />
-      </View>
+      <TouchableOpacity onPress={openSettings} >
+          <View style={{ ...styles.itemStyle, alignSelf: 'flex-end' }}>
+            <Image
+              source={require('../../src/assets/info.png')}
+              resizeMode="contain"
+              style={{ width: 30, height: 30 }}
+            />
+          </View>
+      </TouchableOpacity> 
     </View>
   );
 };
 
-const MessageBoxHeaderWrapper = ({ Name, ProfilePicture, navigation }) => {
+const MessageBoxHeaderWrapper = ({ Name, ProfilePicture, navigation, openSettings }) => {
   return (
     <>
       <Header
@@ -67,6 +69,7 @@ const MessageBoxHeaderWrapper = ({ Name, ProfilePicture, navigation }) => {
             name={Name}
             profile_picture={ProfilePicture}
             navigation={navigation}
+            openSettings={openSettings}
           />
         }
         barStyle="dark-content"

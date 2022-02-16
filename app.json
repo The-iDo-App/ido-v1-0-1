@@ -6,8 +6,8 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/ido-splash.png",
-      "resizeMode": "cover",
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
       "backgroundColor": "#FF6E83"
     },
     "updates": {

@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState,useEffect, useRef } from 'react';
-import { View, Text, Dimensions,Button, TextInput, Image} from 'react-native';
+import { View, Text, Dimensions,Button, TextInput, Image, BackHandler} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 //components
@@ -29,6 +29,10 @@ const CreateAccount = ({navigation}) => {
     const [message,setMessage] = useState("Input successfully saved!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
 
     const handleSubmit = async()=>{
         if(firstName && lastName && username && birthday && sex){
@@ -80,7 +84,7 @@ const CreateAccount = ({navigation}) => {
                             
                                     <View style={{marginTop: 10, marginBottom: 20}}>
                                         <View style={{width: width-50, borderBottomColor: COLORS.grey, borderBottomWidth: 0.5}}>
-                                            <TextInput textContent="nickname" placeholder="JD" placeholderTextColor={COLORS.grey}  style={{fontSize: 18, color: COLORS.grey}} autoCapitalize="words"
+                                            <TextInput textContent="nickname" placeholder="JD" placeholderTextColor={COLORS.grey}  style={{fontSize: 18, color: COLORS.blue}} autoCapitalize="words"
                                              onChangeText={(text)=>setUsername(text)}/>
                                         </View>
                                         <Text style={Register.underText}>Nickname</Text>
