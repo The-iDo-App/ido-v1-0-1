@@ -271,7 +271,7 @@ export default function MessageBox({ route, navigation }) {
        value={message}
        />
        <View style={{display: showEmojis ? 'flex' : 'none', height: 400, backgroundColor: 'white'}} >
-            <EmojiSelector onEmojiSelected={handleMessage} showHistory={true} columns={6}  showSearchBar={false} />
+            <EmojiSelector onEmojiSelected={handleMessage} showHistory={true} columns={9}  showSearchBar={false} />
        </View>
        
        <MessageSettingsModal 
