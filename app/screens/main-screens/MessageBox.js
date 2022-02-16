@@ -173,8 +173,36 @@ export default function MessageBox({ route, navigation }) {
     }
   };
 
-  const handleSelectCamera = () => {
+  const handleSelectCamera = async () => {
     console.log('gif');
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this appp to access your camera!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      base64: true,
+      quality: 0,
+    });
+
+    // Explore the result
+    console.log(result);
+
+    if (!result.cancelled) {
+      setUri(result.uri);
+      // console.log(path.extension(result.uri);
+      const fullBase64 = 'data:image/jpeg;base64, ' + result.base64;
+      // await axios.post('http://192.168.1.11:3000/', { image: fullBase64 });
+      socket.emit('input', {
+        from: myId,
+        to: id,
+        message: '',
+        image: fullBase64,
+      });
+    }
   };
 
   const scrollViewChanges = () => {
