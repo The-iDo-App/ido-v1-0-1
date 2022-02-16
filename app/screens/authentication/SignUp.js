@@ -82,7 +82,7 @@ export default function SignUpPage({navigation}) {
                 setMessage("Input successfully saved!");
                 await AsyncStorage.setItem('email',data.email);
                 await AsyncStorage.setItem('password',data.password);
-                navigation.navigate('CreateAccount');
+                navigation.navigate('VerificationOTP');
             }else{
                 setMessage("Invalid Credentials! Please try again.");
             }
