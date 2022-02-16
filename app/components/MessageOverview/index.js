@@ -34,7 +34,7 @@ const MessageOverview = ({
       }}
     >
       <View style={styles.container}>
-        <Image style={styles.image} source={ProfilePicture} />
+        <Image style={styles.image} source={{ uri: ProfilePicture }} />
         <View
           style={{
             flexDirection: 'row',
