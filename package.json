@@ -23,6 +23,7 @@
     "expo-cli": "^4.13.0",
     "expo-dev-client": "~0.6.3",
     "expo-font": "~10.0.3",
+    "expo-image-manipulator": "^10.2.1",
     "expo-image-picker": "~11.0.3",
     "expo-location": "~13.0.4",
     "expo-status-bar": "~1.1.0",
@@ -52,7 +53,8 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.22"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@types/node": "^17.0.18"
   },
   "private": true
 }
