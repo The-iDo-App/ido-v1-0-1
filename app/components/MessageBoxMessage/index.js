@@ -1,24 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { View, Image, Dimensions, Text } from 'react-native';
+import { View, Image, Dimensions, Text, Card } from 'react-native';
 import { Header } from 'react-native-elements';
 import COLORS from '../../src/consts/color';
 
 const { height, width, fontScale } = Dimensions.get('window');
 
-const MessageBubbles = ({time, currentUser, message}) => {
+const MessageBubbles = ({time, currentUser, message, image}) => {
  
   return (
-    <View>
-      <View style={{ alignItems: 'center' }}>
+    <View style={{display: message === " " ? 'none' : 'flex'}} >
+      <View style={{ alignItems: 'center', display: time === time ? 'flex' : 'none' }}>
         <Text style={{ color: COLORS.grey, fontSize: 10 / fontScale }}>
           {time}
         </Text>
       </View>
-      <View style={ currentUser ? styles.selfMessage : styles.otherMessage}>
-        <Text style={ currentUser ? { color: 'white' } : { color: 'black' }}>
-          {message}
-        </Text>
+      <View style={currentUser ? styles.selfMessage : styles.otherMessage}>
+          {
+            message !== "" ?
+            (
+              <Text style={ currentUser ? { color: 'white' } : { color: 'black' }}>
+                {message}
+              </Text>
+            ):
+            (
+              <Card style={{backgroundColor: COLORS.blue}} elevation={5} >
+                  {
+                    image && <Image source={{uri: image}} style={{width: 100, height: 100}} />
+                  } 
+              </Card>
+            )
+          }
+          
       </View>
     </View>
   );

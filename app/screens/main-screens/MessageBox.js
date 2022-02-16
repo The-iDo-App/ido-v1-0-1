@@ -8,7 +8,7 @@ import MessageInput from '../../components/MessageInput';
 import EmojiSelector from 'react-native-emoji-selector'
 import MessageBubbles from '../../components/MessageBoxMessage';
 import moment from 'moment';
-
+import * as ImagePicker from 'expo-image-picker'
 
 
 const { height, width } = Dimensions.get('window');
@@ -17,10 +17,15 @@ const {screenHeight} =Dimensions.get('screen');
 export default function MessageBox({ route, navigation }) {
   const [message, setMessage] = useState('');
   const [showEmojis, setShowEmojis] = useState(false);
-  const [emoji, setEmoji] = useState([]);
+  const [emoji, setEmoji] = useState('');
   const [keyboardHeight, setKeyboardHeight] = React.useState(0);
   const [timestamp, setTimeStamp] =useState('');
   const [currentIndex, setCurrentIndex] = useState(fakeMessages.length);
+  //States
+    const [photo, setPhoto] = useState(null);
+
+    const [uri, setUri] = useState(null);
+    const [src, setSrc] = useState(null);
 
   const scrollViewRef = React.useRef();
   let bottomNavBarH = screenHeight - width;
@@ -33,16 +38,33 @@ export default function MessageBox({ route, navigation }) {
     setKeyboardHeight(0);
   }
 
+  useEffect(() => {
+            (async () => {
+                if(Platform.OS !== 'web'){
+                    const {granted} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                    if (!granted){
+                        alert('Sorry, we need camera roll permissions to make this work!');
+                    }
+                }
+            })();
+    }, [])
+
+
   useLayoutEffect(() => {
     Keyboard.addListener('keyboardDidShow', onKeyBoardDidShow);
     Keyboard.addListener('keyboardDidHide', onKeyBoardDidHide);
-    var dateNow = moment().format('LLLL');
-    setTimeStamp(dateNow);
+    setInterval(() => tick(), 1000)
     return () => {
       Keyboard.removeListener('keyboardDidShow', onKeyBoardDidShow);
       Keyboard.removeListener('keyboardDidHide', onKeyBoardDidHide);
     };
   }, [])
+
+  const tick = () => {
+    var dateNow = moment().format('LLLL');
+    setTimeStamp(dateNow.toString());
+  }
+
 
   const { name, profile_picture } = route.params;
 
@@ -67,7 +89,7 @@ export default function MessageBox({ route, navigation }) {
   
   const data = {
     message: message,
-    timestamp: timestamp,
+    time: timestamp.toString(),
     currentUser: true,
   }
 
@@ -82,13 +104,24 @@ export default function MessageBox({ route, navigation }) {
       fakeMessages.push(data);
       console.log('buttonClicked')
       setMessage(null);
+      setEmoji("");
+      
   }
 
-  const handleSelectImage = () => {
-     console.log('image')
+  const handleSelectImage = async() => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true, 
+            aspect: [1, 1], 
+            quality: 1,
+        });
+      if (!result.cancelled){
+            setUri(result.uri);
+            console.log(result.uri);
+        }
   }
 
-  const handleSelectGIF = () => {
+  const handleSelectCamera = () => {
     console.log('gif')
   }
 
@@ -96,15 +129,11 @@ export default function MessageBox({ route, navigation }) {
     scrollViewRef.current.scrollToEnd(0);
   }
 
-  const handleMessage = (message) => {
-      setMessage(emoji, message);
-      console.log(emoji, message)
+  const handleMessage = (emoji, message) => {
+  setMessage(emoji, message);
+    
   }
 
-  const handleEmoji = (emoji) => {
-    setEmoji(emoji);
-    // console.log(emoji);
-  }
 
   return (
     <>
@@ -124,6 +153,7 @@ export default function MessageBox({ route, navigation }) {
                       currentUser={chat.currentUser}
                       time={chat.time}
                       key={chat.key}
+                      image={uri}
                     />
                  </React.Fragment>
                ))
@@ -134,7 +164,7 @@ export default function MessageBox({ route, navigation }) {
      
        <MessageInput 
        handleEmojiPicker={handleEmojiPicker} 
-       handleSelectGIF={handleSelectGIF} 
+       handleSelectGIF={handleSelectCamera} 
        handleSendMessage={handleSendMessage} 
        handleSelectImage={handleSelectImage}
        onChangeText={handleMessage}
@@ -142,7 +172,7 @@ export default function MessageBox({ route, navigation }) {
        value={message}
        />
        <View style={{display: showEmojis ? 'flex' : 'none', height: 400, backgroundColor: 'white'}} >
-            <EmojiSelector onEmojiSelected={handleEmoji} showHistory={true} columns={9}  showSearchBar={false} />
+            <EmojiSelector onEmojiSelected={handleMessage} showHistory={true} columns={6}  showSearchBar={false} />
        </View>
        
         
