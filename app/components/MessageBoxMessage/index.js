@@ -5,32 +5,73 @@ import COLORS from '../../src/consts/color';
 
 const { height, width, fontScale } = Dimensions.get('window');
 
-const MessageBubbles = ({time, currentUser, message, image}) => {
- 
+const MessageBubbles = ({
+  time,
+  currentUser,
+  message,
+  image,
+  previousTime,
+}) => {
+  function formatDate(date) {
+    date = new Date(date);
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return (
+      date.getMonth() +
+      1 +
+      '/' +
+      date.getDate() +
+      '/' +
+      date.getFullYear() +
+      '  ' +
+      strTime
+    );
+  }
+
+  // console.log(
+  //   new Date(time),
+  //   new Date(previousTime),
+  //   new Date(time) - new Date(previousTime) >= 60000
+  // );
   return (
-    <View style={{display: message === " " ? 'none' : 'flex'}} >
-      <View style={{ alignItems: 'center', display: time === time ? 'flex' : 'none' }}>
-        <Text style={{ color: COLORS.grey, fontSize: 10 / fontScale }}>
-          {time}
-        </Text>
+    <View style={{ display: message === ' ' ? 'none' : 'flex' }}>
+      <View
+        style={{
+          alignItems: 'center',
+          display: time === time ? 'flex' : 'none',
+        }}
+      >
+        {!previousTime || new Date(time) - new Date(previousTime) >= 60000 ? (
+          <Text style={{ color: COLORS.grey, fontSize: 10 / fontScale }}>
+            {formatDate(time)}
+          </Text>
+        ) : (
+          <></>
+        )}
       </View>
       <View style={currentUser ? styles.selfMessage : styles.otherMessage}>
-          {
-            message !== "" ?
-            (
-              <Text style={ currentUser ? { color: 'white' } : { color: 'black' }}>
-                {message}
-              </Text>
-            ):
-            (
-              <Card style={currentUser ? styles.selfMessage : styles.otherMessage} elevation={5} >
-                  {
-                    image && <Image source={{uri: image}} style={{width: 100, height: 100}} />
-                  } 
-              </Card>
-            )
-          }
-          
+        {message !== '' ? (
+          <Text style={currentUser ? { color: 'white' } : { color: 'black' }}>
+            {message}
+          </Text>
+        ) : (
+          <Card
+            style={currentUser ? styles.selfMessage : styles.otherMessage}
+            elevation={5}
+          >
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 100, height: 100 }}
+              />
+            )}
+          </Card>
+        )}
       </View>
     </View>
   );

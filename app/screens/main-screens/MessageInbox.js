@@ -33,28 +33,27 @@ export default function MessageInbox({ navigation }) {
       // Handle Output
       socket.emit('viewAllUsers', user_id);
       socket.on('showAllUsers', function (data) {
-        data = data.filter((message) => message.timeSent);
+        // data = data.filter((message) => message.timeSent);
         data.map((message) => {
-          message.timeSent = parseTime(message.timeSent);
+          message.timeSent = message.timeSent
+            ? parseTime(message.timeSent)
+            : null;
         });
         setMessages(data);
       });
 
       socket.on('newMessage', function (data) {
         let chat = data.chats[0];
-        let me =
-          chat.senderId === localStorage.getItem('user_id')
-            ? 'sender'
-            : 'receiver';
+        let me = chat.senderId === user_id ? 'sender' : 'receiver';
         let otherUser = me === 'sender' ? 'receiver' : 'sender';
-        console.log(data);
+        console.log(chat, me, otherUser);
         // document.getElementById(data[otherUser]._id)?.remove();
-        chat.timeSent = parseTime(chat.timeSent);
-        setMessages(
-          messages.filter(
-            (message) => message[otherUser]._id != data[otherUser]._id
-          )
+        chat.timeSent = chat.timeSent ? parseTime(chat.timeSent) : null;
+        let temp = messages.filter(
+          (message) => message[otherUser]._id != data[otherUser]._id
         );
+        setMessages([chat, temp]);
+        console.log(messages);
       });
     }
   }, []);
@@ -64,21 +63,35 @@ export default function MessageInbox({ navigation }) {
       <HeaderWrapper />
       <View style={{ flex: 1, backgroundColor: COLORS.white }}>
         <ScrollView style={{ overflow: 'scroll' }}>
-          {messages.map(
-            ({ picture, username, latestMessage, timeSent, _id }) => {
-              return (
-                <MessageOverview
-                  key={_id}
-                  ProfilePicture={picture.originalImage}
-                  Name={username}
-                  LatestMessage={latestMessage}
-                  Time={timeSent}
-                  id={_id}
-                  navigation={navigation}
-                />
-              );
-            }
-          )}
+          {
+            (console.log(messages),
+            messages.map(
+              ({
+                profile,
+                picture,
+                username,
+                latestMessage,
+                timeSent,
+                _id,
+                myId,
+              }) => {
+                return (
+                  <MessageOverview
+                    key={_id}
+                    ProfilePicture={
+                      profile?.picture.originalImage || picture?.originalImage
+                    }
+                    Name={username}
+                    LatestMessage={latestMessage}
+                    Time={timeSent}
+                    id={_id}
+                    navigation={navigation}
+                    myId={myId}
+                  />
+                );
+              }
+            ))
+          }
           {/* <TouchableOpacity onPress={() => navigation.navigate('MessageBox')}> */}
           {/*   <Text>Chatbox</Text> */}
           {/* </TouchableOpacity> */}

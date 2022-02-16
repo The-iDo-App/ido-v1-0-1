@@ -21,6 +21,7 @@ const MessageOverview = ({
   Time,
   id,
   navigation,
+  myId,
 }) => {
   return (
     <TouchableOpacity
@@ -30,6 +31,7 @@ const MessageOverview = ({
           name: Name,
           profile_picture: ProfilePicture,
           id,
+          myId,
         });
       }}
     >
@@ -50,7 +52,7 @@ const MessageOverview = ({
           >
             <Text style={styles.title}>{Name}</Text>
             <Text>
-              {LatestMessage.length > 30
+              {LatestMessage?.length > 30
                 ? LatestMessage.substring(0, 30) + '...'
                 : LatestMessage}
             </Text>

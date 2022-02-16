@@ -19,17 +19,22 @@ import moment from 'moment';
 import * as ImagePicker from 'expo-image-picker';
 import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { WS_URL } from '@env';
+import io from 'socket.io-client/dist/socket.io';
 
 const { height, width } = Dimensions.get('window');
 const { screenHeight } = Dimensions.get('screen');
 
 export default function MessageBox({ route, navigation }) {
+  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [showEmojis, setShowEmojis] = useState(false);
   const [emoji, setEmoji] = useState('');
   const [keyboardHeight, setKeyboardHeight] = React.useState(0);
   const [timestamp, setTimeStamp] = useState('');
   const [currentIndex, setCurrentIndex] = useState(fakeMessages.length);
+  const [socket, setSocket] = useState(io(WS_URL));
   //States
   const [photo, setPhoto] = useState(null);
 
@@ -39,6 +44,10 @@ export default function MessageBox({ route, navigation }) {
   const scrollViewRef = React.useRef();
   let bottomNavBarH = screenHeight - width;
 
+  const { name, profile_picture, id, myId } = route.params;
+
+  // console.log(route.params);
+
   function onKeyBoardDidShow(e: KeyboardEvent) {
     setKeyboardHeight(e.endCoordinates.height + bottomNavBarH);
   }
@@ -46,6 +55,26 @@ export default function MessageBox({ route, navigation }) {
   function onKeyBoardDidHide() {
     setKeyboardHeight(0);
   }
+
+  useEffect(async () => {
+    const access_token = await AsyncStorage.getItem('access_token');
+    const user_id = await AsyncStorage.getItem('userId');
+
+    if (socket !== undefined) {
+      // console.log('Connected to socket...');
+
+      // Handle Output
+      socket.emit('viewOne', {
+        from: user_id,
+        to: id,
+      });
+      socket.on('showChat', function (data) {
+        // console.log(data);
+        let chats = data.chats;
+        setMessages(chats);
+      });
+    }
+  });
 
   useEffect(() => {
     (async () => {
@@ -73,8 +102,6 @@ export default function MessageBox({ route, navigation }) {
     var dateNow = moment().format('LLLL');
     setTimeStamp(dateNow.toString());
   };
-
-  const { name, profile_picture } = route.params;
 
   const handleEmojiPicker = () => {
     setShowEmojis(true);
@@ -107,6 +134,14 @@ export default function MessageBox({ route, navigation }) {
     // setSendMessage(null);
     // console.log(sendMessage)
     // setCurrentIndex(currentIndex++);
+    socket.emit('input', {
+      from: myId,
+      to: id,
+      message,
+    });
+    console.log({ myId, id, message });
+    console.log('========================================================');
+
     console.log(data);
     fakeMessages.push(data);
     console.log('buttonClicked');
@@ -144,6 +179,17 @@ export default function MessageBox({ route, navigation }) {
     setMessage(emoji, message);
   };
 
+  const parseTime = (time) => {
+    time = new Date(time);
+    time = time.toString().split(' ')[4].split(':').slice(0, 2);
+    time[0] = time[0] > 12 ? time[0] - 12 : time[0];
+    let ext = time[0] > 12 ? 'PM' : 'AM';
+    time[0] = time[0] === '00' ? '12' : time[0];
+    ext = time[0] === '00' ? 'AM' : 'PM';
+    time = time.join(':').concat(' ').concat(ext);
+    return time;
+  };
+
   return (
     <>
       <MessageBoxHeaderWrapper
@@ -171,17 +217,20 @@ export default function MessageBox({ route, navigation }) {
               marginBottom: keyboardHeight < width ? 10 : 20,
             }}
           >
-            {fakeMessages.map((chat, index) => (
-              <React.Fragment key={index}>
-                <MessageBubbles
-                  message={chat.message}
-                  currentUser={chat.currentUser}
-                  time={chat.time}
-                  key={chat.key}
-                  image={uri}
-                />
-              </React.Fragment>
-            ))}
+            {messages.map((chat, index) => {
+              return (
+                <React.Fragment key={chat._id}>
+                  <MessageBubbles
+                    message={chat.body}
+                    currentUser={myId == chat.senderId}
+                    time={chat.timeSent}
+                    key={chat._id}
+                    image={uri}
+                    previousTime={index ? messages[index - 1].timeSent : null}
+                  />
+                </React.Fragment>
+              );
+            })}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
