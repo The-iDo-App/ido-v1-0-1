@@ -12,3 +12,5 @@ const AboutLists = ({
     
 
 })
+
+export default AboutLists;

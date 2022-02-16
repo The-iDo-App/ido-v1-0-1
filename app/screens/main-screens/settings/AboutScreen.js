@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ParagraphComponent from '../../../components/Paragraph';
 import SettingsMainTitle from '../../../components/settingsTitle';
 import SettingsSubTitle from '../../../components/settingsSubTitle';
-import AboutLists from '../../../models/abouts';
+import AboutLists from '../../../models/About';
 
 
 export default function AboutScreen({navigation}) {
