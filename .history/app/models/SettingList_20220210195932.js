@@ -1,0 +1,5 @@
+const SETTINGS_LIST = [
+    {
+        
+    }
+]

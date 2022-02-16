@@ -1,0 +1,5 @@
+const MyFakeData = {
+    interests: {
+        sports: []
+    }
+}
