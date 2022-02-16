@@ -50,9 +50,9 @@ const BirthDatePicker = ({dateValue}) => {
                                     testID="dateTimePicker"
                                     value={date}
                                     mode={mode}
-                                    display="calendar"
+                                    display="default"
                                     onChange={onChange}
-                                    maximumDate={new Date(2003, 12, 31)}
+                                    maximumDate={new Date(2003, 11, 31)}
                                     themeVariant="light"
                                     
                                     />

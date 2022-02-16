@@ -84,7 +84,7 @@ const CreateAccount = ({navigation}) => {
                             
                                     <View style={{marginTop: 10, marginBottom: 20}}>
                                         <View style={{width: width-50, borderBottomColor: COLORS.grey, borderBottomWidth: 0.5}}>
-                                            <TextInput textContent="nickname" placeholder="JD" placeholderTextColor={COLORS.grey}  style={{fontSize: 18, color: COLORS.grey}} autoCapitalize="words"
+                                            <TextInput textContent="nickname" placeholder="JD" placeholderTextColor={COLORS.grey}  style={{fontSize: 18, color: COLORS.blue}} autoCapitalize="words"
                                              onChangeText={(text)=>setUsername(text)}/>
                                         </View>
                                         <Text style={Register.underText}>Nickname</Text>
