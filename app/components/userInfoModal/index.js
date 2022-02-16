@@ -168,11 +168,11 @@ export default function UserInfoModal({onPress, modalVisible, nickname, interest
                       <View  style={style.imageWrapper}>
                           <ImageBackground source={image} resizeMode="contain" style={style.image}  />
                       </View>
-                      <Text>{name}</Text>
+                      <Text style={{color: COLORS.blue, fontSize: 20, fontWeight: 'bold'}} >{name}</Text>
                   </View>
 
                   <ScrollView scrollEnabled  contentContainerStyle={{ display: 'flex', flexGrow: 1 }} >
-                      <View style={{marginVertical: 20, borderBottomColor: COLORS.grey, borderBottomWidth: 1, paddingVertical: 10}} >
+                      <View style={{marginVertical: 10, borderBottomColor: COLORS.grey, borderBottomWidth: 1, paddingVertical: 10}} >
                        {/*ABOUT ME*/}
                        <Text style={{color: COLORS.grey, fontSize: 18, fontWeight: 'bold'}}  >What about me</Text>
                         
@@ -191,7 +191,7 @@ export default function UserInfoModal({onPress, modalVisible, nickname, interest
                      </View>
                        
 
-                     <View style={{marginVertical: 20, paddingVertical: 10}}   >
+                     <View style={{marginVertical: 10, paddingVertical: 10}}   >
                        {/*INTERESTS*/}
 
                        {/*SPORTS*/}
