@@ -15,6 +15,7 @@ import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 import { AuthContext } from '../../components/context';
 
 export default function SignInPage({navigation}){
+    const DEVURL = "http://192.168.0.111:5000";
      const hasUnsavedChanges = Boolean(true);
         React.useEffect(
             () =>
@@ -52,7 +53,7 @@ export default function SignInPage({navigation}){
     }
 
     const handlePasswordChange = (val) => {
-        if(val.trim().length >= 8){
+        if(val.trim().length >= 0){
             setData({
                 ...data, 
                 password: val,
@@ -98,8 +99,14 @@ export default function SignInPage({navigation}){
     const fetchUsers = () =>{
         return new Promise(async(resolve, reject) => {
             const {email,password} = data;
-            let user = await axios.post(`${BACKEND_BASEURL}/api/logins/`, {email,password});
+            let user;
+            try{
+              user = await axios.post(`${DEVURL}/api/logins/`, {email,password});
+            }catch(err){
+                console.log(err);
+            }
             if(user.data.access_token) {
+                await AsyncStorage.setItem("userId",user.data.userId);
                 await AsyncStorage.setItem("access_token",user.data.access_token);
                 resolve(user.data);
             }
@@ -210,3 +217,4 @@ export default function SignInPage({navigation}){
     );
 }
 
+//TODO:: CHANGE BACKEND URL

@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { View, Text, Dimensions, StyleSheet,TouchableOpacity } from 'react-native';
 import COLORS from '../../src/consts/color';
 import HeaderWrapper from '../../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,33 +9,79 @@ import BioComponent from '../../components/Bio';
 import InterestChips from '../../components/interestChips';
 import AboutMe from '../../components/AboutMe';
 import MyAnswers from '../../components/EvaluationMyselfChips';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import Loading from '../../components/ActivityIndicator';
 const {width} = Dimensions.get('window');
 
 export default function Profile({navigation}) {
+  const DEVURL = "http://192.168.0.111:5000";
+  const [evalsInfo, setEvalsInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
+  const fetchUser = async()=>{
+    const userId = await AsyncStorage.getItem("userId");
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    const config = {
+      headers: {
+            "Content-type": "application/json",
+            "Authorization": `${access_token}`,
+      }
+    }
+
+    try{
+      const user = await axios.post(`${DEVURL}/api/profiles`,{userId},config);
+      setUserInfo(user.data);
+      setLoading(true);
+    }catch(err){
+      console.log(err);
+    }
+    // console.log(userInfo);
+  }
+  const fetchEvals = async()=>{
+    const userId = await AsyncStorage.getItem("userId");
+    try{
+      const evals = await axios.get(`${DEVURL}/api/evaluations/${userId}`);
+      setEvalsInfo(evals.data);
+    }catch(err){
+      console.log(err);
+    }
+    // console.log(evalsInfo);
+  }
+
+  useEffect(() => {
+    fetchUser();  
+    fetchEvals();
+  },[loading]);
+
   return (
     <>
       <HeaderWrapper />
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}  >
-       
           <ScrollView >
-            <View style={{marginVertical: 20}} >
+            {userInfo !== null && evalsInfo !== null?(<View style={{marginVertical: 20}} >
                 {/*profile photo, name and city*/}
                 <View style={style.contentWrapper} >
                     <View style={style.profilePhotoWrapper}  >
                         <UploadProfile />
                     </View>
                     <View style={style.nameWrapper} >
-                        <Text style={style.nameText}>Coeli</Text>
-                        <Text style={style.cityText}>Quezon City</Text>
+                        <Text style={style.nameText}>{userInfo.user.firstName}</Text>
+                        <Text style={style.cityText}>{userInfo.user.address.city}</Text>
                     </View>
                 </View>
                 <BioComponent />
-                <AboutMe />
-                <InterestChips />
+                <AboutMe about={userInfo.interest}/>
+                <InterestChips interest={userInfo.interest}/>
                 {/*Yung onPress prop ng MyAnswers ay mapupunta sa Question screen para magdagdag ng answers*/}
-                <MyAnswers/>
-            </View>
+                <MyAnswers evaluation={evalsInfo}/>
+            </View>)
+          :(
+              <Loading />
+          )}
+            
             
             
           </ScrollView>

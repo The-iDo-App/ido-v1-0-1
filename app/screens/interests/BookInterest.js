@@ -20,7 +20,7 @@ const BookInterest = ({navigation}) => {
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
     const handleSubmit = async() =>{
-        if(books.length>0){
+        if(books.length>=5){
             await AsyncStorage.setItem('books', String(books));
             setMessage("Input successfully saved!");
             console.log(books);

@@ -95,5 +95,5 @@ export default function OTPScreen({navigation}) {
   );
 }
 
-
+//TODO:: CHANGE BACKEND URL
 //TODO: match the current validation with entered validation

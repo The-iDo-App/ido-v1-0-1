@@ -19,7 +19,7 @@ const PetsInterest = ({navigation}) => {
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
     const handleSubmit = async() =>{
-        if(pets.length > 0){
+        if(pets.length >= 5){
             await AsyncStorage.setItem('pets', String(pets));
             setMessage("Input successfully saved!");
             console.log(pets);
