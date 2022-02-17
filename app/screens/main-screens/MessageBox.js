@@ -329,10 +329,17 @@ export default function MessageBox({ route, navigation }) {
     navigation.goBack();
   };
 
-  const leaveUser = () => {
+  const leaveUser = async () => {
     //functionality
     //mapupunta sa inbox
-    navigation.goBack();
+    const access_token = await AsyncStorage.getItem('access_token');
+    let res = await axios.post(
+      `${BACKEND_DEVURL}/api/settings/leave-conversation`,
+      { user_id: id },
+      { headers: { authorization: access_token } }
+    );
+    console.log(res);
+    navigation.navigate('Messaging');
   };
 
   const parseTime = (time) => {
