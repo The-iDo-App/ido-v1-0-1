@@ -16,7 +16,7 @@ const ChipAbout = ({label, text}) => (
   </View>
 )
 
-export default function AboutMe() {
+export default function AboutMe({about}) {
   return (
     <View style={{paddingHorizontal: 20, marginTop: 10, flex: 1, justifyContent: 'center' }}  >
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center',  justifyContent: 'center' }}  >
@@ -25,46 +25,34 @@ export default function AboutMe() {
         </View>
         <View style={{ borderColor: COLORS.grey, borderWidth: 0.5, borderStyle: 'solid', borderRadius: 10, flex: 1, paddingHorizontal: 10, paddingVertical: 20, width: width-40, marginTop: 20}} >
                {
-                   MyFakeData.map((item, i) => (
-                       <React.Fragment key={i}  >
-                          <ChipAbout  label="Astrological Sign"  text={item.about.sign} />
-                       </React.Fragment>
-                   ))
+                  <React.Fragment>
+                    <ChipAbout  label="Astrological Sign"  text={about.astrologicalSign} />
+                  </React.Fragment>
                }
                {
-                   MyFakeData.map((item, i) => (
-                       <React.Fragment key={i}  >
-                          <ChipAbout  label="Political Stand"  text={item.about.stand} />
-                       </React.Fragment>
-                   ))
+                  <React.Fragment >
+                    <ChipAbout  label="Political Stand"  text={about.politicalView} />
+                  </React.Fragment>
                }
                 {
-                   MyFakeData.map((item, i) => (
-                       <React.Fragment key={i}  >
-                          <ChipAbout  label="Religion"  text={item.about.religion} />
-                       </React.Fragment>
-                   ))
+                  <React.Fragment >
+                    <ChipAbout  label="Religion"  text={about.religion} />
+                  </React.Fragment>
                }
                {
-                   MyFakeData.map((item, i) => (
-                       <React.Fragment key={i}  >
-                          <ChipAbout  label="Do I smoke?"  text={item.about.smoke} />
-                       </React.Fragment>
-                   ))
+                  <React.Fragment >
+                    <ChipAbout  label="Do I smoke?"  text={about.smoke} />
+                  </React.Fragment>
                }
                 {
-                   MyFakeData.map((item, i) => (
-                       <React.Fragment key={i}  >
-                          <ChipAbout  label="Do I drink?"  text={item.about.drink} />
-                       </React.Fragment>
-                   ))
+                  <React.Fragment  >
+                    <ChipAbout  label="Do I drink?"  text={about.drinks} />
+                  </React.Fragment>
                }
                {
-                   MyFakeData.map((item, i) => (
-                       <React.Fragment key={i}  >
-                          <ChipAbout  label="Do I want to have kids?"  text={item.about.kids} />
-                       </React.Fragment>
-                   ))
+                  <React.Fragment  >
+                    <ChipAbout  label="Do I want to have kids?"  text={about.wantKids} />
+                  </React.Fragment>
                }
         </View>
      </View>

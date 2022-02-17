@@ -82,7 +82,7 @@ export default function SignUpPage({navigation}) {
                 setMessage("Input successfully saved!");
                 await AsyncStorage.setItem('email',data.email);
                 await AsyncStorage.setItem('password',data.password);
-                navigation.navigate('VerificationOTP');
+                navigation.navigate('CreateAccount');
             }else{
                 setMessage("Invalid Credentials! Please try again.");
             }
@@ -184,3 +184,4 @@ export default function SignUpPage({navigation}) {
 
 }
 
+//TODO:: CHANGE BACKEND URL

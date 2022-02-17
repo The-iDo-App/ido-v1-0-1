@@ -1,19 +1,19 @@
 import React, {useRef, useState, useEffect} from 'react';
-import { View, Text, StyleSheet, Dimensions, PanResponder, Animated } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, PanResponder, Animated,ActivityIndicator,TouchableOpacity } from 'react-native';
 import COLORS from '../../src/consts/color';
 import DatingCard from '../../components/DatingCard';
 import HeaderWrapper from '../../components/Header';
 import FakeUsers from '../../models/fakeUsers';
 import UserInfoModal from '../../components/userInfoModal';
-
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width, height} = Dimensions.get('window');
 
-
-export default function Home({navigation}) {
-
+export default function Home() {
+  const DEVURL = "http://192.168.0.111:5000";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInfoModalVisible, setUserInfoModalVisible] = useState(false);
-  
+  const [users,setUsers] = useState([]);
   //drag
   const pan = new Animated.ValueXY();
 
@@ -60,11 +60,9 @@ export default function Home({navigation}) {
       },
     })
     
-    const [pr, setPR] = useState(panResponder);
-  
+  const [pr, setPR] = useState(panResponder);
   
   const update = () => {
-    
     setCurrentIndex(currentIndex + 1);
     return;
   }
@@ -114,14 +112,38 @@ export default function Home({navigation}) {
      extrapolate: 'clamp'
    })
 
+    const getBirthday = (bday)=>{
+      let birthday = new Date(bday);  
+      let ageDifMs = Date.now() - birthday.getTime();
+      let ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
 
+  const getUsers = async()=>{
+      const access_token = await AsyncStorage.getItem("access_token");
+      const userId = await AsyncStorage.getItem("userId");
+      const config = {
+        headers: {
+              "Content-type": "application/json",
+              "Authorization": `${access_token}`,
+        },
+      }
+      const dbusers = await axios.get(`${DEVURL}/api/profiles/${userId}`,config);
+      setUsers(dbusers.data.users);
+  }
+  
+  useEffect(() => {
+     getUsers();
+  },[users]);
+  
   return (
     < >
       <HeaderWrapper />
       <View style={styles.pageContainer}>
-        
-      {
-        FakeUsers.map((item, i) => {
+      {users !==null && currentIndex< users.length?(
+        users.map((item, i) => {
+          let name = `${item.userId.firstName} ${item.userId.lastName}`;
+          let img = {uri:item.picture.blurredImage} || {uri:item.picture.avatar};
           if(i < currentIndex){
             return null;
           } 
@@ -138,27 +160,27 @@ export default function Home({navigation}) {
                           </Animated.View>
                       </View>
                       <DatingCard 
-                          id={item.id}
-                          nickname={item.nickname}
-                          image={item.image}
-                          bio={item.bio}
-                          city={item.city}
-                          age={item.age}
-                          matchRate={item.matchRate}
+                          id={item._id}
+                          nickname={item.userId.username}
+                          image={img}
+                          bio={item.shortDescription}
+                          city={item.userId.address.city}
+                          age={getBirthday(item.userId.birthday)}
+                          matchRate={"23%"}
                           onPress={() => {
                                 setUserInfoModalVisible(true)
-                                console.log('button clicked')
+                                // console.log('button clicked')
                                 }}  />
                   </Animated.View>
                   <UserInfoModal
-                    name={item.name}
-                    interests={item.interests}
-                    about={item.about}
-                    image={item.image}
-                    nickname={item.nickname} 
+                    name={name}
+                    interests={item.interest}
+                    about={item}
+                    image={img}
+                    interests={item.interest}
+                    nickname={item.userId.username} 
                     modalVisible={userInfoModalVisible} 
                     onPress={() => setUserInfoModalVisible(false)} 
-
                   />
               </React.Fragment>
               
@@ -169,33 +191,34 @@ export default function Home({navigation}) {
                 <React.Fragment key={i}>
                   <Animated.View  style={[styles.animatedCard, {opacity: nextCardOpacity, transform: [{scale: nextCardScale}]}]}  >
                       <DatingCard 
-                      id={item.id}
-                      nickname={item.nickname}
-                      image={item.image}
+                      id={item._id}
+                      nickname={item.userId.username} 
+                      image={img}
                       bio={item.bio}
-                      city={item.city}
-                      age={item.age}
-                      matchRate={item.matchRate}
+                      city={item.userId.address.city}
+                      age={getBirthday(item.userId.birthday)}
+                      matchRate={"23%"}
                         onPress={() => {
                         setUserInfoModalVisible(true)
-                        console.log('button clicked')
+                        // console.log('button clicked')
                         }}  />
                   </Animated.View>
-                  
-              
                 </React.Fragment>
-                
               )
-
           }
-           
-
         }).reverse()
-      }
-      
-     
-            
-       
+      ):(
+        <View style={{flex:1,justifyContent:'center',alignItems:'center',paddingHorizontal: 10}}>
+            <Text>No users to match</Text>
+            <ActivityIndicator size="large"  color="#FFC0CB"/>  
+            <TouchableOpacity
+              onPress={()=>setCurrentIndex(0)}
+              style={{backgroundColor: "#DDDDDD",padding: 10}}
+            >
+              <Text>Reload</Text>
+            </TouchableOpacity>
+        </View>
+      )}
       </View>
       
     </>

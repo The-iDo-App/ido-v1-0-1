@@ -131,7 +131,7 @@ const FoodInterest = ({navigation}) => {
     }
 
     const handleSubmit = async() =>{
-        if(food.length>0){
+        if(food.length>=5){
             await AsyncStorage.setItem('food', String(food));
             // console.log(food);
             postData();
@@ -156,7 +156,7 @@ const FoodInterest = ({navigation}) => {
     );
 };
 
-
-
 //make this component available to the app
 export default FoodInterest;
+
+//TODO:: CHANGE BACKEND URL

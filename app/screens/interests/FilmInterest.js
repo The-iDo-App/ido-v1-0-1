@@ -23,7 +23,7 @@ const FilmInterest = ({navigation}) => {
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
     const handleSubmit = async() =>{
-        if(movieGenre.length>0){
+        if(movieGenre.length>=5){
             await AsyncStorage.setItem('movieGenre', String(movieGenre));
             setMessage("Input successfully saved!");
             console.log(movieGenre);

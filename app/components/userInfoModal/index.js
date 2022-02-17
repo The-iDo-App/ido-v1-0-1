@@ -136,18 +136,18 @@ export default function UserInfoModal({onPress, modalVisible, nickname, interest
   var sportItems = interests.sports; 
   var hobbyItems = interests.hobbies; 
   var musicItems = interests.musicGenre ;
-  var filmItems = interests.filmGenre;
-  var petItems = interests.pet; 
-  var bookItems = interests.bookGenre; 
+  var filmItems = interests.movieGenre;
+  var petItems = interests.pets; 
+  var bookItems = interests.books; 
   var foodItems = interests.food; 
 
   //about
-  var signItem = about.mySign;
-  var politicalItem = about.political;
-  var religionItem = about.religion;
-  var smokingItem = about.smoking;
-  var drinkingItem = about.drinking; 
-  var kidsItem = about.kids;
+  var signItem = about.interest.astrologicalSign;
+  var politicalItem = about.interest.politicalView;
+  var religionItem = about.interest.religion;
+  var smokingItem = about.interest.smoke;
+  var drinkingItem = about.interest.drinks; 
+  var kidsItem = about.interest.wantKids;
 
 
   return (
@@ -168,11 +168,11 @@ export default function UserInfoModal({onPress, modalVisible, nickname, interest
                       <View  style={style.imageWrapper}>
                           <ImageBackground source={image} resizeMode="contain" style={style.image}  />
                       </View>
-                      <Text style={{color: COLORS.blue, fontSize: 20, fontWeight: 'bold'}} >{name}</Text>
+                      <Text>{name}</Text>
                   </View>
 
                   <ScrollView scrollEnabled  contentContainerStyle={{ display: 'flex', flexGrow: 1 }} >
-                      <View style={{marginVertical: 10, borderBottomColor: COLORS.grey, borderBottomWidth: 1, paddingVertical: 10}} >
+                      <View style={{marginVertical: 20, borderBottomColor: COLORS.grey, borderBottomWidth: 1, paddingVertical: 10}} >
                        {/*ABOUT ME*/}
                        <Text style={{color: COLORS.grey, fontSize: 18, fontWeight: 'bold'}}  >What about me</Text>
                         
@@ -191,7 +191,7 @@ export default function UserInfoModal({onPress, modalVisible, nickname, interest
                      </View>
                        
 
-                     <View style={{marginVertical: 10, paddingVertical: 10}}   >
+                     <View style={{marginVertical: 20, paddingVertical: 10}}   >
                        {/*INTERESTS*/}
 
                        {/*SPORTS*/}

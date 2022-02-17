@@ -16,13 +16,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SportsInterest = ({navigation}) => {
     const  [sports,setSports] = useState([]);
 
-    
     const [message,setMessage] = useState("Input successfully saved!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
     const handleSubmit = async() =>{
-        if(sports.length>0){
+        if(sports.length>=5){
             await AsyncStorage.setItem('sports', String(sports));
             setMessage("Input successfully saved!");
             console.log(sports);
