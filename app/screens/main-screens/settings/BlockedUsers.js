@@ -24,6 +24,25 @@ export default function BlockedUsersScreen({ navigation }) {
     setBlockedUsers(res.data.users);
   }, []);
 
+  const unblockUser = async (user_id) => {
+    const access_token = await AsyncStorage.getItem('access_token');
+    let res = await axios.delete(
+      `${BACKEND_DEVURL}/api/settings/blocked-users`,
+      {
+        headers: {
+          authorization: access_token,
+        },
+        data: {
+          user_id,
+        },
+      }
+    );
+    console.log(res.data);
+    if (res.data.success) {
+      setBlockedUsers(blockedUsers.filter((user) => user._id !== user_id));
+    }
+  };
+
   return (
     <>
       <View style={{ backgroundColor: 'white' }}>
@@ -59,7 +78,7 @@ export default function BlockedUsersScreen({ navigation }) {
                   key={user._id}
                   nickname={user.username}
                   email={user.email}
-                  onPress={() => console.log(user._id)}
+                  onPress={() => unblockUser(user._id)}
                 />
               );
             })}
