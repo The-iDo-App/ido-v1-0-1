@@ -26,8 +26,6 @@ const FakeUsers = [
             drinking: 'Moderate drinker',
             kids: 'No plans'
         }
-        
-
     },
     {
         id: 1, 

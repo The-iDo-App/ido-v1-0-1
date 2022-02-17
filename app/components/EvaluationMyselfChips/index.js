@@ -6,20 +6,23 @@ import COLORS from '../../src/consts/color';
 import MyFakeData from '../../models/MyData';
 import {Feather, FontAwesome, AntDesign} from '@expo/vector-icons';
 
-
-
 const {width} = Dimensions.get('window');
 
 const ChipAbout = ({label, text}) => (
   <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}} >
-    <Text style={chipStyle.itemLabel}> {label} : </Text>
+    <Text style={chipStyle.itemLabel}> {label} </Text>
+    {text !== undefined?(  
     <View style={{backgroundColor: COLORS.blue, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 10}}  >
         <Text style={{color: COLORS.white}}  >{text}</Text>
-    </View>
+    </View>):(
+      <Text></Text>
+    )  
+  }
+  
   </View>
 )
 
-export default function MyAnswers({onPress}) {
+export default function MyAnswers({onPress, evaluation}) {
   return (
     <View style={{paddingHorizontal: 20, marginTop: 10, flex: 1, justifyContent: 'center' }}  >
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center',  justifyContent: 'center' }}  >
@@ -31,11 +34,13 @@ export default function MyAnswers({onPress}) {
         </View>
         <View style={{ borderColor: COLORS.grey, borderWidth: 0.5, borderStyle: 'solid', borderRadius: 10, flex: 1, paddingHorizontal: 10, paddingVertical: 20, width: width-40, marginTop: 20}} >
                {
-                   MyFakeData.map((item, i) => (
-                       <React.Fragment key={i}  >
-                          <ChipAbout  label={item.evaluation.question}  text={item.evaluation.answer} />
-                       </React.Fragment>
-                   ))
+                //  console.log(evaluation)
+                  evaluation.questions.map((item, i) => (
+                     <React.Fragment key={i}  >
+                        <ChipAbout  label={item}/>
+                        <ChipAbout text={evaluation.answers[i]} />
+                     </React.Fragment>
+                  ))
                }
         </View>
      </View>

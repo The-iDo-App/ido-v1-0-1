@@ -21,7 +21,7 @@ const HobbyInterest = ({navigation}) => {
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
     const handleSubmit = async() =>{
-        if(hobbies.length>0){
+        if(hobbies.length>=5){
             await AsyncStorage.setItem('hobbies', String(hobbies));
             setMessage("Input successfully saved!");
             console.log(hobbies);

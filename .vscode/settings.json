@@ -12,5 +12,8 @@
         "VAWC",
         "VAWCD",
         "WCPC"
-    ]
+    ],
+    "files.associations": {
+        "*.js":"javascriptreact"
+    }
 }

@@ -12,14 +12,6 @@ export default function ForgotPassScreen({navigation}) {
     const [message,setMessage] = useState("Security code sent!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
-
-    const hasUnsavedChanges = Boolean(true);
-        React.useEffect(
-            () =>
-            navigation.addListener('beforeRemove', (e) => {
-                e.preventDefault();
-        }),[navigation, hasUnsavedChanges]
-    );
     
     const fetchEmail = async() =>{
       return new Promise(async(resolve, reject) =>{
@@ -86,3 +78,4 @@ export default function ForgotPassScreen({navigation}) {
     </SafeAreaView>
   );
 }
+//TODO:: CHANGE BACKEND URL

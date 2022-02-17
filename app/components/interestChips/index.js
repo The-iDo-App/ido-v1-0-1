@@ -7,7 +7,7 @@ import MyFakeData from '../../models/MyData';
 
 const {width} = Dimensions.get('window');
 
-export default function InterestChips() {
+export default function InterestChips({interest}) {
   return (
     <View style={{paddingHorizontal: 20, marginTop: 10, flex: 1, justifyContent: 'center' }}  >
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center',  justifyContent: 'center' }}  >
@@ -23,7 +23,7 @@ export default function InterestChips() {
                             MyFakeData.map((item, i) => (
                                 <React.Fragment key={i}>
                                     {
-                                        item.interests.sports.map((sporty, index) => (
+                                        interest.sports.map((sporty, index) => (
                                             <React.Fragment key={index}>
                                                 <IdoChip isProfile={false} text={sporty} isProfile={true} />
                                             </React.Fragment>
@@ -43,7 +43,7 @@ export default function InterestChips() {
                             MyFakeData.map((item, i) => (
                                 <React.Fragment key={i}>
                                     {
-                                        item.interests.hobbies.map((hobby, index) => (
+                                            interest.hobbies.map((hobby, index) => (
                                             <React.Fragment key={index}>
                                                 <IdoChip isProfile={false} text={hobby} isProfile={true} />
                                             </React.Fragment>
@@ -62,7 +62,7 @@ export default function InterestChips() {
                             MyFakeData.map((item, i) => (
                                 <React.Fragment key={i}>
                                     {
-                                        item.interests.music.map((favMusic, index) => (
+                                        interest.musicGenre.map((favMusic, index) => (
                                             <React.Fragment key={index}>
                                                 <IdoChip isProfile={false} text={favMusic} isProfile={true} />
                                             </React.Fragment>
@@ -81,7 +81,7 @@ export default function InterestChips() {
                             MyFakeData.map((item, i) => (
                                 <React.Fragment key={i}>
                                     {
-                                        item.interests.film.map((filmy, index) => (
+                                        interest.movieGenre.map((filmy, index) => (
                                             <React.Fragment key={index}>
                                                 <IdoChip isProfile={false} text={filmy} isProfile={true} />
                                             </React.Fragment>
@@ -100,7 +100,7 @@ export default function InterestChips() {
                             MyFakeData.map((item, i) => (
                                 <React.Fragment key={i}>
                                     {
-                                        item.interests.pet.map((pets, index) => (
+                                        interest.pets.map((pets, index) => (
                                             <React.Fragment key={index}>
                                                 <IdoChip isProfile={false} text={pets} isProfile={true} />
                                             </React.Fragment>
@@ -119,7 +119,7 @@ export default function InterestChips() {
                             MyFakeData.map((item, i) => (
                                 <React.Fragment key={i}>
                                     {
-                                        item.interests.book.map((booky, index) => (
+                                        interest.books.map((booky, index) => (
                                             <React.Fragment key={index}>
                                                 <IdoChip isProfile={false} text={booky} isProfile={true} />
                                             </React.Fragment>
@@ -138,7 +138,7 @@ export default function InterestChips() {
                             MyFakeData.map((item, i) => (
                                 <React.Fragment key={i}>
                                     {
-                                        item.interests.food.map((foodies, index) => (
+                                        interest.food.map((foodies, index) => (
                                             <React.Fragment key={index}>
                                                 <IdoChip isProfile={false} text={foodies} isProfile={true} />
                                             </React.Fragment>

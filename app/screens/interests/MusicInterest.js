@@ -21,7 +21,7 @@ const MusicInterest = ({navigation}) => {
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
     const handleSubmit = async() =>{
-        if(musicGenre.length >0){
+        if(musicGenre.length >=5){
             await AsyncStorage.setItem('musicGenre', String(musicGenre));
             setMessage("Input successfully saved!");
             console.log(musicGenre);

@@ -136,18 +136,18 @@ export default function UserInfoModal({onPress, modalVisible, nickname, interest
   var sportItems = interests.sports; 
   var hobbyItems = interests.hobbies; 
   var musicItems = interests.musicGenre ;
-  var filmItems = interests.filmGenre;
-  var petItems = interests.pet; 
-  var bookItems = interests.bookGenre; 
+  var filmItems = interests.movieGenre;
+  var petItems = interests.pets; 
+  var bookItems = interests.books; 
   var foodItems = interests.food; 
 
   //about
-  var signItem = about.mySign;
-  var politicalItem = about.political;
-  var religionItem = about.religion;
-  var smokingItem = about.smoking;
-  var drinkingItem = about.drinking; 
-  var kidsItem = about.kids;
+  var signItem = about.interest.astrologicalSign;
+  var politicalItem = about.interest.politicalView;
+  var religionItem = about.interest.religion;
+  var smokingItem = about.interest.smoke;
+  var drinkingItem = about.interest.drinks; 
+  var kidsItem = about.interest.wantKids;
 
 
   return (
