@@ -9,7 +9,7 @@ const {width} = Dimensions.get('window');
 export default function BioComponent() {
 
     const [bioEditModal, setBioEditModal] = useState(false);
-    const [bioText, setBioText] = useState("Enjoy what you gotta enjoy!");
+    const [bioText, setBioText] = useState("");
 
 
 
@@ -55,6 +55,7 @@ export default function BioComponent() {
                                         placeholder="Write your bio"
                                         value={bioText}
                                         style={{fontSize: 18, color: COLORS.grey}}
+                                        multiline
                                     />
                             </View>
                             <View style={style.modalFooter} >
