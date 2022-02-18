@@ -1,5 +1,5 @@
 import ResetPassword from "../../components/ResetPassword";
-import { View, Text, Touchable,Linking } from "react-native";
+import { View, Text, Touchable,Linking,BackHandler } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React , {useEffect, useState} from "react";
 import COLORS from "../../src/consts/color";
@@ -7,9 +7,10 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Snackbar from '../../components/Toast';
 import axios from 'axios';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
+
 
 export default function OTPScreen({navigation}) {
-    const DEVURL = "http://192.168.0.111:5000";
     const maxTimer = 100;
     const [counter, setCounter] = useState(maxTimer);
     const [activeCounter, setActiveCounter] = useState(false);
@@ -25,13 +26,18 @@ export default function OTPScreen({navigation}) {
       return () => clearInterval(timer);
     });
     
-     const hasUnsavedChanges = Boolean(true);
-        React.useEffect(
-            () =>
-            navigation.addListener('beforeRemove', (e) => {
-                e.preventDefault();
-        }),[navigation, hasUnsavedChanges]
-    );
+    //  const hasUnsavedChanges = Boolean(true);
+    //     React.useEffect(
+    //         () =>
+    //         navigation.addListener('beforeRemove', (e) => {
+    //             e.preventDefault();
+    //     }),[navigation, hasUnsavedChanges]
+    // );
+
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
 
     const submitOTP = async() => {
         const securityCode = await AsyncStorage.getItem("securityCode");
@@ -47,7 +53,7 @@ export default function OTPScreen({navigation}) {
     const fetchSecurity = async()=>{
       return new Promise(async(resolve, reject) =>{
         const sendTo = await AsyncStorage.getItem("forgotEmail");
-        let securityCode = await axios.post(`${DEVURL}/api/emails/otp`, {sendTo});
+        let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
         if(securityCode) 
             resolve(securityCode.data);
         reject(false);

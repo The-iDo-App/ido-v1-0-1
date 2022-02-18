@@ -5,11 +5,10 @@ import {Feather, FontAwesome, AntDesign} from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios  from 'axios';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 const {width} = Dimensions.get('window');
 export default function BioComponent() {
-     const DEVURL = "http://192.168.0.111:5000";
-
     const [bioEditModal, setBioEditModal] = useState(false);
     const [bioText, setBioText] = useState("Enjoy what you gotta enjoy!");
 
@@ -24,7 +23,7 @@ export default function BioComponent() {
         }
 
         try{
-            const userbio = await axios.post(`${DEVURL}/api/profiles/${userId}`,{bio: bioText},config);
+            const userbio = await axios.post(`${BACKEND_BASEURL}/api/profiles/${userId}`,{bio: bioText},config);
             // console.log(userbio.data.user.shortDescription);
             setBioText(userbio.data.user.shortDescription);
         }catch(err){

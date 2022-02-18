@@ -11,11 +11,11 @@ import AboutMe from '../../components/AboutMe';
 import MyAnswers from '../../components/EvaluationMyselfChips';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 import Loading from '../../components/ActivityIndicator';
 const {width} = Dimensions.get('window');
 
 export default function Profile({navigation}) {
-  const DEVURL = "http://192.168.0.111:5000";
   const [evalsInfo, setEvalsInfo] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -30,23 +30,29 @@ export default function Profile({navigation}) {
             "Authorization": `${access_token}`,
       }
     }
-
+    let user;
     try{
-      const user = await axios.post(`${DEVURL}/api/profiles`,{userId},config);
-      setUserInfo(user.data);
-      setLoading(true);
+      user = await axios.post(`${BACKEND_BASEURL}/api/profiles`,{userId},config);
     }catch(err){
       console.log(err);
+    }
+    if(user.data.user){
+      setUserInfo(user.data);
+      setLoading(true);
     }
     // console.log(userInfo);
   }
   const fetchEvals = async()=>{
     const userId = await AsyncStorage.getItem("userId");
+    let evals;
     try{
-      const evals = await axios.get(`${DEVURL}/api/evaluations/${userId}`);
-      setEvalsInfo(evals.data);
+      evals = await axios.get(`${BACKEND_BASEURL}/api/evaluations/${userId}`);
+      console.log(evals);
     }catch(err){
       console.log(err);
+    }
+    if(evals.data.questions){
+      setEvalsInfo(evals.data);
     }
     // console.log(evalsInfo);
   }
@@ -90,6 +96,8 @@ export default function Profile({navigation}) {
     
   );
 }
+
+//TODO: CHANGE BACKEND URL
 
 
 

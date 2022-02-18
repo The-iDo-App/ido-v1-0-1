@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView,BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderWrapper from '../../components/Header';
 import Title from '../../components/Title';
@@ -9,22 +9,26 @@ import COLORS from '../../src/consts/color';
 import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 const {width, height} = Dimensions.get('window');
 export default function ChangePassScreen({navigation}) {
-   const DEVURL = "http://192.168.0.111:5000";
-
     const [message,setMessage] = useState("");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
-    const hasUnsavedChanges = Boolean(true);
-        React.useEffect(
-            () =>
-            navigation.addListener('beforeRemove', (e) => {
-                e.preventDefault();
-        }),[navigation, hasUnsavedChanges]
-    );
+    // const hasUnsavedChanges = Boolean(true);
+    //     React.useEffect(
+    //         () =>
+    //         navigation.addListener('beforeRemove', (e) => {
+    //             e.preventDefault();
+    //     }),[navigation, hasUnsavedChanges]
+    // );
+
+     useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    }, [])
 
     const [data, setData] = React.useState({
         email: '',
@@ -84,8 +88,13 @@ export default function ChangePassScreen({navigation}) {
     const fetchUpdate = async()=>{
         return new Promise(async(resolve, reject) =>{
             const email = await AsyncStorage.getItem("forgotEmail");
-            let user = await axios.post(`${DEVURL}/api/emails/change`, {email, password: data.password});
-            if(user) 
+            let user;
+            try{
+                user = await axios.post(`${BACKEND_BASEURL}/api/emails/change`, {email, password: data.password});
+            }catch(err){
+                console.log(err);
+            }
+            if(user.data.success) 
                 resolve(user.data);
             reject(false);
         });
@@ -99,11 +108,13 @@ export default function ChangePassScreen({navigation}) {
             let updateUser;
             try{
                 updateUser = await fetchUpdate();
-                setMessage("Password updated!");
-                 navigation.navigate('SignIn');
             }catch(reject){
                 setMessage("An error occured");
                 updateUser = reject;
+            }
+            if(updateUser.success){
+                navigation.navigate('SignIn');
+                setMessage("Password updated!");
             }
         }else{
             setMessage("Password does not match.");

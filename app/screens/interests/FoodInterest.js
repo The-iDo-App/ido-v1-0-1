@@ -111,6 +111,7 @@ const FoodInterest = ({navigation}) => {
             });
             if (response.status === 200) {
                 setMessage(`Account successfully created!`);
+                console.log(response.data);
                 await AsyncStorage.setItem('userId', response.data.user_id);
                 await AsyncStorage.setItem('interestId', response.data.interestId);
                 await AsyncStorage.setItem('access_token',  response.data.access_token);

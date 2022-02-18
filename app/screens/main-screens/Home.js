@@ -8,9 +8,9 @@ import UserInfoModal from '../../components/userInfoModal';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width, height} = Dimensions.get('window');
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 export default function Home() {
-  const DEVURL = "http://192.168.0.111:5000";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInfoModalVisible, setUserInfoModalVisible] = useState(false);
   const [users,setUsers] = useState([]);
@@ -128,8 +128,13 @@ export default function Home() {
               "Authorization": `${access_token}`,
         },
       }
-      const dbusers = await axios.get(`${DEVURL}/api/profiles/${userId}`,config);
-      setUsers(dbusers.data.users);
+      let dbusers;
+      try{
+         dbusers = await axios.get(`${BACKEND_BASEURL}/api/profiles/${userId}`,config);
+         setUsers(dbusers.data.users);
+      }catch(err){
+        console.log(err);
+      }
   }
   
   useEffect(() => {
