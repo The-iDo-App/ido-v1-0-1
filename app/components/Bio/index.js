@@ -3,37 +3,17 @@ import { View, Text, Dimensions,StyleSheet, Modal, Pressable, TextInput } from '
 import COLORS from '../../src/consts/color';
 import {Feather, FontAwesome, AntDesign} from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios  from 'axios';
 
 const {width} = Dimensions.get('window');
+
 export default function BioComponent() {
-     const DEVURL = "http://192.168.0.111:5000";
 
     const [bioEditModal, setBioEditModal] = useState(false);
-    const [bioText, setBioText] = useState("Enjoy what you gotta enjoy!");
+    const [bioText, setBioText] = useState("");
 
-    const fetchBio = async() =>{
-        const userId = await AsyncStorage.getItem("userId");
-        const access_token = await AsyncStorage.getItem("access_token");
-        const config = {
-            headers: {
-                    "Content-type": "application/json",
-                    "Authorization": `${access_token}`,
-            }
-        }
 
-        try{
-            const userbio = await axios.post(`${DEVURL}/api/profiles/${userId}`,{bio: bioText},config);
-            // console.log(userbio.data.user.shortDescription);
-            setBioText(userbio.data.user.shortDescription);
-        }catch(err){
-            console.log(err);
-        }
-    }
 
     const handleSaveButton = () => {
-       fetchBio();
        setBioEditModal(false)
     }
 
@@ -55,12 +35,12 @@ export default function BioComponent() {
                 </View>
             </View>
             
-                <Modal
+                 <Modal
                     animationType="fade"
                     visible={bioEditModal}
                     transparent={true}
                             
-                >
+                 >
                     <View style={style.anotherView}>
                         <View style={style.modalView} >
                             <View style={style.modalHeader} >
@@ -75,6 +55,7 @@ export default function BioComponent() {
                                         placeholder="Write your bio"
                                         value={bioText}
                                         style={{fontSize: 18, color: COLORS.grey}}
+                                        multiline
                                     />
                             </View>
                             <View style={style.modalFooter} >
@@ -86,9 +67,11 @@ export default function BioComponent() {
                                         </Pressable>
                             </View>
                         </View>
-                    </View>  
-                </Modal>
-        
+                         
+                    </View>
+                           
+                    </Modal>
+            
            
     </>
     
@@ -185,5 +168,3 @@ const style = StyleSheet.create({
     height: width/1.35
   },
 })
-
-//TODO: CHANGE DEV URLBIO

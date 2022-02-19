@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import DeleteAccountModal from '../../../components/DeleteAccount';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BACKEND_DEVURL } from '@env';
+import { BACKEND_BASEURL } from '@env';
 
 const ItemSettings = ({ onPress, label, deleteAccount }) => {
   return (
@@ -48,7 +48,7 @@ export default function Settings({ navigation }) {
   const handleDeleteAccount = async () => {
     const access_token = await AsyncStorage.getItem('access_token');
     await axios.post(
-      `${BACKEND_DEVURL}/api/settings/account-deletion`,
+      `${BACKEND_BASEURL}/api/settings/account-deletion`,
       {},
       {
         headers: { authorization: access_token },

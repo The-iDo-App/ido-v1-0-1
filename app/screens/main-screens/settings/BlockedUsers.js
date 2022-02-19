@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SettingsMainTitle from '../../../components/settingsTitle';
 import BlockedUserComponent from '../../../components/BlockedUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BACKEND_DEVURL } from '@env';
+import { BACKEND_BASEURL } from '@env';
 import axios from 'axios';
 
 export default function BlockedUsersScreen({ navigation }) {
@@ -17,7 +17,7 @@ export default function BlockedUsersScreen({ navigation }) {
 
   useEffect(async () => {
     const access_token = await AsyncStorage.getItem('access_token');
-    let res = await axios.get(`${BACKEND_DEVURL}/api/settings/blocked-users`, {
+    let res = await axios.get(`${BACKEND_BASEURL}/api/settings/blocked-users`, {
       headers: { authorization: access_token },
     });
 
@@ -27,7 +27,7 @@ export default function BlockedUsersScreen({ navigation }) {
   const unblockUser = async (user_id) => {
     const access_token = await AsyncStorage.getItem('access_token');
     let res = await axios.delete(
-      `${BACKEND_DEVURL}/api/settings/blocked-users`,
+      `${BACKEND_BASEURL}/api/settings/blocked-users`,
       {
         headers: {
           authorization: access_token,

@@ -11,11 +11,10 @@ import * as Animatable from 'react-native-animatable';
 import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT,WS_URL} from '@env';
 import { AuthContext } from '../../components/context';
 
 export default function SignInPage({navigation}){
-    const DEVURL = "http://192.168.0.111:5000";
      const hasUnsavedChanges = Boolean(true);
         React.useEffect(
             () =>
@@ -101,7 +100,8 @@ export default function SignInPage({navigation}){
             const {email,password} = data;
             let user;
             try{
-              user = await axios.post(`${DEVURL}/api/logins/`, {email,password});
+              user = await axios.post(`${BACKEND_BASEURL}/api/logins/`, {email,password});
+              console.log(user);
             }catch(err){
                 console.log(err);
             }

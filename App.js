@@ -14,7 +14,7 @@ export default function App() {
 
   return (
     <>
-    {console.log(BACKEND_DEVURL)}
+    {console.log(BACKEND_BASEURL)}
       <StatusBar />
       {
         connectionStatus ? 

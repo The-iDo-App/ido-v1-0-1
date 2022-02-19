@@ -7,9 +7,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Snackbar from '../../components/Toast';
 import axios from 'axios';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 export default function VerificationOTPScreen({navigation}) {
-    // const DEVURL = "http://192.168.0.111:5000";
     const maxTimer = 100;
     const [counter, setCounter] = useState(maxTimer);
     const [activeCounter, setActiveCounter] = useState(false);
@@ -34,43 +34,43 @@ export default function VerificationOTPScreen({navigation}) {
     // );
 
     const submitOTP = async() => {
-        // const securityCode = await AsyncStorage.getItem("securityCode");
-        // if(securityCode == userOtp){
-        //   navigation.navigate('ChangePass');  
-        // }else{
-        //   setMessage("Invalid security code!");
-        //   setvisibleToast(true);
-        // }
+        const securityCode = await AsyncStorage.getItem("securityCode");
+        if(securityCode == userOtp){
+          navigation.navigate('ChangePass');  
+        }else{
+          setMessage("Invalid security code!");
+          setvisibleToast(true);
+        }
 
         navigation.navigate('CreateAccount');
 
     }
    
     const fetchSecurity = async()=>{
-    //   return new Promise(async(resolve, reject) =>{
-    //     const sendTo = await AsyncStorage.getItem("forgotEmail");
-    //     let securityCode = await axios.post(`${DEVURL}/api/emails/otp`, {sendTo});
-    //     if(securityCode) 
-    //         resolve(securityCode.data);
-    //     reject(false);
-    //   });
+      return new Promise(async(resolve, reject) =>{
+        const sendTo = await AsyncStorage.getItem("forgotEmail");
+        let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
+        if(securityCode) 
+            resolve(securityCode.data);
+        reject(false);
+      });
     }
 
     const resendOTP = async() => {
         // send email again
-        // let securityCode;
-        // try{
-        //   securityCode = await fetchSecurity();
-        //   await AsyncStorage.setItem("securityCode",securityCode.securityCode.toString());
-        //   await AsyncStorage.setItem("devmail",securityCode.devmail.toString());
-        //   setMessage("Security code sent!");
-        // }catch(reject){
-        //     securityCode = reject;
-        //     await AsyncStorage.removeItem("securityCode");
-        // }
+        let securityCode;
+        try{
+          securityCode = await fetchSecurity();
+          await AsyncStorage.setItem("securityCode",securityCode.securityCode.toString());
+          await AsyncStorage.setItem("devmail",securityCode.devmail.toString());
+          setMessage("Security code sent!");
+        }catch(reject){
+            securityCode = reject;
+            await AsyncStorage.removeItem("securityCode");
+        }
         // console.log(securityCode);
 
-        // setvisibleToast(true);
+        setvisibleToast(true);
         setCounter(maxTimer);
     }
 

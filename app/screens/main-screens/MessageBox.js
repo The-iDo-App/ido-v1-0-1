@@ -23,7 +23,7 @@ import ConfirmationModal from '../../components/MessageSettings/confirmModal';
 import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { WS_URL, BACKEND_DEVURL } from '@env';
+import { WS_URL, BACKEND_BASEURL } from '@env';
 import io from 'socket.io-client/dist/socket.io';
 
 const { height, width } = Dimensions.get('window');
@@ -315,7 +315,7 @@ export default function MessageBox({ route, navigation }) {
     //mapupunta sa inbox
     const access_token = await AsyncStorage.getItem('access_token');
     let res = await axios.post(
-      `${BACKEND_DEVURL}/api/settings/blocked-users`,
+      `${BACKEND_BASEURL}/api/settings/blocked-users`,
       { user_id: id },
       { headers: { authorization: access_token } }
     );
@@ -328,7 +328,7 @@ export default function MessageBox({ route, navigation }) {
     //mapupunta sa inbox
     const access_token = await AsyncStorage.getItem('access_token');
     let res = await axios.post(
-      `${BACKEND_DEVURL}/api/settings/report-user`,
+      `${BACKEND_BASEURL}/api/settings/report-user`,
       { user_id: id },
       { headers: { authorization: access_token } }
     );
@@ -341,7 +341,7 @@ export default function MessageBox({ route, navigation }) {
     //mapupunta sa inbox
     const access_token = await AsyncStorage.getItem('access_token');
     let res = await axios.post(
-      `${BACKEND_DEVURL}/api/settings/leave-conversation`,
+      `${BACKEND_BASEURL}/api/settings/leave-conversation`,
       { user_id: id },
       { headers: { authorization: access_token } }
     );

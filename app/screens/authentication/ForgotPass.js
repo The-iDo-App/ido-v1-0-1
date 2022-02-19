@@ -4,9 +4,9 @@ import React,{useState, useEffect} from "react";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Snackbar from '../../components/Toast';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 export default function ForgotPassScreen({navigation}) {
-    const DEVURL = "http://192.168.0.111:5000";
     const [sendTo,setSendTo] = useState(null);
   
     const [message,setMessage] = useState("Security code sent!");
@@ -15,7 +15,7 @@ export default function ForgotPassScreen({navigation}) {
     
     const fetchEmail = async() =>{
       return new Promise(async(resolve, reject) =>{
-            let user = await axios.post(`${DEVURL}/api/logins/otp`, {email:sendTo});
+            let user = await axios.post(`${BACKEND_BASEURL}/api/logins/otp`, {email:sendTo});
             if(user) 
                 resolve(user.data);
             reject(false);
@@ -24,7 +24,7 @@ export default function ForgotPassScreen({navigation}) {
 
     const fetchSecurity = async()=>{
       return new Promise(async(resolve, reject) =>{
-      let securityCode = await axios.post(`${DEVURL}/api/emails/otp`, {sendTo});
+      let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
       if(securityCode) 
           resolve(securityCode.data);
       reject(false);
