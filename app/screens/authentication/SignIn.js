@@ -11,7 +11,7 @@ import * as Animatable from 'react-native-animatable';
 import Snackbar from '../../components/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
+import {BACKEND_BASEURL,BACKEND_DEVURL,PORT,WS_URL} from '@env';
 import { AuthContext } from '../../components/context';
 
 export default function SignInPage({navigation}){

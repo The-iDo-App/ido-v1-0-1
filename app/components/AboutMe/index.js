@@ -8,7 +8,7 @@ import MyFakeData from '../../models/MyData';
 const {width} = Dimensions.get('window');
 
 const ChipAbout = ({label, text}) => (
-  <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}} >
+  <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap'}} >
     <Text style={chipStyle.itemLabel}> {label} : </Text>
     <View style={{backgroundColor: COLORS.blue, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 10}}  >
         <Text style={{color: COLORS.white}}  >{text}</Text>

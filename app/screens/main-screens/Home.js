@@ -139,7 +139,7 @@ export default function Home() {
   
   useEffect(() => {
      getUsers();
-  },[users]);
+  },[]);
   
   return (
     < >
@@ -149,6 +149,9 @@ export default function Home() {
         users.map((item, i) => {
           let name = `${item.userId.firstName} ${item.userId.lastName}`;
           let img = {uri:item.picture.blurredImage} || {uri:item.picture.avatar};
+          const max = 96;
+          const min = 85;
+          let matchrate = Math.floor(Math.random() * (max - min) + min) + "%";
           if(i < currentIndex){
             return null;
           } 
@@ -171,7 +174,7 @@ export default function Home() {
                           bio={item.shortDescription}
                           city={item.userId.address.city}
                           age={getBirthday(item.userId.birthday)}
-                          matchRate={"23%"}
+                          matchRate={matchrate}
                           onPress={() => {
                                 setUserInfoModalVisible(true)
                                 // console.log('button clicked')
@@ -202,7 +205,7 @@ export default function Home() {
                       bio={item.bio}
                       city={item.userId.address.city}
                       age={getBirthday(item.userId.birthday)}
-                      matchRate={"23%"}
+                      matchRate={matchrate}
                         onPress={() => {
                         setUserInfoModalVisible(true)
                         // console.log('button clicked')
