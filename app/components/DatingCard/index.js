@@ -30,7 +30,6 @@ export default function DatingCard({
   name,
   onPress,
 }) {
-  console.log(location);
   return (
     <>
       <View style={cardStyle.cardWrapper}>

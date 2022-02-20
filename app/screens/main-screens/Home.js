@@ -154,9 +154,9 @@ export default function Home() {
             .map((item, i) => {
               // console.log(item);
               let name = `${item.firstName} ${item.lastName}`;
-              let img = { uri: item.picture.blurredImage } || {
-                uri: item.picture.avatar,
-              };
+              let img = item.picture.blurredImage
+                ? { uri: item.picture.blurredImage }
+                : { uri: item.picture.avatar };
               const max = 96;
               const min = 85;
               let matchrate =
