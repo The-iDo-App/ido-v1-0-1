@@ -38,7 +38,7 @@ export default function MyAnswers({onPress, evaluation}) {
                   evaluation.questions.map((item, i) => (
                      <React.Fragment key={i}  >
                         <ChipAbout  label={item}/>
-                        <ChipAbout text={evaluation.answers[i]} />
+                        <ChipAbout text={evaluation.answers[i]?.slice(3)} />
                      </React.Fragment>
                   ))
                }
