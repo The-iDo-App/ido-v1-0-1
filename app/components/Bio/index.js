@@ -11,6 +11,9 @@ import {
 import COLORS from '../../src/consts/color';
 import { Feather, FontAwesome, AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { BACKEND_BASEURL } from '@env';
 
 const { width } = Dimensions.get('window');
 
@@ -22,7 +25,14 @@ export default function BioComponent({ bio }) {
     setBioText(bio);
   }, []);
 
-  const handleSaveButton = () => {
+  const handleSaveButton = async () => {
+    const accessToken = await AsyncStorage.getItem('access_token');
+    const id = await AsyncStorage.getItem('userId');
+    let res = await axios.post(
+      `${BACKEND_BASEURL}/api/profiles/${id}`,
+      { bio: bioText },
+      { headers: { authorization: accessToken } }
+    );
     setBioEditModal(false);
   };
 
