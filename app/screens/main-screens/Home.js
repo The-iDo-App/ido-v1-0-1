@@ -134,7 +134,7 @@ export default function Home() {
     let dbusers;
     try {
       dbusers = await axios.get(`${BACKEND_BASEURL}/api/suggestions`, config);
-      console.log(dbusers);
+      // console.log(dbusers);
       setUsers(dbusers.data.users);
     } catch (err) {
       console.log(err);
@@ -152,7 +152,8 @@ export default function Home() {
         {users !== null && currentIndex < users.length ? (
           users
             .map((item, i) => {
-              let name = `${item.userId.firstName} ${item.userId.lastName}`;
+              // console.log(item);
+              let name = `${item.firstName} ${item.lastName}`;
               let img = { uri: item.picture.blurredImage } || {
                 uri: item.picture.avatar,
               };
@@ -223,12 +224,12 @@ export default function Home() {
                       </View>
                       <DatingCard
                         id={item._id}
-                        nickname={item.userId.username}
+                        nickname={item.username}
                         image={img}
+                        location={item.location}
                         bio={item.shortDescription}
-                        city={item.userId.address.city}
-                        age={getBirthday(item.userId.birthday)}
-                        matchRate={matchrate}
+                        age={item.age}
+                        matchRate={item.matchRate}
                         onPress={() => {
                           setUserInfoModalVisible(true);
                           // console.log('button clicked')
@@ -241,7 +242,7 @@ export default function Home() {
                       about={item}
                       image={img}
                       interests={item.interest}
-                      nickname={item.userId.username}
+                      nickname={item.username}
                       modalVisible={userInfoModalVisible}
                       onPress={() => setUserInfoModalVisible(false)}
                     />
@@ -261,12 +262,12 @@ export default function Home() {
                     >
                       <DatingCard
                         id={item._id}
-                        nickname={item.userId.username}
+                        nickname={item.username}
                         image={img}
-                        bio={item.bio}
-                        city={item.userId.address.city}
-                        age={getBirthday(item.userId.birthday)}
-                        matchRate={matchrate}
+                        bio={item.shortDescription}
+                        location={item.location}
+                        age={item.age}
+                        matchRate={item.matchRate}
                         onPress={() => {
                           setUserInfoModalVisible(true);
                           // console.log('button clicked')
