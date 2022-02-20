@@ -79,7 +79,10 @@ export default function MessageInbox({ navigation }) {
                   <MessageOverview
                     key={_id}
                     ProfilePicture={
-                      profile?.picture.originalImage || picture?.originalImage
+                      profile?.picture.originalImage ||
+                      picture?.originalImage ||
+                      profile?.picture.avatar ||
+                      picture?.avatar
                     }
                     Name={username}
                     LatestMessage={latestMessage}
