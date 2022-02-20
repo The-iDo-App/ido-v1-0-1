@@ -85,7 +85,17 @@ const UploadProfile = ({ picture }) => {
       formData,
       config
     );
-    console.log(response.data);
+    // console.log(response.data);
+
+    let accessToken = await AsyncStorage.getItem('access_token');
+    let id = await AsyncStorage.getItem('userId');
+
+    let res = await axios.post(
+      `${BACKEND_BASEURL}/api/profiles/${id}`,
+      { picture: response.data },
+      { headers: { authorization: accessToken } }
+    );
+
     if (response.data) {
       await AsyncStorage.setItem('blurredImage', response.data.blurredImage);
       await AsyncStorage.setItem('originalImage', response.data.originalImage);
