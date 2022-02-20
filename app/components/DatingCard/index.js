@@ -60,7 +60,7 @@ export default function DatingCard({
             </Text>
           </View>
           <View>
-            <Text style={cardStyle.bioTextStyle}>"{bio}"</Text>
+            <Text style={cardStyle.bioTextStyle}>{bio ? `"${bio}"` : ''}</Text>
           </View>
           <TouchableOpacity onPress={onPress}>
             <Text style={cardStyle.fullInfoTextStyle}>SEE FULL INFO</Text>
