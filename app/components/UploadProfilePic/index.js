@@ -122,7 +122,18 @@ const UploadProfile = ({ picture }) => {
     }
   };
 
-  const handleSaveButton = () => {
+  const handleSaveButton = async () => {
+    const avatar = await AsyncStorage.getItem('avatar');
+    if (avatar) {
+      const accessToken = await AsyncStorage.getItem('access_token');
+      const id = await AsyncStorage.getItem('userId');
+
+      let res = await axios.post(
+        `${BACKEND_BASEURL}/api/profiles/${id}`,
+        { avatar },
+        { headers: { authorization: accessToken } }
+      );
+    }
     // code goes here for displaying the selected avatar in Image component
     setModalVisible(!modalVisible);
   };
