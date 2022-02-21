@@ -47,7 +47,7 @@ const MessageBubbles = ({
           display: time === time ? 'flex' : 'none',
         }}
       >
-        {!previousTime || new Date(time) - new Date(previousTime) >= 60000 ? (
+        {!previousTime || new Date(time) - new Date(previousTime) >= 600000 ? (
           <Text style={{ color: COLORS.grey, fontSize: 10 / fontScale }}>
             {formatDate(time)}
           </Text>
@@ -56,7 +56,6 @@ const MessageBubbles = ({
         )}
       </View>
       <View style={currentUser ? styles.selfMessage : styles.otherMessage}>
-
         {!image ? (
           <Text style={currentUser ? { color: 'white' } : { color: 'black' }}>
             {message}
@@ -64,7 +63,6 @@ const MessageBubbles = ({
         ) : (
           <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
         )}
-
       </View>
     </View>
   );
