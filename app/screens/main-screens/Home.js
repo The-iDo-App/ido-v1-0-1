@@ -23,6 +23,9 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInfoModalVisible, setUserInfoModalVisible] = useState(false);
   const [users, setUsers] = useState([]);
+  const [userId, setUserId] = useState('');
+  const [accessToken, setAccessToken] = useState('');
+
   //drag
   const pan = new Animated.ValueXY();
 
@@ -43,14 +46,14 @@ export default function Home() {
           toValue: { x: width + 100, y: gestureState.dy },
           useNativeDriver: false,
         }).start(() => {
-          update();
+          update('right');
         });
       } else if (gestureState.dx < -120) {
         Animated.spring(pan, {
           toValue: { x: -width - 100, y: gestureState.dy },
           useNativeDriver: false,
         }).start(() => {
-          update();
+          update('left');
         });
       } else {
         Animated.spring(pan, {
@@ -64,7 +67,21 @@ export default function Home() {
 
   const [pr, setPR] = useState(panResponder);
 
-  const update = () => {
+  const update = async (direction) => {
+    if (direction === 'left') {
+      // nope
+      // walang gagawin
+    } else if (direction === 'right') {
+      // like
+      let otherUserId = users[currentIndex]._id;
+      // console.log(accessToken, userId, otherUserId);
+      let res = await axios.post(
+        `${BACKEND_BASEURL}/api/suggestions/${otherUserId}`,
+        {},
+        { headers: { authorization: accessToken } }
+      );
+      // console.log(res);
+    }
     setCurrentIndex(currentIndex + 1);
     return;
   };
@@ -74,11 +91,18 @@ export default function Home() {
     pan.setValue({ x: 0, y: 0 });
   }, [currentIndex]);
 
+  useEffect(async () => {
+    let token = await AsyncStorage.getItem('access_token');
+    let id = await AsyncStorage.getItem('userId');
+
+    setAccessToken(token);
+    setUserId(id);
+  }, []);
+
   //tinder animation
   const rotate = pan.x.interpolate({
     inputRange: [-width / 2, 0, width / 2],
     outputRange: ['-10deg', '0deg', '10deg'],
-    extrapolate: 'clamp',
   });
 
   const rotateAndTranslate = {
