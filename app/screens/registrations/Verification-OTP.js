@@ -11,6 +11,7 @@ import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 export default function VerificationOTPScreen({navigation}) {
     const maxTimer = 100;
+    const [email,setEmail] = useState(null);
     const [counter, setCounter] = useState(maxTimer);
     const [activeCounter, setActiveCounter] = useState(false);
     const [userOtp, setOtp] = useState(null);
@@ -24,33 +25,27 @@ export default function VerificationOTPScreen({navigation}) {
       const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
       return () => clearInterval(timer);
     });
-    
-    //  const hasUnsavedChanges = Boolean(true);
-    //     React.useEffect(
-    //         () =>
-    //         navigation.addListener('beforeRemove', (e) => {
-    //             e.preventDefault();
-    //     }),[navigation, hasUnsavedChanges]
-    // );
+    useEffect(async() => {
+       let user = await AsyncStorage.getItem('email');
+       setEmail(user);
+    }, [email]);
 
     const submitOTP = async() => {
         const securityCode = await AsyncStorage.getItem("securityCode");
-        if(securityCode == userOtp){
-          navigation.navigate('ChangePass');  
+        if(securityCode === userOtp){
+          navigation.navigate('CreateAccount');
         }else{
           setMessage("Invalid security code!");
           setvisibleToast(true);
         }
 
-        navigation.navigate('CreateAccount');
-
     }
    
     const fetchSecurity = async()=>{
       return new Promise(async(resolve, reject) =>{
-        const sendTo = await AsyncStorage.getItem("forgotEmail");
+        const sendTo = await AsyncStorage.getItem('email');
         let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
-        if(securityCode) 
+        if(securityCode.data.securityCode) 
             resolve(securityCode.data);
         reject(false);
       });
@@ -77,12 +72,12 @@ export default function VerificationOTPScreen({navigation}) {
 
   return (
     <SafeAreaView style={{justifyContent: 'flex-start', backgroundColor: 'white', flex: 1}}>
-        {/* <Snackbar message={message} visibleToast={visibleToast}/> */}
+        <Snackbar message={message} visibleToast={visibleToast}/>
         <ResetPassword 
             icon={'lock'}
             text={'Enter 6-digit OTP'}
             pageTitle={'otp verification'.toUpperCase()}
-            pageDescription={'Enter the OTP sent to example@email.com'}
+            pageDescription={`Enter the OTP sent to ${email}`}
             buttonText={'submit'.toUpperCase()}
             maxLength={6}
             onPressed={submitOTP}

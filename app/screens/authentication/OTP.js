@@ -15,7 +15,7 @@ export default function OTPScreen({navigation}) {
     const [counter, setCounter] = useState(maxTimer);
     const [activeCounter, setActiveCounter] = useState(false);
     const [userOtp, setOtp] = useState(null);
-
+    const [email,setEmail] = useState(null);
     const [message,setMessage] = useState("Security code sent!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
@@ -25,7 +25,11 @@ export default function OTPScreen({navigation}) {
       const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
       return () => clearInterval(timer);
     });
-    
+
+    useEffect(async() => {
+       let user = await AsyncStorage.getItem('forgotEmail');
+       setEmail(user);
+    }, [email]);
     //  const hasUnsavedChanges = Boolean(true);
     //     React.useEffect(
     //         () =>
@@ -44,17 +48,16 @@ export default function OTPScreen({navigation}) {
         if(securityCode == userOtp){
           navigation.navigate('ChangePass');  
         }else{
-          setMessage("Invalid security code!");
           setvisibleToast(true);
+          setMessage("Invalid security code!");
         }
-
     }
    
     const fetchSecurity = async()=>{
       return new Promise(async(resolve, reject) =>{
         const sendTo = await AsyncStorage.getItem("forgotEmail");
         let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
-        if(securityCode) 
+        if(securityCode.data.securityCode) 
             resolve(securityCode.data);
         reject(false);
       });
@@ -86,7 +89,7 @@ export default function OTPScreen({navigation}) {
             icon={'lock'}
             text={'Enter 6-digit OTP'}
             pageTitle={'otp verification'.toUpperCase()}
-            pageDescription={'Enter the OTP sent to example@email.com'}
+            pageDescription={`Enter the OTP sent to ${email}`}
             buttonText={'submit'.toUpperCase()}
             maxLength={6}
             onPressed={submitOTP}
