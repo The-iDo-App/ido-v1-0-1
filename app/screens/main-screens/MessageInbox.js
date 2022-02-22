@@ -56,7 +56,7 @@ export default function MessageInbox({ navigation }) {
         console.log(messages);
       });
     }
-  });
+  }, []);
 
   return (
     <>
