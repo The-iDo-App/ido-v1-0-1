@@ -95,7 +95,7 @@ export default function MessageBox({ route, navigation }) {
         }
       }
     })();
-  }, []);
+  });
 
   useLayoutEffect(() => {
     Keyboard.addListener('keyboardDidShow', onKeyBoardDidShow);
