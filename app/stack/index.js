@@ -61,12 +61,10 @@ import GuidelinesScreen from '../screens/main-screens/settings/Guidelines';
 import SafetyTipsScreen from '../screens/main-screens/settings/SafetyTipsScreen';
 import ViewInfo from '../screens/main-screens/settings/ViewInfo';
 import TermsAndConditions from '../screens/main-screens/settings/TermsAndConditionScreen';
-
-
-
+import MyPreferences from '../screens/main-screens/settings/MyPreferences';
 
 //others
-import Loading from '../components/ActivityIndicator'
+import Loading from '../components/ActivityIndicator';
 import { AuthContext } from '../components/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -75,91 +73,108 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const { height } = Dimensions.get('window');
-;
-
-
-function MainTab(){
-  return(
-      <Tab.Navigator screenOptions={{ headerShown: false }}  >
-        <Tab.Screen 
-            name="Home" 
-            component={Home}  
-            options={{
-                tabBarIcon: ({focused}) =>  (
-                    focused ?
-                         <Image source={require('../src/assets/components/matchFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                         :
-                         <Image source={require('../src/assets/components/match.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                ),
-                tabBarLabel: '' ,
-                tabBarStyle:{
-                    height: height/11,
-                    borderTopColor: COLORS.grey,
-                    borderTopWidth: 1
-                }
-            }}
-
-        />
-        <Tab.Screen 
-            name="Messaging" 
-            component={MessageInbox}  
-            options={({
-                tabBarIcon: ({focused}) =>  (
-                    focused ?
-                         <Image source={require('../src/assets/components/messageFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                         :
-                         <Image source={require('../src/assets/components/message.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                ),
-                tabBarLabel: '' ,
-                tabBarStyle:{
-                    height: height/11,
-                    borderTopColor: COLORS.grey,
-                    borderTopWidth: 1,
-                }
-            })}
-        />
-        <Tab.Screen
-            name="Profile" 
-            component={Profile}  
-            options={{
-                tabBarIcon: ({focused}) =>  (
-                    focused ?
-                         <Image source={require('../src/assets/components/profileFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                         :
-                         <Image source={require('../src/assets/components/profile.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                ),
-                tabBarLabel: '' ,
-                tabBarStyle:{
-                    height: height/11,
-                    borderTopColor: COLORS.grey,
-                    borderTopWidth: 1
-                }
-            }}
-        />
-        <Tab.Screen 
-            name="Settings" 
-            component={Settings}  
-            options={({
-                tabBarIcon: ({focused}) =>  (
-                    focused ?
-                         <Image source={require('../src/assets/components/settingsFocused.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                         :
-                         <Image source={require('../src/assets/components/settings.png')} style={{resizeMode:'contain', height:50, width:40}} />
-                ),
-                tabBarLabel: '',
-                tabBarStyle:{
-                    height: height/11,
-                    borderTopColor: COLORS.grey,
-                    borderTopWidth: 1,
-                }
-            })}
-        />
-      </Tab.Navigator>
+function MainTab() {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <Image
+                source={require('../src/assets/components/matchFocused.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ) : (
+              <Image
+                source={require('../src/assets/components/match.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ),
+          tabBarLabel: '',
+          tabBarStyle: {
+            height: height / 11,
+            borderTopColor: COLORS.grey,
+            borderTopWidth: 1,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Messaging"
+        component={MessageInbox}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <Image
+                source={require('../src/assets/components/messageFocused.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ) : (
+              <Image
+                source={require('../src/assets/components/message.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ),
+          tabBarLabel: '',
+          tabBarStyle: {
+            height: height / 11,
+            borderTopColor: COLORS.grey,
+            borderTopWidth: 1,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <Image
+                source={require('../src/assets/components/profileFocused.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ) : (
+              <Image
+                source={require('../src/assets/components/profile.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ),
+          tabBarLabel: '',
+          tabBarStyle: {
+            height: height / 11,
+            borderTopColor: COLORS.grey,
+            borderTopWidth: 1,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <Image
+                source={require('../src/assets/components/settingsFocused.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ) : (
+              <Image
+                source={require('../src/assets/components/settings.png')}
+                style={{ resizeMode: 'contain', height: 50, width: 40 }}
+              />
+            ),
+          tabBarLabel: '',
+          tabBarStyle: {
+            height: height / 11,
+            borderTopColor: COLORS.grey,
+            borderTopWidth: 1,
+          },
+        }}
+      />
+    </Tab.Navigator>
   );
-    
-  
 }
-
 
 // create a component
 const Stacks = () => {
@@ -226,53 +241,173 @@ const Stacks = () => {
     return <Loading />;
   }
 
-    return (
-        <AuthContext.Provider value={authContext}>
-            <NavigationContainer>
-                {loginState.userToken === null ?(
-                    <Stack.Navigator screenOptions={{headerShown: false}} >
-                        <Stack.Screen name="SignIn" options={{header: () => null}}  component={SignInPage} />
-                        <Stack.Screen name="SignUp" options={{header: () => null}} component={SignUpPage} />
-                        <Stack.Screen name="ForgotPass" options={{header: () => null}}  component={ForgotPassScreen} />
-                        <Stack.Screen name="OTP" options={{header: () => null}} component={OTPScreen} />
-                        <Stack.Screen name="ChangePass" options={{header: () => null}} component={ChangePassScreen} />
-                        <Stack.Screen name="VerificationOTP" options={{header: () => null}} component={VerificationOTPScreen} />
-                        <Stack.Screen name="CreateAccount" options={{header: () => null}} component={CreateAccount} />
-                        <Stack.Screen name="Sexuality" options={{header: () => null}} component={Sexuality} />
-                        <Stack.Screen name="Address" options={{header: () => null}} component={Address}/>
-                        <Stack.Screen name="Employment" options={{header: () => null}} component={EmploymentStatus}/>
-                        <Stack.Screen name="Preference" options={{header: () => null}} component={Preference}/>
-                        <Stack.Screen name="Describe" options={{header: () => null}} component={DescribeScreen}/>
-                        <Stack.Screen name="SportInterest" options={{header: () => null}} component={SportInterest}/>
-                        <Stack.Screen name="HobbyInterest" options={{header: () => null}} component={HobbyInterest}/>
-                        <Stack.Screen name="MusicInterest" options={{header: () => null}} component={MusicInterest}/>
-                        <Stack.Screen name="FilmInterest" options={{header: () => null}} component={FilmInterest}/>
-                        <Stack.Screen name="PetsInterest" options={{header: () => null}} component={PetsInterest}/>
-                        <Stack.Screen name="BookInterest" options={{header: () => null}} component={BookInterest}/>
-                        <Stack.Screen name="FoodInterest" options={{header: () => null}} component={FoodInterest}/>
-                        <Stack.Screen name="Question"  options={{header: () => null}} component={Question} />
-                        <Stack.Screen name="Onboarding" options={{header: () => null}} component={Onboarding} />
-                        
-                    </Stack.Navigator>
-                ):(
-                    <Stack.Navigator screenOptions={{headerShown: false}} >
-                        <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}} title="MainTab"/>
-                        <Stack.Screen name="MessageBox" options={{header: () => null}}  component={MessageBox} />
-                        <Stack.Group  >
-                            <Stack.Screen  name="About" options={{header: () => null}}  component={AboutScreen} />
-                            <Stack.Screen  name="ViewInfo" options={{header: () => null}}  component={ViewInfo} />
-                            <Stack.Screen name="BlockedUsers" options={{header: () => null}}  component={BlockedUsersScreen} />
-                            <Stack.Screen name="Guidelines" options={{header: () => null}}  component={GuidelinesScreen} />
-                            <Stack.Screen name="SafetyTips" options={{header: () => null}}  component={SafetyTipsScreen} />
-                            <Stack.Screen name="TermsConditions" options={{header: () => null}}  component={TermsAndConditions} />
-                        </Stack.Group>
-                    </Stack.Navigator>
-                )}
-            </NavigationContainer>
-       </AuthContext.Provider> 
-    );
+  return (
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        {loginState.userToken === null ? (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
+              name="SignIn"
+              options={{ header: () => null }}
+              component={SignInPage}
+            />
+            <Stack.Screen
+              name="SignUp"
+              options={{ header: () => null }}
+              component={SignUpPage}
+            />
+            <Stack.Screen
+              name="ForgotPass"
+              options={{ header: () => null }}
+              component={ForgotPassScreen}
+            />
+            <Stack.Screen
+              name="OTP"
+              options={{ header: () => null }}
+              component={OTPScreen}
+            />
+            <Stack.Screen
+              name="ChangePass"
+              options={{ header: () => null }}
+              component={ChangePassScreen}
+            />
+            <Stack.Screen
+              name="VerificationOTP"
+              options={{ header: () => null }}
+              component={VerificationOTPScreen}
+            />
+            <Stack.Screen
+              name="CreateAccount"
+              options={{ header: () => null }}
+              component={CreateAccount}
+            />
+            <Stack.Screen
+              name="Sexuality"
+              options={{ header: () => null }}
+              component={Sexuality}
+            />
+            <Stack.Screen
+              name="Address"
+              options={{ header: () => null }}
+              component={Address}
+            />
+            <Stack.Screen
+              name="Employment"
+              options={{ header: () => null }}
+              component={EmploymentStatus}
+            />
+            <Stack.Screen
+              name="Preference"
+              options={{ header: () => null }}
+              component={Preference}
+            />
+            <Stack.Screen
+              name="Describe"
+              options={{ header: () => null }}
+              component={DescribeScreen}
+            />
+            <Stack.Screen
+              name="SportInterest"
+              options={{ header: () => null }}
+              component={SportInterest}
+            />
+            <Stack.Screen
+              name="HobbyInterest"
+              options={{ header: () => null }}
+              component={HobbyInterest}
+            />
+            <Stack.Screen
+              name="MusicInterest"
+              options={{ header: () => null }}
+              component={MusicInterest}
+            />
+            <Stack.Screen
+              name="FilmInterest"
+              options={{ header: () => null }}
+              component={FilmInterest}
+            />
+            <Stack.Screen
+              name="PetsInterest"
+              options={{ header: () => null }}
+              component={PetsInterest}
+            />
+            <Stack.Screen
+              name="BookInterest"
+              options={{ header: () => null }}
+              component={BookInterest}
+            />
+            <Stack.Screen
+              name="FoodInterest"
+              options={{ header: () => null }}
+              component={FoodInterest}
+            />
+            <Stack.Screen
+              name="Question"
+              options={{ header: () => null }}
+              component={Question}
+            />
+            <Stack.Screen
+              name="Onboarding"
+              options={{ header: () => null }}
+              component={Onboarding}
+            />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
+              name="MainTab"
+              component={MainTab}
+              options={{ headerShown: false }}
+              title="MainTab"
+            />
+            <Stack.Screen
+              name="MessageBox"
+              options={{ header: () => null }}
+              component={MessageBox}
+            />
+            <Stack.Group>
+              <Stack.Screen
+                name="About"
+                options={{ header: () => null }}
+                component={AboutScreen}
+              />
+              <Stack.Screen
+                name="ViewInfo"
+                options={{ header: () => null }}
+                component={ViewInfo}
+              />
+              <Stack.Screen
+                name="BlockedUsers"
+                options={{ header: () => null }}
+                component={BlockedUsersScreen}
+              />
+              <Stack.Screen
+                name="Guidelines"
+                options={{ header: () => null }}
+                component={GuidelinesScreen}
+              />
+              <Stack.Screen
+                name="SafetyTips"
+                options={{ header: () => null }}
+                component={SafetyTipsScreen}
+              />
+              <Stack.Screen
+                name="TermsConditions"
+                options={{ header: () => null }}
+                component={TermsAndConditions}
+              />
+              <Stack.Screen
+                name="MyPreferences"
+                options={{ header: () => null }}
+                component={MyPreferences}
+              />
+            </Stack.Group>
+          </Stack.Navigator>
+        )}
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
 };
 
 //make this component available to the app
 export default Stacks;
-
