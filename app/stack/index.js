@@ -62,6 +62,7 @@ import SafetyTipsScreen from '../screens/main-screens/settings/SafetyTipsScreen'
 import ViewInfo from '../screens/main-screens/settings/ViewInfo';
 import TermsAndConditions from '../screens/main-screens/settings/TermsAndConditionScreen';
 import MyPreferences from '../screens/main-screens/settings/MyPreferences';
+import ChangePassword from '../screens/main-screens/settings/ChangePassword';
 
 //others
 import Loading from '../components/ActivityIndicator';
@@ -400,6 +401,11 @@ const Stacks = () => {
                 name="MyPreferences"
                 options={{ header: () => null }}
                 component={MyPreferences}
+              />
+              <Stack.Screen
+                name="ChangePassword"
+                options={{ header: () => null }}
+                component={ChangePassword}
               />
             </Stack.Group>
           </Stack.Navigator>
