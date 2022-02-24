@@ -12,9 +12,28 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BACKEND_BASEURL } from '@env';
 import NextButton from '../../../components/NextButton';
+import Snackbar from '../../../components/Toast';
 
 export default function MyPreferences({ navigation }) {
   const [preferences, setPreferences] = useState({});
+  const [message, setMessage] = useState('');
+  const [isVisibleToast, setIsVisibleToast] = useState(false);
+  const savePreferences = async () => {
+    const userId = await AsyncStorage.getItem('userId');
+    const accessToken = await AsyncStorage.getItem('access_token');
+
+    let res = await axios.put(
+      `${BACKEND_BASEURL}/api/profiles/${userId}`,
+      { preferences },
+      { headers: { authorization: accessToken } }
+    );
+
+    if (res.data) {
+      setMessage('Preferences updated!');
+      setIsVisibleToast(true);
+      setIsVisibleToast(false);
+    }
+  };
   return (
     <>
       <View style={{ backgroundColor: 'white' }}>
@@ -44,12 +63,13 @@ export default function MyPreferences({ navigation }) {
           <SafeAreaView style={{ marginBottom: 20 }}>
             <SettingsMainTitle title="My Preferences" des={null} />
             <UserPreferences report={setPreferences} />
+            <Snackbar message={message} visibleToast={isVisibleToast} />
           </SafeAreaView>
         </ScrollView>
         <NextButton
           TextButton="Save Changes"
           backgroundColor={COLORS.lightPink}
-          onPress={() => console.log(preferences)}
+          onPress={savePreferences}
         />
       </View>
     </>
