@@ -9,13 +9,14 @@ const { width, fontScale } = Dimensions.get('window');
 // create a component
 const DistanceRange = ({ distanceValue, defaultValue }) => {
   const [distance, setDistance] = useState(100);
+  const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
     distanceValue(distance);
   }, [distance]);
 
   useEffect(() => {
-    if (defaultValue) setDistance(defaultValue);
+    if (defaultValue && isNew) setDistance(defaultValue);
   }, [defaultValue]);
 
   return (
@@ -28,7 +29,10 @@ const DistanceRange = ({ distanceValue, defaultValue }) => {
       <Slider
         thumbStyle={{ height: 20, width: 20, backgroundColor: COLORS.blue }}
         value={distance}
-        onValueChange={setDistance}
+        onValueChange={(value) => {
+          setDistance(value);
+          setIsNew(false);
+        }}
         maximumValue={20000}
         minimumTrackTintColor={COLORS.blue}
         maximumTrackTintColor={COLORS.grey}

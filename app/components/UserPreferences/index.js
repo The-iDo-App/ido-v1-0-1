@@ -11,12 +11,12 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BACKEND_BASEURL } from '@env';
 import Register from '../../src/styles/screens/registration';
-import AgeRange from '../../components/InputRange';
+import AgeRange from '../../components/InputRange/index.js';
 import DistanceRange from '../../components/DistanceRange/index.js';
 
 const { width, height } = Dimensions.get('window');
 
-export default function UserPreferences({ name, email }) {
+export default function UserPreferences({ report }) {
   const screenGenderList = [
     { key: 0, gender: 'Women' },
     { key: 1, gender: 'Men' },
@@ -53,6 +53,10 @@ export default function UserPreferences({ name, email }) {
       res.data.interest;
     setPreferences({ minAge, maxAge, minDistance, maxDistance, gender });
   }, []);
+
+  useEffect(() => {
+    report(preferences);
+  }, [preferences]);
 
   return (
     <View
@@ -99,7 +103,7 @@ export default function UserPreferences({ name, email }) {
         <Text style={Register.labelText}>Age</Text>
       </View>
       <AgeRange
-        ageValue={(value) => console.log(value)}
+        ageValue={(value) => setPreferences({ ...preferences, maxAge: value })}
         defaultValue={preferences.maxAge}
       />
       <View
@@ -108,7 +112,9 @@ export default function UserPreferences({ name, email }) {
         <Text style={Register.labelText}>Distance</Text>
       </View>
       <DistanceRange
-        distanceValue={(value) => console.log(value)}
+        distanceValue={(value) =>
+          setPreferences({ ...preferences, maxDistance: value })
+        }
         defaultValue={preferences.maxDistance}
       />
     </View>

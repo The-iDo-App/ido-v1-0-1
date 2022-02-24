@@ -9,13 +9,14 @@ const { width, fontScale } = Dimensions.get('window');
 // create a component
 const AgeRange = ({ ageValue, defaultValue }) => {
   const [age, setAge] = useState(18);
+  const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
     ageValue(age);
   }, [age]);
 
   useEffect(() => {
-    if (defaultValue) setAge(defaultValue);
+    if (defaultValue && isNew) setAge(defaultValue);
   }, [defaultValue]);
 
   return (
@@ -24,7 +25,10 @@ const AgeRange = ({ ageValue, defaultValue }) => {
       <Slider
         thumbStyle={{ height: 20, width: 20, backgroundColor: COLORS.blue }}
         value={age}
-        onValueChange={setAge}
+        onValueChange={(value) => {
+          setAge(value);
+          setIsNew(false);
+        }}
         minimumValue={18}
         maximumValue={65}
         minimumTrackTintColor={COLORS.blue}

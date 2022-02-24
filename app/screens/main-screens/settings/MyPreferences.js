@@ -11,8 +11,10 @@ import UserPreferences from '../../../components/UserPreferences';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BACKEND_BASEURL } from '@env';
+import NextButton from '../../../components/NextButton';
 
 export default function MyPreferences({ navigation }) {
+  const [preferences, setPreferences] = useState({});
   return (
     <>
       <View style={{ backgroundColor: 'white' }}>
@@ -41,9 +43,14 @@ export default function MyPreferences({ navigation }) {
         <ScrollView>
           <SafeAreaView style={{ marginBottom: 20 }}>
             <SettingsMainTitle title="My Preferences" des={null} />
-            <UserPreferences />
+            <UserPreferences report={setPreferences} />
           </SafeAreaView>
         </ScrollView>
+        <NextButton
+          TextButton="Save Changes"
+          backgroundColor={COLORS.lightPink}
+          onPress={() => console.log(preferences)}
+        />
       </View>
     </>
   );
