@@ -66,7 +66,15 @@ export default function SignUpPage({navigation}) {
             confirmSecureTextEntry: !data.confirmSecureTextEntry,
         });
     }
-
+    
+    const fetchSecurity = async(email)=>{
+      return new Promise(async(resolve, reject) =>{
+      let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo: email});
+      if(securityCode) 
+          resolve(securityCode.data);
+      reject(false);
+      });
+    }
 
     const handleSubmit = async() =>{
         const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -79,10 +87,20 @@ export default function SignUpPage({navigation}) {
                 setMessage("Email already exists in the system.");
             }
             else if((data.password === data.confirmPassword) && data.password !== '' && data.email.match(emailRegex)){
-                setMessage("Input successfully saved!");
                 await AsyncStorage.setItem('email',data.email);
                 await AsyncStorage.setItem('password',data.password);
-                navigation.navigate('CreateAccount');
+                try{
+                   const securityCode =  await fetchSecurity(data.email);
+                   if(securityCode.securityCode){
+                        await AsyncStorage.setItem("securityCode",JSON.stringify(securityCode.securityCode));   
+                        console.log(JSON.stringify(securityCode.securityCode))
+                        setMessage("Input successfully saved!");
+                        navigation.navigate('VerificationOTP');
+                   }
+                }catch(err){
+                    setMessage("An error occured!", err);
+                    console.log(err);
+                }
             }else{
                 setMessage("Invalid Credentials! Please try again.");
             }
