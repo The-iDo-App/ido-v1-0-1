@@ -19,6 +19,7 @@ import axios from 'axios';
 import mime from 'mime';
 import { BACKEND_BASEURL, BACKEND_DEVURL, PORT } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Snackbar from '../../components/Toast';
 
 //For the responsiveness of the website
 const { width, height } = Dimensions.get('window');
@@ -45,11 +46,14 @@ const Item = ({ item, onPress, borderColor, borderWidth, icon }) => {
 };
 
 // create a component
-const UploadProfile = ({ picture }) => {
+const UploadProfile = ({ picture: pictureObject }) => {
   // console.log(picture);
   //States
   const [modalVisible, setModalVisible] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const [isVisibleToast, setIsVisibleToast] = useState(false);
+  const [message, setMessage] = useState('');
+  const [picture, setPicture] = useState({});
 
   const [uri, setUri] = useState(null);
   const [src, setSrc] = useState(null);
@@ -66,6 +70,11 @@ const UploadProfile = ({ picture }) => {
     })();
   }, []);
 
+  useEffect(() => {
+    setPicture(pictureObject);
+    console.log(pictureObject);
+  }, [pictureObject]);
+
   const uploadPicture = async (imageUri) => {
     // console.log(BACKEND_DEVURL);
     const config = {
@@ -80,27 +89,47 @@ const UploadProfile = ({ picture }) => {
       type: mime.getType(newImageUri),
       name: newImageUri.split('/').pop(),
     });
-    const response = await axios.post(
-      `${BACKEND_BASEURL}/api/registers/uploadImage`,
-      formData,
-      config
-    );
-    // console.log(response.data);
 
-    let accessToken = await AsyncStorage.getItem('access_token');
-    let id = await AsyncStorage.getItem('userId');
+    try {
+      const response = await axios.post(
+        `${BACKEND_BASEURL}/api/registers/uploadImage`,
+        formData,
+        config
+      );
+      // console.log(response.data);
 
-    let res = await axios.post(
-      `${BACKEND_BASEURL}/api/profiles/${id}`,
-      { picture: response.data },
-      { headers: { authorization: accessToken } }
-    );
+      if (response.data.error) {
+        setMessage(response.data.error);
+        setIsVisibleToast(true);
+        setIsVisibleToast(false);
+        setUri(picture.avatar || picture.originalImage);
+      } else if (response.data) {
+        console.log(response.data);
+        setPicture(response.data);
+        let accessToken = await AsyncStorage.getItem('access_token');
+        let id = await AsyncStorage.getItem('userId');
 
-    if (response.data) {
-      await AsyncStorage.setItem('blurredImage', response.data.blurredImage);
-      await AsyncStorage.setItem('originalImage', response.data.originalImage);
-      const avat = await AsyncStorage.getItem('avatar');
-      if (avat) await AsyncStorage.removeItem('avatar');
+        let res = await axios.post(
+          `${BACKEND_BASEURL}/api/profiles/${id}`,
+          { picture: response.data },
+          { headers: { authorization: accessToken } }
+        );
+        await AsyncStorage.setItem('blurredImage', response.data.blurredImage);
+        await AsyncStorage.setItem(
+          'originalImage',
+          response.data.originalImage
+        );
+        const avat = await AsyncStorage.getItem('avatar');
+        if (avat) await AsyncStorage.removeItem('avatar');
+        setMessage('Image uploaded successfully');
+        setIsVisibleToast(true);
+        setIsVisibleToast(false);
+      }
+    } catch (err) {
+      setMessage('File size exceeded');
+      setIsVisibleToast(true);
+      setIsVisibleToast(false);
+      setUri(picture.avatar || picture.originalImage);
     }
   };
 
@@ -128,11 +157,27 @@ const UploadProfile = ({ picture }) => {
       const accessToken = await AsyncStorage.getItem('access_token');
       const id = await AsyncStorage.getItem('userId');
 
-      let res = await axios.post(
-        `${BACKEND_BASEURL}/api/profiles/${id}`,
-        { avatar },
-        { headers: { authorization: accessToken } }
-      );
+      try {
+        let res = await axios.post(
+          `${BACKEND_BASEURL}/api/profiles/${id}`,
+          { avatar },
+          { headers: { authorization: accessToken } }
+        );
+        if (res.data) {
+          setPicture(res.data.user.picture);
+          setMessage('Successfully updated');
+          setIsVisibleToast(true);
+          setIsVisibleToast(false);
+        } else {
+          setMessage('Something went wrong');
+          setIsVisibleToast(true);
+          setIsVisibleToast(false);
+        }
+      } catch (err) {
+        setMessage('Something went wrong');
+        setIsVisibleToast(true);
+        setIsVisibleToast(false);
+      }
     }
     // code goes here for displaying the selected avatar in Image component
     setModalVisible(!modalVisible);
@@ -166,15 +211,17 @@ const UploadProfile = ({ picture }) => {
       <View style={style.imageWrapper}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           {uri ? (
-            <Image source={{ uri }} resizeMode="contain" style={style.image} />
+            <Image
+              source={{ uri: picture?.originalImage || picture?.avatar }}
+              resizeMode="contain"
+              style={style.image}
+            />
           ) : src ? (
             <Image source={src} resizeMode="contain" style={style.image} />
           ) : (
             <Image
               source={{
-                uri: picture.originalImage
-                  ? picture.originalImage
-                  : picture.avatar,
+                uri: picture?.originalImage || picture?.avatar,
               }}
               resizeMode="contain"
               style={style.image}
@@ -241,6 +288,7 @@ const UploadProfile = ({ picture }) => {
           </TouchableOpacity>
         </View>
       </Modal>
+      <Snackbar message={message} visibleToast={isVisibleToast} />
     </>
   );
 };
