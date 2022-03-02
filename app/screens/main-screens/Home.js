@@ -160,6 +160,7 @@ export default function Home() {
       dbusers = await axios.get(`${BACKEND_BASEURL}/api/suggestions`, config);
       // console.log(dbusers);
       setUsers(dbusers.data.users);
+      setCurrentIndex(0);
     } catch (err) {
       console.log(err);
     }
@@ -315,7 +316,7 @@ export default function Home() {
             <Text>No users to match</Text>
             <ActivityIndicator size="large" color="#FFC0CB" />
             <TouchableOpacity
-              onPress={() => setCurrentIndex(0)}
+              onPress={getUsers}
               style={{ backgroundColor: '#DDDDDD', padding: 10 }}
             >
               <Text>Reload</Text>
