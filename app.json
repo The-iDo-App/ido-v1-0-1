@@ -25,7 +25,8 @@
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#FF6E83"
             },
-            "package": "com.saientric.ido"
+            "package": "com.saientric.ido",
+            "versionCode": 2
         },
         "web": {
             "favicon": "./assets/favicon.png"
