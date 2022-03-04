@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const {width, height, scale} = Dimensions.get('window');
 
 
-export default function ResetPassword({maxLength, onChangeText, pageTitle, pageDescription, onPressed, buttonText, icon, text}) {
+export default function ResetPassword({maxLength, onChangeText, pageTitle, pageDescription, onPressed, buttonText, icon, text, disabled}) {
   return (
     <View style={STYLES.wrapper} >
         <FontAwesome name='lock' size={scale*50} color={COLORS.darkPink}  />
@@ -26,7 +26,7 @@ export default function ResetPassword({maxLength, onChangeText, pageTitle, pageD
                   />
             </View>
         </View>
-        <TouchableOpacity  onPress={onPressed}>
+        <TouchableOpacity  onPress={onPressed} disabled={disabled}>
           <View style={STYLES.submitEmailBtn}>
             <Text style={STYLES.submitEmailTxt}>{buttonText}</Text>
           </View>

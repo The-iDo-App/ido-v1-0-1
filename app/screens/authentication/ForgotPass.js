@@ -8,26 +8,46 @@ import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 export default function ForgotPassScreen({navigation}) {
     const [sendTo,setSendTo] = useState(null);
+    const [token,setToken] = useState(null);
   
     const [message,setMessage] = useState("Security code sent!");
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
     
+
+    useEffect(async() => {
+        let userToken =  await AsyncStorage.getItem("securityCode");
+        // console.log('mytoken', userToken);
+        if(token !== null){
+          navigation.navigate('OTP');
+        }
+    });
     const fetchEmail = async() =>{
       return new Promise(async(resolve, reject) =>{
-            let user = await axios.post(`${BACKEND_BASEURL}/api/logins/otp`, {email:sendTo});
-            if(user) 
-                resolve(user.data);
-            reject(false);
+          let user;
+          try{
+            user = await axios.post(`${BACKEND_BASEURL}/api/logins/otp`, {email:sendTo});
+          }catch(err){
+            console.log(err);
+          }
+          if(user) 
+              resolve(user.data);
+          reject(false);
       });
     } 
 
     const fetchSecurity = async()=>{
       return new Promise(async(resolve, reject) =>{
-      let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
-      if(securityCode) 
-          resolve(securityCode.data);
-      reject(false);
+        let securityCode;
+        try{
+          securityCode  = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
+          // console.log(securityCode);
+        }catch(err){
+          console.log(err);
+        }
+        if(securityCode) 
+            resolve(securityCode.data);
+        reject(false);
       });
     }
 
@@ -45,16 +65,16 @@ export default function ForgotPassScreen({navigation}) {
         let securityCode;
         if(existing){
           try{
-            securityCode = await fetchSecurity();
-            console.log(securityCode);
+            if(token === null)
+              securityCode = await fetchSecurity();
+            console.log('hehe',securityCode.securityCode.toString())
+            setToken(securityCode.securityCode.toString())
             await AsyncStorage.setItem("securityCode",securityCode.securityCode.toString());
             await AsyncStorage.setItem("devmail",securityCode.devmail.toString());
             await AsyncStorage.setItem("forgotEmail",existing);
             setMessage("Security code sent!");
-            navigation.navigate('OTP');
           }catch(reject){
               securityCode = reject;
-              await AsyncStorage.removeItem("securityCode");
           }
         }else{
           setMessage("Email does not exist!");
@@ -74,6 +94,7 @@ export default function ForgotPassScreen({navigation}) {
             buttonText={'send email'.toUpperCase()}
             onPressed={submitEmail}
             onChangeText={(e)=> setSendTo(e)}
+            disabled={false}
          />
     </SafeAreaView>
   );

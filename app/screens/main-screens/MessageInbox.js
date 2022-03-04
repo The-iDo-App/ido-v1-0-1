@@ -29,7 +29,7 @@ export default function MessageInbox({ navigation }) {
     const socket = io(WS_URL);
 
     if (socket !== undefined) {
-      console.log('Connected to socket...');
+      // console.log('Connected to socket...');
       // Handle Output
       socket.emit('viewAllUsers', user_id);
       socket.on('showAllUsers', function (data) {
@@ -46,17 +46,17 @@ export default function MessageInbox({ navigation }) {
         let chat = data.chats[0];
         let me = chat.senderId === user_id ? 'sender' : 'receiver';
         let otherUser = me === 'sender' ? 'receiver' : 'sender';
-        console.log(chat, me, otherUser);
+        // console.log(chat, me, otherUser);
         // document.getElementById(data[otherUser]._id)?.remove();
         chat.timeSent = chat.timeSent ? parseTime(chat.timeSent) : null;
         let temp = messages.filter(
           (message) => message[otherUser]._id != data[otherUser]._id
         );
         setMessages([chat, temp]);
-        console.log(messages);
+        // console.log(messages);
       });
     }
-  });
+  },[]);
 
   return (
     <>
@@ -64,7 +64,8 @@ export default function MessageInbox({ navigation }) {
       <View style={{ flex: 1, backgroundColor: COLORS.white }}>
         <ScrollView style={{ overflow: 'scroll' }}>
           {
-            (console.log(messages),
+            (
+            // (console.log(messages),
             messages.map(
               ({
                 profile,

@@ -69,11 +69,18 @@ export default function SignUpPage({navigation}) {
     
     const fetchSecurity = async(email)=>{
       return new Promise(async(resolve, reject) =>{
-      let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo: email});
-      if(securityCode) 
-          resolve(securityCode.data);
-      reject(false);
-      });
+            let securityCode;
+            try{
+                securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo: email});
+            }catch(err){
+                console.log(err);
+            }
+        
+            if(securityCode) 
+                resolve(securityCode.data);
+            reject(false);
+        });
+ 
     }
 
     const handleSubmit = async() =>{
@@ -95,7 +102,7 @@ export default function SignUpPage({navigation}) {
                         await AsyncStorage.setItem("securityCode",JSON.stringify(securityCode.securityCode));   
                         console.log(JSON.stringify(securityCode.securityCode))
                         setMessage("Input successfully saved!");
-                        navigation.navigate('VerificationOTP');
+                        navigation.navigate('CreateAccount');
                    }
                 }catch(err){
                     setMessage("An error occured!", err);

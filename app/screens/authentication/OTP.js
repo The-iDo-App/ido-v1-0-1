@@ -11,12 +11,12 @@ import {BACKEND_BASEURL,BACKEND_DEVURL,PORT} from '@env';
 
 
 export default function OTPScreen({navigation}) {
-    const maxTimer = 100;
+    const maxTimer =0;
     const [counter, setCounter] = useState(maxTimer);
     const [activeCounter, setActiveCounter] = useState(false);
     const [userOtp, setOtp] = useState(null);
     const [email,setEmail] = useState(null);
-    const [message,setMessage] = useState("Security code sent!");
+    const [message,setMessage] = useState('');
     const [visibleToast, setvisibleToast] = useState(false);
     useEffect(() => setvisibleToast(false), [visibleToast]);
 
@@ -28,15 +28,10 @@ export default function OTPScreen({navigation}) {
 
     useEffect(async() => {
        let user = await AsyncStorage.getItem('forgotEmail');
+       let token = await AsyncStorage.getItem('securityCode');
+       console.log(token);
        setEmail(user);
     }, [email]);
-    //  const hasUnsavedChanges = Boolean(true);
-    //     React.useEffect(
-    //         () =>
-    //         navigation.addListener('beforeRemove', (e) => {
-    //             e.preventDefault();
-    //     }),[navigation, hasUnsavedChanges]
-    // );
 
     useEffect(() => {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -45,23 +40,30 @@ export default function OTPScreen({navigation}) {
 
     const submitOTP = async() => {
         const securityCode = await AsyncStorage.getItem("securityCode");
+        // console.log(securityCode,userOtp);
         if(securityCode == userOtp){
           navigation.navigate('ChangePass');  
         }else{
-          setvisibleToast(true);
           setMessage("Invalid security code!");
+          setvisibleToast(true);
         }
     }
    
     const fetchSecurity = async()=>{
       return new Promise(async(resolve, reject) =>{
+        let securityCode;
         const sendTo = await AsyncStorage.getItem("forgotEmail");
-        let securityCode = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
-        if(securityCode.data.securityCode) 
+        try{
+          securityCode  = await axios.post(`${BACKEND_BASEURL}/api/emails/otp`, {sendTo});
+          // console.log(securityCode);
+        }catch(err){
+          console.log(err);
+        }
+        if(securityCode) 
             resolve(securityCode.data);
         reject(false);
       });
-  }
+    }
 
     const resendOTP = async() => {
         // send email again
@@ -69,7 +71,7 @@ export default function OTPScreen({navigation}) {
         try{
           securityCode = await fetchSecurity();
           await AsyncStorage.setItem("securityCode",securityCode.securityCode.toString());
-          await AsyncStorage.setItem("devmail",securityCode.devmail.toString());
+          console.log(securityCode.securityCode.toString());
           setMessage("Security code sent!");
         }catch(reject){
             securityCode = reject;

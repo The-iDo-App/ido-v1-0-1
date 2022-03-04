@@ -100,15 +100,18 @@ export default function SignInPage({navigation}){
             const {email,password} = data;
             let user;
             try{
-              user = await axios.post(`${BACKEND_BASEURL}/api/logins/`, {email,password});
-              console.log(user);
+              if(email && password)
+                user = await axios.post(`${BACKEND_BASEURL}/api/logins/`, {email,password});
+            //   console.log(user);
             }catch(err){
                 console.log(err);
             }
-            if(user.data.access_token) {
-                await AsyncStorage.setItem("userId",user.data.userId);
-                await AsyncStorage.setItem("access_token",user.data.access_token);
-                resolve(user.data);
+            if(user) {
+                if(user.data.access_token){
+                    await AsyncStorage.setItem("userId",user.data.userId);
+                    await AsyncStorage.setItem("access_token",user.data.access_token);
+                    resolve(user.data);
+                }
             }
             reject(false);
         });
